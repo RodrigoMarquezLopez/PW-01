@@ -1,0 +1,37 @@
+{
+  "name": "basic-ts",
+  "version": "1.0.0",
+  "description": "tec",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "start": "npm run build && node dist/src/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "AdrianHernandezIslas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.8.0"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.20.0",
+    "typescript": "^4.7.2"
+  }
+}
