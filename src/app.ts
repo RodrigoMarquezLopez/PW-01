@@ -22,6 +22,6 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'./public')))
 
 
-app.use("/",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
+app.use("/registro",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
 
 export default app;
