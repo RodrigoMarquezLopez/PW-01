@@ -1,22 +1,41 @@
+
 <form action="">
-    <h1>Nueva cita</h1>
+    <h2 class="center-align">Nueva cita</h2>
     <div class="row">
-        <label for="">Doctor</label>
-        <input type="text">
+        <div>
+        <h5>Especialidad</h5>
+        <select class="browser-default blue lighten-5" name="" id="">
+            <option value="">Cardiologo</option>
+        </select>
+    </div>
     </div>
     <div class="row">
-        <label for="">Fecha</label>
-        <input type="text">
+        <h5>Descripcion</h5>
+        <h6 class="blue lighten-5">Descripcion de la especialidad</h6>
     </div>
     <div class="row">
-        <label for="">Horario</label>
-        <input type="text" class="datepicker">
+        <h5 for="">Doctor</h5>
+        <select class="browser-default blue lighten-5" name="" id="">
+            <option value="">Doctor</option>
+        </select>
     </div>
     <div class="row">
-        <label for="">Motivo</label>
-        <input type="text">
+        <h5 for="">Fecha</h5>
+        <input type="text" class="blue lighten-5 datepicker" id="fecha">
     </div>
-    <div>
+    <div class="row">
+        <h5 for="">Horario</h5>
+        <br>
+        <select class="browser-default blue lighten-5">
+            <option value="Hora">Elige una hora</option>
+        <option value=""></option>
+        </select>
+    </div>
+    <div class="row">
+        <h5 for="">Motivo</h5>
+        <input type="text" class="blue lighten-5">
+    </div>
+    <div class="row center-align">
         <a class="waves-effect blue darken-1 btn-large">Guardar cita</a>
     </div>
 </form>

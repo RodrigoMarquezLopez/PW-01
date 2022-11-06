@@ -1,4 +1,34 @@
 .imagen{
-    width: 500px;
-    height: 500px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+
+.botones{
+    margin-left: 25px;
+    margin-top: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+}
+
+.margendiv{
+    border-color: aqua;
+    border-right: 100px;
+
+}
+
+.inputs{
+    background-color: #E8F0FD;
+}
+
+.contenedor{
+    width: 100px;
+    
+    margin-left: 25px;
+    margin-top: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+
 }
