@@ -1,13 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database.config";
 import DoctorType from "../types/doctor.type";
+import { Cita } from "./cita.model";
 
 
 export class Doctor extends Model<DoctorType> {}
 
 Doctor.init(
 {
-    idDodctor:{
+    idDoctor:{
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -22,11 +23,29 @@ Doctor.init(
         allowNull: false
     },
 
-    
-    
+    cedula:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    horaEntrada:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    horaSalida:{
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+
     },
 {
     sequelize,
-    tableName: "persona",
+    tableName: "doctor",
 }
 );
+
+Doctor.hasMany(Cita,{
+    foreignKey:"idDoctor",
+    sourceKey:"idDoctor"
+});
+

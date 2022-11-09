@@ -1,7 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database.config";
 import PersonaType from "../types/persona.type";
-
+import { Doctor } from "./doctor.model";
+import { Cita } from "./cita.model";
 
 export class Persona extends Model<PersonaType> {}
 
@@ -35,3 +36,14 @@ Persona.init(
     tableName: "persona",
 }
 );
+
+Persona.hasOne(Doctor,{
+    foreignKey:"idPersona",
+    sourceKey:"idPersona"
+});
+
+Persona.hasMany(Cita,{
+    foreignKey:"idPersona",
+    sourceKey:"idPersona"
+});
+

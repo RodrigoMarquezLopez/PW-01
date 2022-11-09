@@ -1,5 +1,5 @@
 export default interface DoctorType{
-    idDodctor?: number;
+    idDoctor?: number;
     idPersona?: number;
     idEspecialidad?:number;
     cedula?: string;
