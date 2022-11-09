@@ -4,6 +4,9 @@ import morgan from "morgan";
 import path from "path"
 import dotenv from "dotenv";
 dotenv.config();
+import registroCitasRouter from "./routes/regitrocitas.route";
+
+
 
 const app: Application = express();
 
@@ -23,5 +26,6 @@ app.use(express.static(path.join(__dirname,'./public')))
 
 
 app.use("/registro",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
+app.use("/",registroCitasRouter);
 
 export default app;

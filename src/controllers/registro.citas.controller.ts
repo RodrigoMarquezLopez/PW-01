@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Especialidad } from "../models/especialidad.model";
 
-export async function getExample(req: Request, res: Response) {
+export async function getEspecialidades(req: Request, res: Response) {
   const records = await Especialidad.findAll({ raw: true});
   res.status(200).json(records);
 }

@@ -25,6 +25,6 @@ Especialidad.init(
     },
 {
     sequelize,
-    tableName: "persona",
+    tableName: "especialidad",
 }
 );
