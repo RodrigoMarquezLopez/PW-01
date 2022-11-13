@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database.config";
 import EspecialidadType from "../types/especialidad.type";
-
+import { Doctor } from "./doctor.model";
 
 export class Especialidad extends Model<EspecialidadType> {}
 
@@ -25,6 +25,12 @@ Especialidad.init(
     },
 {
     sequelize,
-    tableName: "persona",
+    tableName: "especialidad",
 }
 );
+
+Especialidad.hasMany(Doctor,{
+    foreignKey:"idEspecialidad",
+    sourceKey:"idEspecialidad"
+});
+
