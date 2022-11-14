@@ -1,11 +1,21 @@
-
-<form action="" id="formRegistrar">
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems,{
+        format:"yyyy-mm-dd",
+        disableWeekends:true
+    });
+    console.log("Si me ejecute");
+    //idPersona,idDoctor,fecha,hora,motivo,estado
+  });
+</script>
+<form id="formRegistrar" action="/citas/registrar" method="post">
     <h2 class="center-align">Nueva cita</h2>
     <div class="row">
         <div>
         <h5>Especialidad</h5>
         <select class="browser-default blue lighten-5" name="" id="selectEsp">
-            <option value="">A</option>
+            <option value="">Elige una especialidad</option>
         </select>
     </div>
     </div>
@@ -15,7 +25,7 @@
     </div>
     <div class="row">
         <h5 for="">Doctor</h5>
-        <select class="browser-default blue lighten-5" name="" id="">
+        <select class="browser-default blue lighten-5" name="" id="selectDoctor">
             <option value="">Doctor</option>
         </select>
     </div>
@@ -26,17 +36,17 @@
     <div class="row">
         <h5 for="">Horario</h5>
         <br>
-        <select class="browser-default blue lighten-5">
+        <select class="browser-default blue lighten-5" id="selectHora">
             <option value="Hora">Elige una hora</option>
         <option value=""></option>
         </select>
     </div>
     <div class="row">
         <h5 for="">Motivo</h5>
-        <input type="text" class="blue lighten-5">
+        <input type="text" class="blue lighten-5" id="motivo">
     </div>
     <div class="row center-align">
-        <a class="waves-effect blue darken-1 btn-large">Guardar cita</a>
+        <a class="waves-effect blue darken-1 btn-large" id="guardar">Guardar cita</a>
     </div>
 </form>
 <script src="/assets/js/http.js"></script>
