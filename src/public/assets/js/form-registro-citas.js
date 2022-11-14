@@ -10,20 +10,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-$fecha = document.getElementById("fecha");
-$fecha.addEventListener('change',event =>{
-  console.log($fecha.value);
-})  
-
-
+ 
+/*
 
 const form = (() => {
   const $formRegistrar = document.getElementById("formRegistrar");
-  const $inputStatus = document.getElementById("status");
-  const $inputDescription = document.getElementById("description");
+  //const $inputStatus = document.getElementById("status");
+  //const $inputDescription = document.getElementById("description");
+  const $selectFecha = document.getElementById("fecha");
+  const $selectHora = document.getElementById("selectHora");
+
+  const request = {
+    "POST":()=>{
+      http.post({url:"http://localhost:4000/citas/registrar",body:{
+        idPersona:1,
+        idDoctor:2,
+        fecha:$selectFecha.value,
+        hora:$selectHora.value,
+        motivo:document.getElementById("motivo").value,
+        estado:"agendada"
+        }});
+    },
+    "PUT":() =>{
+      http.put({url:"http://localhost:4000/api/v2/example",body:{
+          
+      }});
+    }
+  };
 
   const _sendActionForm = (event = {}) => {
-    event.preventDefault();
+    request["POST"]();
+    /*event.preventDefault();
     if ($inputStatus.value === "" || $inputDescription.value === "") {
       alert("Todos los campos son requeridos");
     }
@@ -43,4 +60,5 @@ const form = (() => {
 form.init();
 
 
+**/
 
