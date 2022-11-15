@@ -81,7 +81,7 @@ const _actionSelectDoctor = (event)=>{
     const _actionSelectFecha = async (event)=>{
         const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
         console.log($selectFecha.value);
-        _getCitas(doctor,new Date($selectFecha.value).toISOString().split('T')[0],response["horaEntrada"],response["horaSalida"]);
+        _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
     }
     const _getDescription = async (nombreEsp)=>{
         const response = await http.get(BASE_URL);
@@ -156,11 +156,11 @@ const _actionSelectDoctor = (event)=>{
                           "url":BASE_URL+'citas/registrar',
                           "body":{
                                 "estado":"agendada",
-                                "fecha":$selectFecha.value,
+                                "fecha":new Date($selectFecha.value).toISOString().split('T')[0],
                                 "hora":$selectHora.value,
                                 "motivo":document.getElementById("motivo").value,
                                 "idDoctor":parseInt(doctor),
-                                "idPersona":1,
+                                "idPersona":17,
                               },
                         };
                         
