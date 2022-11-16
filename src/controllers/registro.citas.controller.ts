@@ -5,14 +5,25 @@ import {Doctor}from "../models/doctor.model";
 import { Cita } from "../models/cita.model";
 
 export async function getEspecialidades(req: Request, res: Response) {
-
+  
   const records = await Especialidad.findAll({ raw: true});
   res.status(200).json(records);
 }
 
 export async function getRegistro(req: Request, res: Response) {
-  res.render("registro-citas-completo");
+  const {idPersona} = req.params;
+  const record = await Persona.findByPk(idPersona);
+  const data = {record:record}
+  res.render("registro-citas-completo",data);
+  
 }
+
+export async function getCitasPersona(req: Request, res: Response) {
+  const {idPersona} = req.params; 
+  const records = await Cita.findAll({raw:true,where:{idPersona}});
+  res.status(200).json(records);
+}
+
 
 export async function getPersona(req: Request, res: Response) {
   

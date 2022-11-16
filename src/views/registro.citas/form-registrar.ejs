@@ -5,7 +5,7 @@
         format:"yyyy-mm-dd",
         disableWeekends:true
     });
-    console.log("Si me ejecute");
+    //const persona = record;
     //idPersona,idDoctor,fecha,hora,motivo,estado
   });
 </script>
@@ -49,6 +49,13 @@
         <a class="waves-effect blue darken-1 btn-large" id="guardar">Guardar cita</a>
     </div>
 </form>
+
+    <script>
+       var OBJpersona = '<%- JSON.stringify(record) %>'
+              
+    </script>
+
+
 <script src="/assets/js/http.js"></script>
 <script src="/assets/js/main.registro-citas.js"></script>
 

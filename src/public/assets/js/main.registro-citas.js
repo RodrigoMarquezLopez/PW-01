@@ -1,4 +1,5 @@
 const main = (() => {
+    
     const $selectEsp = document.getElementById("selectEsp");
     const $descripcionEsp = document.getElementById("descripcionEsp");
     const $selectDoctor = document.getElementById("selectDoctor");
@@ -6,6 +7,7 @@ const main = (() => {
     const $selectHora = document.getElementById("selectHora");
     const $guardar = document.getElementById("guardar");
     const BASE_URL = "http://localhost:4000/";
+    const persona = JSON.parse(OBJpersona);
     var doctor;
      //$selectDoctor.selectmenu("disble");
 
@@ -160,7 +162,7 @@ const _actionSelectDoctor = (event)=>{
                                 "hora":$selectHora.value,
                                 "motivo":document.getElementById("motivo").value,
                                 "idDoctor":parseInt(doctor),
-                                "idPersona":17,
+                                "idPersona":persona["idPersona"],
                               },
                         };
                         
@@ -168,14 +170,38 @@ const _actionSelectDoctor = (event)=>{
         console.log(data);
         await http.post(data);    
         //console.log(response);              
+      }else{
+        $selectEsp.value = $selectEsp.childNodes[1];
+        $descripcionEsp.textContent = "Elija una especialidad";
+        var opciones = document.createElement("option");
+        while ($selectDoctor.firstChild) {
+          $selectDoctor.removeChild($selectDoctor.lastChild);
+        }
+        opciones.value="Doctor";
+        $selectDoctor.appendChild(opciones);
+        while ($selectHora.firstChild) {
+          $selectHora.removeChild($selectHora.lastChild);
+        }
+      opciones.value="Hora";
+      $selectHora.appendChild(opciones); 
+      fecha.value = "";
+        alert("Error en los campos");
+
+
+          //const $selectDoctor = document.getElementById("selectDoctor");
+    //const $selectFecha = document.getElementById("fecha");
+    //const $selectHora = document.getElementById("selectHora");
+
+
       }
 
     };
   
      const _initElements = () => {
       _getData();
-     
-    };
+      //console.log(persona["idPersona"]);
+      
+     };
 
 
     const _generarArrgeloComparacion = (horaEntrada,horaSalida)=>{
@@ -223,3 +249,38 @@ const _actionSelectDoctor = (event)=>{
   })();
   
   main.init();
+
+
+  const validaciones = (() => {
+    
+    
+
+
+      const validacionesFechayHoraPersona = (citas = [], fecha,hora)=>{
+        var citaArreglo;
+          for(var i = 0; i<citas.length;i++){
+              citaArreglo = citas[i];  
+            if(citaArreglo["fecha"] == fecha ){
+                if(citaArreglo["hora"] == hora){
+                    return false;
+                }
+              }
+          }
+          return true;
+      };
+
+
+      const validacionDoctor = (idDoctor,citas = []) =>{
+        var citaArreglo;
+          for(var i = 0; i<citas.length;i++){
+              var citaArreglo = citas[i];
+              if(citaArreglo["idDoctor"] == idDoctor && citaArreglo["estado"] == "finalizada"){
+                  return false;
+              }
+
+          }
+          return true;  
+      };
+
+      return {validacionDoctor,validacionesFechayHoraPersona}
+   })();
