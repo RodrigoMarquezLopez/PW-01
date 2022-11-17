@@ -3,21 +3,23 @@
         <h2 class="center-align">Historial de citas</h2>
     </div>
     <div class="row">
-        <table>
+        <table id="tablahistorial">
             <thead class="blue darken-1">
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th>Doctor</th>
                 <th></th>
             </thead>
-            <tbody>
-                <tr>
-                    <td>2022-10-03</td>
-                    <td>13:00</td>
-                    <td>Doctor</td>
-                    <td><button>Ver informacion</button></td>
-                </tr>
+            <tbody id="cuerpotabla">
+                
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    var OBJpersona = '<%- JSON.stringify(record) %>'
+</script>
+
+<script src="/assets/js/http.js"></script>
+<script src="/assets/js/main-historial-citas.js"></script>
