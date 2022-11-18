@@ -9,6 +9,7 @@ registroCitasRouter.get("/doctor/:idEspecialidad",getDoctores);
 registroCitasRouter.get("/doctor/buscar/:idDoctor",getDoctor);
 registroCitasRouter.get("/citas/:idDoctor/:fecha",getCitasDoctorFecha);
 registroCitasRouter.get("/citas/:idPersona",getCitasPersona);
+registroCitasRouter.get("/citas",getCitasGeneral);
 registroCitasRouter.get("/registro/:idPersona",getRegistro);
 registroCitasRouter.post("/citas/registrar",createCita);
 registroCitasRouter.get("/historialcitas/:idPersona",getHistorial);

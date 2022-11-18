@@ -3,13 +3,13 @@
 const main = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
-    const BASE_URL = "http://localhost:4000/citas";
+    const BASE_URL = "http://localhost:4000/";
     const persona = JSON.parse(OBJpersona);
      //$selectDoctor.selectmenu("disble");
 
 
      const _getData = async () => {
-        const response = await http.get(BASE_URL);
+        const response = await http.get(BASE_URL+"citas");
         console.log(response.length);
         for(let index = 0; index < response.length; index++){
              const $row1 = _createRow(response[index]);
@@ -20,8 +20,8 @@ const main = (() => {
 
       const _createRow = async (item = {}) =>{
         const value = item["idPersona"];
-        const response2 = await http.get(BASE_URL+`/doctor/${item["idDoctor"]}`);
-        const response3 = await http.get(BASE_URL+`/persona/${response2["idPersona"]}`);
+        const response2 = await http.get(BASE_URL+`doctor/buscar/${item["idDoctor"]}`);
+        const response3 = await http.get(BASE_URL+`persona/${response2["idPersona"]}`);
         //if(value==17){
           if(value==persona["idPersona"] && item["estado"]=="finalizada"){
         //const $row2 = document.getElementById("datos");
