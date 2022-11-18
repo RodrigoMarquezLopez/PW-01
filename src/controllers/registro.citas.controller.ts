@@ -13,6 +13,7 @@ export async function getEspecialidades(req: Request, res: Response) {
 export async function getRegistro(req: Request, res: Response) {
   const {idPersona} = req.params;
   const record = await Persona.findByPk(idPersona);
+  console.log(record);
   const data = {record:record}
   res.render("registro-citas-completo",data);
   

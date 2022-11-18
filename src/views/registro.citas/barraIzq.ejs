@@ -3,9 +3,14 @@
         <img class="imagen" src="/assets/other/logo.png">
     </div>
     <div class="row">
-        <a class="waves-effect blue darken-1 btn-large botones">Informacion</a>
+        <a class="waves-effect blue darken-1 btn-large botones" id="informacionPersona" >Informacion</a>
     </div>
     <div class="row">
-        <a class="waves-effect blue darken-1 btn-large botones">Agendar Cita</a>
+        <a class="waves-effect blue darken-1 btn-large botones" id="agendarCitaPersona" href="/registro/<%=record["idPersona"]  %> ">Agendar Cita</a>
     </div>
+    <div class="row">
+        <a class="waves-effect blue darken-1 btn-large botones" id="historialCitaPersona" href="/historialcitas/<%=record["idPersona"]  %> ">Historial cita</a>
+    </div>
+    
 </div>
+

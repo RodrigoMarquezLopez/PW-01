@@ -1,6 +1,6 @@
 //const { response } = require("express");
 
-const main = (() => {
+const mainHistorial = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
     const BASE_URL = "http://localhost:4000/";
@@ -60,4 +60,4 @@ const main = (() => {
 
   })();
   
-  main.init();
+  mainHistorial.init();
