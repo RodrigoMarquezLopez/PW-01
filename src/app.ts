@@ -25,9 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'./public')))
 
 
-app.use("/registro",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
+//app.use("/registro",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
 app.use("/",registroCitasRouter);
-
-//app.use("/historialcitas",(req:Request,res:Response) =>{res.render("historial-citas-completo");});
 
 export default app;
