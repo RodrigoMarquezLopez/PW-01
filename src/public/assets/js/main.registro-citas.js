@@ -1,4 +1,5 @@
 const main = (() => {
+    
     const $selectEsp = document.getElementById("selectEsp");
     const $descripcionEsp = document.getElementById("descripcionEsp");
     const $selectDoctor = document.getElementById("selectDoctor");
@@ -6,6 +7,7 @@ const main = (() => {
     const $selectHora = document.getElementById("selectHora");
     const $guardar = document.getElementById("guardar");
     const BASE_URL = "http://localhost:4000/";
+    const persona = JSON.parse(OBJpersona);
     var doctor;
      //$selectDoctor.selectmenu("disble");
 
@@ -21,6 +23,14 @@ const main = (() => {
     };
     
     const _getDataDoctor = async (idEspecialidad)=>{
+      while ($selectDoctor.firstChild) {
+        $selectDoctor.removeChild($selectDoctor.lastChild);
+      }
+      let opcion = document.createElement("option");
+      opcion.value = "Doctor";
+      opcion.innerText = "Doctor";
+      opcion.textContent = "Doctor";
+      $selectDoctor.appendChild(opcion);
       const response = await http.get(BASE_URL+`doctor/${idEspecialidad}`);
       for(let index = 0; index < response.length; index++){
           _createOptionDoctor(response[index]);
@@ -51,8 +61,11 @@ const main = (() => {
 };
 
 const _actionSelectDoctor = (event)=>{
+  _restablecerHora();
   doctor = $selectDoctor.options[$selectDoctor.selectedIndex].getAttribute("iddoctor");
-  
+  console.log("ME IMPRIMI");
+  console.log(doctor);
+  $selectFecha.disabled = false;
 }
 
 
@@ -70,18 +83,32 @@ const _actionSelectDoctor = (event)=>{
     };
 
     const _actionSelectEsp = (event) =>{
+      _restablecerHora();
         const $selectEvent = event.target;
         console.log($selectEvent.value);
         var idEsp = $selectEvent.value;
         _getDescription(idEsp);
+        $selectFecha.disabled = true;
        // $descripcionEsp.innerText = 
     };
 
+    const _restablecerHora = ()=>{
+      while ($selectHora.firstChild) {
+        $selectHora.removeChild($selectHora.lastChild);
+      }
+      let opcion2 = document.createElement("option");
+      opcion2.value = "Hora";
+      opcion2.innerText = "Hora";
+      opcion2.textContent = "Hora";
+      $selectHora.appendChild(opcion2);
+
+    };
 
     const _actionSelectFecha = async (event)=>{
-        const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
+      _restablecerHora();  
+      const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
         console.log($selectFecha.value);
-        _getCitas(doctor,new Date($selectFecha.value).toISOString().split('T')[0],response["horaEntrada"],response["horaSalida"]);
+        _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
     }
     const _getDescription = async (nombreEsp)=>{
         const response = await http.get(BASE_URL);
@@ -140,42 +167,66 @@ const _actionSelectDoctor = (event)=>{
     const _actionRegistrar = async (event) => {
       if($selectDoctor.value != "Doctor" && $selectFecha.value != "" && 
       $selectHora != "Elige una hora" && document.getElementById("motivo").value != ""){
-        //idPersona,idDoctor,fecha,hora,motivo,estado
-        console.log("llegue");
-         // const body = new FormData();
-          //const data = new FormData();
-         // body.append('estado',"agendada");
-         // body.append('fecha',$selectFecha.value);
-          //body.append('hora',$selectHora.value);
-          //body.append('motivo',document.getElementById("motivo").value);
-          //body.append('idDoctor',parseInt(doctor));
-          //body.append('idPersona',1);
-         // data.append('url',BASE_URL+'citas/registrar');
-         // data.append('body',body);
-          const data ={
-                          "url":BASE_URL+'citas/registrar',
-                          "body":{
-                                "estado":"agendada",
-                                "fecha":$selectFecha.value,
-                                "hora":$selectHora.value,
-                                "motivo":document.getElementById("motivo").value,
-                                "idDoctor":parseInt(doctor),
-                                "idPersona":1,
-                              },
-                        };
-                        
+          var citasPersona = await http.get(BASE_URL+`citas/${persona["idPersona"]}`);
+          if(validaciones.validacionesFechayHoraPersona(citasPersona,new Date($selectFecha.value).toISOString(),$selectHora.value)){
+            if(validaciones.validacionDoctor(doctor,citasPersona)){
+              console.log("llegue");
+              const data ={
+                               "url":BASE_URL+'citas/registrar',
+                               "body":{
+                                     "estado":"agendada",
+                                     "fecha":new Date($selectFecha.value).toISOString().split('T')[0],
+                                     "hora":$selectHora.value,
+                                     "motivo":document.getElementById("motivo").value,
+                                     "idDoctor":parseInt(doctor),
+                                     "idPersona":persona["idPersona"],
+                                     
+                                   },
+                             };
+              console.log(data);
+              await http.post(data);    
+             //console.log(response);                   
 
-        console.log(data);
-        await http.post(data);    
-        //console.log(response);              
+            }else{
+              alert("ya tienes una cita agendada con el doctor");
+            }
+              
+          }else{
+            alert("ya tienes una cita para ese dia y hora");
+          }
+                     
+      }else{
+        $selectEsp.value = "Elije una especialidad";
+        $descripcionEsp.textContent = "Descripcion de la especialidad";
+        var opciones = document.createElement("option");
+        while ($selectDoctor.firstChild) {
+          $selectDoctor.removeChild($selectDoctor.lastChild);
+        }
+        opciones.innerText="Doctor";
+        $selectDoctor.appendChild(opciones);
+        while ($selectHora.firstChild) {
+          $selectHora.removeChild($selectHora.lastChild);
+        }
+      opciones.innerText="Hora";
+      $selectHora.appendChild(opciones); 
+      fecha.value = "";
+        alert("Hay campos vacios");
+
+
+          //const $selectDoctor = document.getElementById("selectDoctor");
+    //const $selectFecha = document.getElementById("fecha");
+    //const $selectHora = document.getElementById("selectHora");
+
+
       }
 
     };
   
      const _initElements = () => {
       _getData();
-     
-    };
+      //console.log(persona["idPersona"]);
+      
+     };
 
 
     const _generarArrgeloComparacion = (horaEntrada,horaSalida)=>{
@@ -223,3 +274,34 @@ const _actionSelectDoctor = (event)=>{
   })();
   
   main.init();
+
+
+  const validaciones = (() => {
+    const validacionesFechayHoraPersona = (citas = [], fecha,hora)=>{
+        var citaArreglo;
+          for(var i = 0; i<citas.length;i++){
+              citaArreglo = citas[i];  
+            if(citaArreglo["fecha"] == fecha ){
+                if(citaArreglo["hora"] == hora){
+                    return false;
+                }
+              }
+          }
+          return true;
+      };
+
+
+      const validacionDoctor = (idDoctor,citas = []) =>{
+        var citaArreglo;
+          for(var i = 0; i<citas.length;i++){
+              var citaArreglo = citas[i];
+              if(citaArreglo["idDoctor"] == idDoctor && citaArreglo["estado"] == "agendada"){
+                  return false;
+              }
+
+          }
+          return true;  
+      };
+
+      return {validacionDoctor,validacionesFechayHoraPersona}
+   })();

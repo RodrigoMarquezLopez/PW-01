@@ -10,7 +10,7 @@ const http = (() => {
     const _post = async (data = { url: "", body: {} }) => {
       const {url,body} = data;
       console.log(body);
-      debugger;
+      //debugger;
       const response = await fetch(url, { method: "POST" ,
       headers: {
         'Content-Type': 'application/json',
