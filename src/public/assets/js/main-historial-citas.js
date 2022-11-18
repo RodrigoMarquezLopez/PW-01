@@ -30,18 +30,21 @@ const mainHistorial = (() => {
             const $td = document.createElement("td");
             const $td2 = document.createElement("td");
             const $td3 = document.createElement("td");
+            const $td4 = document.createElement("td");
             const $btn = document.createElement("button"); //la funcionalidad de este botón se le será asignada en la siguiente iteración
             $btn.textContent = "Ver Información";
+            $btn.className = "waves-effect blue darken-1 btn";
             $td.innerText = item["fecha"].toString().split('T')[0];
             $td2.innerText = item["hora"];
             $td3.innerText = "Dr. "+response3["nombres"]+" "+response3["apellidoP"]+" "+response3["apellidoM"];
+            $td4.appendChild($btn);
             //$td.setAttribute("fecha",item["fecha"]);
             //$td2.setAttribute("hora",item["hora"]);
            // $td3.setAttribute("doctor", "Dr. "+response3["nombres"]+" "+response3["apellidoP"]+" "+response3["apellidoM"];);
             $row2.appendChild($td);
             $row2.appendChild($td2);
             $row2.appendChild($td3);
-            $row2.appendChild($btn);
+            $row2.appendChild($td4);
           return $row2;
           
         }
