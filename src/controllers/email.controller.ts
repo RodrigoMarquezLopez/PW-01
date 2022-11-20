@@ -12,7 +12,7 @@ export async function sendMail(req: Request, res: Response) {
             from: '"Fred Foo 👻" <foo@example.com>', // sender address
             to:     "eodiguiz@gmail.com", // list of receivers
             subject: "Confirma tu cita", // Subject line
-            text: "Confitma tu cita pls", // plain text body
+            text: "Ya jalo esta madre wey, cambiale cosas y en putiza sale", // plain text body
             html: 
             "<h2>Recuerda confirmar tu cita</h2>", // html body
           });
