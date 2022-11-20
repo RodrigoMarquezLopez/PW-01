@@ -1,5 +1,6 @@
 import app from "./app";
 import { sequelize } from "./database/database.config";
+import { emailer } from "./email/email.config";
 import "./database/models.config";
 
 async function main() {
@@ -7,6 +8,11 @@ async function main() {
     .sync({ alter: true })
     .then(() => {})
     .catch((err) => console.log(err));
+
+  emailer
+  .verify()
+  .then(()=>{})
+  .catch((err)=>console.log("di error en el controlador email"+err));  
     
   await app.listen(app.get("port"));
 
