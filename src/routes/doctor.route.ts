@@ -3,7 +3,7 @@ import { getVistaDoctor } from "../controllers/doctor.controller";
 const doctorRouter: Router = Router();
 
 
-doctorRouter.use("/tabla/:idPersona",getVistaDoctor);
+doctorRouter.use("/agenda/vista",getVistaDoctor);
 
 
 
