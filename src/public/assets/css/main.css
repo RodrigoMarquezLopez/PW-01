@@ -63,3 +63,14 @@ body{
     margin-bottom: 25px;
 
 }
+
+.Tarjeta{
+    border: 1px solid rgb(189, 189, 189);
+    margin: 1%;
+    border-radius: 10px;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 35px;
+}
+

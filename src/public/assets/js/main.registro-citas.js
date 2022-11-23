@@ -141,9 +141,11 @@ const _actionSelectDoctor = (event)=>{
         if(response.length > 0){
         for(let index = 0; index < response.length; index++){
             for(let i  = 0; i<arregloHoras.length;i++){
+              if(response[index]["estado"] != "cancelada"){
                 if(response[index]["hora"]==arregloHoras[i]){
                     arregloHoras[i] = -1;
                 }
+              }
             }
         }
 

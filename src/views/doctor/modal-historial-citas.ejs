@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/assets/css/main.css">
+<a class="waves-effect waves-light btn modal-trigger" href="#modal2">Modal</a>
+<div id="modal2" class="modal modal-fixed-footer modal-info">
+    
+  <div class="modal-content">
+    <%- include("../registro.citas/historial-citas.ejs")  -%>
+   </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Terminar</a>
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, 
+    {
+        opacity:0.6
+    });
+  });
+
+</script>
+<script src="/assets/js/main-doctor-recetas.js"></script>
