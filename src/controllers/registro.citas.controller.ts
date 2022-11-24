@@ -19,6 +19,7 @@ export async function getPersona(req: Request, res: Response) {
   const {idPersona} = req.params; 
   const records = await Persona.findByPk(idPersona);
   res.status(200).json(records);
+  
 }
 
 export async function getDoctores(req: Request, res: Response) {
@@ -57,3 +58,10 @@ export async function getExampleById(req: Request, res: Response) {
     res.status(200).json(records);
   }
   **/
+
+
+  export async function getInformacionUsuario(req: Request, res: Response) {
+    res.render("informacion-usuario-completo");
+  }
+
+  

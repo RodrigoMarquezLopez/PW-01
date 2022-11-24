@@ -1,5 +1,8 @@
-console.log("Soy http");
 
+
+
+
+console.log("Soy http");
 const http = (() => {
     const _get = async (url = "") => {
       const response = await fetch(url);
@@ -19,7 +22,13 @@ const http = (() => {
       const bodyResponse = await response.json();
       return bodyResponse;
     };
-    return { get: _get, post:_post };
+    const _goto = async (url = "") => {
+      const response = await fetch(url);
+      
+    };
+    
+    
+    return { get: _get, post:_post, goto:_goto };
   })();
   
 

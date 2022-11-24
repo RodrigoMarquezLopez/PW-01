@@ -1,20 +1,29 @@
 <div>
-    <div>
-    <div class="row">
-        <h2 class="center-align">Infomacion de perfil</h2>
+    <div class="center-align">
+    <div >
+        <h2 class="center-align">Información de perfil</h2>
     </div>
-    <div class="row">
-        <h5>Nombre</h5>
-        <input type="text" class="blue lighten-5">
+    <div class="informacion">
+        
+        <label class="dato">Nombre: </label>
+        <label class="dato" id="user"></label>
     </div>
-    <div class="row">
-        <h5>Correo electronico</h5>
-        <input type="text" class="blue lighten-5">
+    <div class="informacion">
+        
+        <label class="dato" >Correo Electronico: </label>
+        <label class="dato" id="email"></label>
     </div>
-    <div class="row">
-        <h5>Contraseña</h5>
-        <input type="text" class="blue lighten-5">
+    <div class="informacion" >
+
+        <label class="dato">Contraseña: </label>
+        <label class="dato" id="password"></label>
     </div>
+
+    <div >
+        <%- include("tabla-citas-agendadas.ejs")  -%>
+    </div>
+
+
 </div>
-<%- include("tabla-citas-agendadas.ejs")  -%>
-</div>
+
+

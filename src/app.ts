@@ -5,6 +5,7 @@ import path from "path"
 import dotenv from "dotenv";
 dotenv.config();
 import registroCitasRouter from "./routes/regitrocitas.route";
+import emailRouter from "./routes/email.route";
 
 
 
@@ -27,5 +28,7 @@ app.use(express.static(path.join(__dirname,'./public')))
 
 //app.use("/registro",(req:Request,res:Response) =>{res.render("registro-citas-completo");});
 app.use("/",registroCitasRouter);
+app.use("/correo",emailRouter);
+
 
 export default app;

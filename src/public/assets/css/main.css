@@ -11,6 +11,7 @@
     margin-top: 25px;
     margin-right: 25px;
     margin-bottom: 25px;
+    
 }
 
 .margendiv{
@@ -32,3 +33,33 @@
     margin-bottom: 25px;
 
 }
+
+.rectangulo{
+background-color: lightgray;
+align-items: center;
+height: 5%;
+width: 50%;
+}
+
+.pagina{
+    align-items:center;
+    align-content: center;
+    margin: 0 auto;
+    
+}
+
+.informacion{
+    align-items:center;
+    align-content: space-between;
+    margin: 5% 0%;
+    
+}
+
+.dato{
+    align-items: center;  
+    margin: 0% 5%;
+    font-size:larger;
+    font-weight: 500;
+    color: black;
+}
+
