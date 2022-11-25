@@ -21,7 +21,7 @@ const mainHistorial = (() => {
         const response = await http.get(BASE_URL+"citas");
         console.log(response.length);
         for(let index = 0; index < response.length; index++){
-             const $row1 = _createRow(response[index]);
+             _createRow(response[index]);
              console.log($cuerpoTabla.childNodes);
            
         }
