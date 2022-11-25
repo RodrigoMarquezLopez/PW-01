@@ -11,4 +11,26 @@ export async function getVistaDoctor(req: Request, res: Response) {
     
   }
 
+  export async function getCitasDoctor(req: Request, res: Response) {
+   const records = await Cita.findAll({ raw: true});
+ res.status(200).json(records);
+ }
+
+ export async function getDoctor2(req: Request, res: Response) {
+  
+  const records = await Doctor.findAll({ raw: true});
+  res.status(200).json(records);
+}
+
+
+
+ export async function getAgenda(req: Request, res: Response) {
+   const {idDoctor} = req.params;
+   const record = await Doctor.findByPk(idDoctor);
+   const data = {record:record}
+   res.render("doctor-completo",data);
+ }
+
+
+
 
