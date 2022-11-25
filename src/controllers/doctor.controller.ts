@@ -7,7 +7,12 @@ import { Cita } from "../models/cita.model";
 
 
 export async function getVistaDoctor(req: Request, res: Response) {
-   res.status(200).render("doctor-completo");
+  //const {idPersona} = req.params;
+    //const record = await Persona.findByPk(idPersona);
+    //console.log(record);
+    //const data = {record:record}
+     
+  res.status(200).render("doctor-completo");
     
   }
 

@@ -39,13 +39,13 @@
                     <div class="col s4 offset-s1">
                         <p>
                            Paciente:
-                           <h6 class="blue lighten-5" id="modal-hora">Juan Martinez Alas</h6>
+                           <h6 class="blue lighten-5" id="modal-paciente">Juan Martinez Alas</h6>
                         </p>
                     </div>
                     <div class="col s5 offset-s1">
                         <p>
                             Motivo:
-                            <h6 class="blue lighten-5" id="modal-especialidad">Dolor en el pecho</h6>
+                            <h6 class="blue lighten-5" id="modal-motivo">Dolor en el pecho</h6>
 
                          </p>
                     </div>    
@@ -54,7 +54,7 @@
                     <div class="col s12">
                         <p>
                            Diagnostico:
-                           <textarea id="textarea2" class="materialize-textarea" data-length="999"></textarea>
+                           <textarea id="modal-diagnostico" class="materialize-textarea" data-length="999"></textarea>
                         </p>
                     </div>
                       
@@ -63,7 +63,7 @@
                     <div class="col s12">
                         <p>
                            Indicaciones:
-                           <textarea id="textarea2" class="materialize-textarea" data-length="999"></textarea>
+                           <textarea id="modal-indicaciones" class="materialize-textarea" data-length="999"></textarea>
                         </p>
                     </div>
                       
@@ -71,18 +71,20 @@
         </div> 
   </div>
   <div class="modal-footer">
-    <a href="#modal2" class="waves-effect waves-light btn modal-trigger">Terminar</a>
+    <a href="#modal1" class="waves-effect waves-light btn modal-trigger">Terminar</a>
     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
   </div>
 </div>
 <script>
+    var instances;
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, 
+    instances = M.Modal.init(elems, 
     {
         opacity:0.6
     });
   });
+  console.log(instances);
 
 </script>
 <script src="/assets/js/main-doctor-recetas.js"></script>
