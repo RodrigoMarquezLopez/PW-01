@@ -38,4 +38,13 @@ export async function getVistaDoctor(req: Request, res: Response) {
 
 
 
+ export async function getHistorialModal(req:Request,res:Response){
+    console.log(req.params);
+    const idPersona = req.params.idPersona;
+    const record = await Persona.findOne({raw:true,where:{idPersona}});
+    const data = {record:record};
+    res.render("modal-historial-citas",data);
+ }
+
+
 
