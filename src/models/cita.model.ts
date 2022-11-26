@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database/database.config";
 import CitaType from "../types/cita.type";
+import { Receta } from "./receta.model";
 
 
 export class Cita extends Model<CitaType> {}
@@ -45,3 +46,8 @@ Cita.init(
     tableName: "cita",
 }
 );
+
+Cita.hasOne(Receta,{
+    foreignKey:"idCita",
+    sourceKey:"idCita"
+});

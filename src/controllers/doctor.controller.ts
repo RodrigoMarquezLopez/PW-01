@@ -7,7 +7,12 @@ import { Cita } from "../models/cita.model";
 
 
 export async function getVistaDoctor(req: Request, res: Response) {
-   res.status(200).render("doctor-completo");
+  //const {idPersona} = req.params;
+    //const record = await Persona.findByPk(idPersona);
+    //console.log(record);
+    //const data = {record:record}
+     
+  res.status(200).render("doctor-completo");
     
   }
 
@@ -31,6 +36,15 @@ export async function getVistaDoctor(req: Request, res: Response) {
    res.render("doctor-completo",data);
  }
 
+
+
+ export async function getHistorialModal(req:Request,res:Response){
+    console.log(req.params);
+    const idPersona = req.params.idPersona;
+    const record = await Persona.findOne({raw:true,where:{idPersona}});
+    const data = {record:record};
+    res.render("modal-historial-citas",data);
+ }
 
 
 
