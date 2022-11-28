@@ -2,6 +2,6 @@ import {Router} from "express";
 import { sendMail } from "../controllers/email.controller";
 const emailRouter: Router = Router();
 
-emailRouter.get("/:correo",sendMail);
+emailRouter.get("/confirmar/:idCita/:idPersona",sendMail);
 
 export default emailRouter;

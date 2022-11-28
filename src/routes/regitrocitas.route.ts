@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {getEspecialidades,getPersona,getDoctores,getCitasDoctorFecha,getDoctor, createCita,getRegistro, getInformacionUsuario} from "../controllers/registro.citas.controller";
 const registroCitasRouter: Router = Router();
-import {getDatos,getUsuarios,getCitasGeneral, getCitasPersona} from "../controllers/informacion-usuario.controller";
+import {getDatos,getUsuarios,getCitasGeneral, getCitasPersona, confCita, elimCita, updatePersona} from "../controllers/informacion-usuario.controller";
 
 registroCitasRouter.get("/",getEspecialidades);
 registroCitasRouter.get("/persona/:idPersona",getPersona);
@@ -17,6 +17,10 @@ registroCitasRouter.get("/usuarios",getUsuarios);
 registroCitasRouter.get("/informacion-usuario/:idPersona",getDatos);
 registroCitasRouter.get("/citas",getCitasGeneral);
 
+registroCitasRouter.get("/cita/confirmar/:idCita",confCita);
+registroCitasRouter.get("/cita/eliminar/:idCita",elimCita);
+
+registroCitasRouter.get("/update/:idCita",updatePersona);
 
 export default registroCitasRouter;
 

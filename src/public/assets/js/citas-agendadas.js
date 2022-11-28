@@ -24,6 +24,7 @@ const main = (() => {
       const _createRow = async (item = {}) =>{
         const value = item["idPersona"];
         const itemId =item["idCita"];
+        
         const response2 = await http.get(BASE_URL+`/doctor/buscar/${item["idDoctor"]}`);
         const response3 = await http.get(BASE_URL+`/persona/${response2["idPersona"]}`);
 
@@ -33,6 +34,7 @@ const main = (() => {
         //if(value==17){
           if(value==persona["idPersona"] && item["estado"]=="agendada"){
         //const $row2 = document.getElementById("datos");
+        console.log(itemId);
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
             const $td = document.createElement("td");
@@ -48,30 +50,34 @@ const main = (() => {
             $row2.appendChild($td);
             $row2.appendChild($td2);
             $row2.appendChild($td3);
-            $row2.appendChild(_createBtnAction(value, "Confirmar","blue", _actionButtonConfirmar));
-            $row2.appendChild(_createBtnAction(correo, "Eliminar","red",_actionButtonEliminar));
+            $row2.appendChild(_createBtnAction(itemId,value, "Confirmar","blue", _actionButtonConfirmar));
+            $row2.appendChild(_createBtnAction(itemId,value, "Eliminar","red",_actionButtonEliminar));
           return $row2;
           
         }
       };
 
       
-      const _createBtnAction = (itemId = 0, labelBtn = "",color="", _actionFuntion = () => {}) => {
+      const _createBtnAction = (citaId = 0, personaId=0, labelBtn = "",color="", _actionFuntion = () => {}) => {
         
 
         const $btn = document.createElement("button");
         $btn.innerText = labelBtn;
         $btn.className += "waves-effect waves-light btn "+color;
-        $btn.setAttribute("item-id", itemId);
+        $btn.setAttribute("cita-id", citaId);
+        $btn.setAttribute("persona-id",personaId);
         $btn.addEventListener("click", _actionFuntion);
         return $btn;
       };
 
       const _actionButtonConfirmar = async (event) => {
         const $btn = event.target;
-        const correo = $btn.getAttribute("item-id");
-        console.log(correo);
-        const request = await http.get(BASE_URL+`/correo/${correo}`);
+        const idP = $btn.getAttribute("persona-id");
+        const idC =$btn.getAttribute("cita-id");
+        console.log(idC);
+        console.log(idP);
+        const request = await http.get(BASE_URL+`/correo/confirmar/${idC}/${idP}`);
+
         
 
         
@@ -79,9 +85,11 @@ const main = (() => {
     
       const _actionButtonEliminar = async (event) => {
         const $btn = event.target;
-        const idCita = $btn.getAttribute("item-id");
-        const response = await http.delete({url:`${BASE_URL}/${idCita}`});
-        producto.getData();
+        const idP = $btn.getAttribute("persona-id");
+        const idC =$btn.getAttribute("cita-id");
+        console.log(idC);
+        console.log(idP);
+        const request = await http.get(BASE_URL+`/cita/eliminar/${idC}`);
       };
 
       

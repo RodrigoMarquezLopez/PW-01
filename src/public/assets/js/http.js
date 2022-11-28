@@ -22,13 +22,10 @@ const http = (() => {
       const bodyResponse = await response.json();
       return bodyResponse;
     };
-    const _goto = async (url = "") => {
-      const response = await fetch(url);
-      
-    };
     
     
-    return { get: _get, post:_post, goto:_goto };
+    
+    return { get: _get, post:_post };
   })();
   
 

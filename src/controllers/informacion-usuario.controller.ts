@@ -38,7 +38,36 @@ export async function getDatos(req: Request, res: Response) {
     res.status(200).json(records);
   }
 
+  export async function confCita(req: Request, res: Response) {
+    const {idCita} =req.params;
+    
+    await Cita.update({ estado:"agendada" }, {
+      where: {
+        idCita
+      }
+    });
+    res.send("Cita Confirmada");
+  }
 
- 
+  export async function elimCita(req: Request, res: Response) {
+    const {idCita} =req.params;
+    await Cita.update({ estado:"eliminada" }, {
+      where: {
+        idCita
+      }
+    });
+    
+  }
+
+  export async function updatePersona(req: Request, res: Response) {
+    const {idCita} =req.params;
+    
+    await Cita.update({ estado:"agendada" }, {
+      where: {
+        idCita
+      }
+    });
+    res.send("cambiado");
+  }
   
   
