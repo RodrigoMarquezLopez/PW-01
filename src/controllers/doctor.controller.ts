@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { Request, Response} from "express";
 import { Especialidad } from "../models/especialidad.model";
 import { Persona } from "../models/persona.model";
 import {Doctor}from "../models/doctor.model";
 import { Cita } from "../models/cita.model";
-
+import ejs from "ejs";
+import pdf from "html-pdf";
+import express from "express";
+import fs from "fs";
+import { Receta } from "../models/receta.model";
 
 
 export async function getVistaDoctor(req: Request, res: Response) {
@@ -28,6 +32,12 @@ export async function getVistaDoctor(req: Request, res: Response) {
 }
 
 
+export async function getReceta(req: Request, res: Response) {
+  const{idCita} = req.params;
+  const records = await Receta.findOne({raw:true,where:{idCita}});
+  res.status(200).json(records);
+}
+
 
  export async function getAgenda(req: Request, res: Response) {
    const {idDoctor} = req.params;
@@ -35,6 +45,24 @@ export async function getVistaDoctor(req: Request, res: Response) {
    const data = {record:record}
    res.render("doctor-completo",data);
  }
+
+export async function updateCita(req: Request, res: Response) {
+  const {idCita} = req.params;
+  const {body} = req;
+  const entity = await Cita.findByPk(idCita);
+  await entity?.update(body);
+  res.status(201).json(entity?.toJSON());
+}
+
+export async function createReceta(req: Request, res: Response) {
+  console.log(req.method);
+  const {idCita,diagnostico,indicaciones} = req.body;
+  const record = await Receta.create({idCita,diagnostico,indicaciones});
+  const data = {httpCode:201,
+    message:"Registrado correctamente"};
+  res.status(201).json(data);
+}
+
 
 
 
@@ -46,5 +74,37 @@ export async function getVistaDoctor(req: Request, res: Response) {
     res.render("modal-historial-citas",data);
  }
 
-
+ export async function generarPdf(req:Request,res:Response) {
+  console.log("NO di error");
+  console.log(req.body);
+  //var html;
+  const {doctor,fecha,especialidad,paciente} = req.body;
+    ejs.renderFile(__dirname+"/receta.ejs",{doctor,fecha,especialidad,paciente},(err,result)=>{
+      if (err) {
+        console.log(err);
+        res.send(err);
+  } else {
+      //html = result;
+      console.log("NO di error");
+      let options = {
+          "height": "5.5in",
+          "width": "8.5in",
+          "header": {
+              "height": "20mm"
+          },
+          "footer": {
+              "height": "20mm",
+          },
+      };
+      pdf.create(result,options).toFile(function (err,result) {
+        console.log(result.filename);
+        var data =fs.readFileSync(result.filename);
+        res.contentType("application/pdf");
+        res.send(data);
+      })
+  }
+    });
+    
+    
+  }
 

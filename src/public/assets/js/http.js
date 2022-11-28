@@ -17,9 +17,21 @@ const http = (() => {
     },
     body:JSON.stringify(body)});
       const bodyResponse = await response.json();
+      //return bodyResponse;
+    };
+    const _put = async (data = { url: "", body: {} }) => {
+      console.log("here");
+      const { url, body } = data;
+      const response = await fetch(url, {
+        method: "PUT",
+        headers:{'Content-Type': 'application/json',},
+        body:JSON.stringify(body)
+      });
+      const bodyResponse = await response.json();
       return bodyResponse;
     };
-    return { get: _get, post:_post };
+
+    return { get: _get, post:_post,put:_put };
   })();
   
 

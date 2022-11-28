@@ -27,7 +27,7 @@ export async function getCitas(req: Request, res: Response) {
   export async function getHistorial(req: Request, res: Response) {
     const {idPersona} = req.params;
     const record = await Persona.findByPk(idPersona);
-    const data = {record:record}
+    const data = {record:record,verReceta:false}
     res.render("historial-citas-completo",data);
   }
 
