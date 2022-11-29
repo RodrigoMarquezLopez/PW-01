@@ -1,0 +1,73 @@
+<div class="card mx-basic my-basic">
+    <form id="formProducto" action="/catalogo/producto/" method="post" enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="input-field col s4">
+                <p>
+                    Nombre:
+                    <input type="text" class="blue lighten-5" id="nombre">
+                </p>
+            </div>
+            <div class="input-field col s4">
+                <p>
+                    Apellido Paterno:
+                    <input type="text" class="blue lighten-5" id="apellidoP">
+                </p>
+            </div>
+            <div class="input-field col s4">
+                <p>
+                    Apellido Materno:
+                    <input type="text" class="blue lighten-5" id="apellidoM">
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s4">
+                <p>
+                    Corre Electronico:
+                    <input type="text" class="blue lighten-5" id="email">
+                </p>
+            </div>
+            <div class="input-field col s4 ">
+                <p>Especialidad:
+                <select class="browser-default blue lighten-5" name="selectEsp" id="esp" >
+                    <option value="especialidad">Elige una especialidad</option>
+                </select>
+                </p>
+            </div>
+            <div class="input-field col s4">
+                <p>
+                    Cedula:
+                    <input type="text" class="blue lighten-5" id="cedula">
+                </p>
+            </div>
+        
+        </div>
+
+        <div class="row">
+            <div class="input-field col s4 ">
+                <p>Hora de Entrada:
+                <select class="browser-default blue lighten-5" name="selectEsp" id="horaEntrada" >
+                    <option value="especialidad">Seleccione la Hora de Entrada</option>
+                </select>
+                </p>
+            </div>
+            <div class="input-field col s4 ">
+                <p>Hora de Salida:
+                <select class="browser-default blue lighten-5" name="selectEsp" id="horaSalida" >
+                    <option value="especialidad">Seleccione la Hora de Salida</option>
+                </select>
+                </p>
+            </div>
+        
+        </div>
+
+        <div class="row center-align">
+            <p>
+                <a class="waves-effect blue darken-1 btn-large" id="guardar">Registrar Doctor</a>
+            </p>
+        </div>
+
+    </form>
+</div>
