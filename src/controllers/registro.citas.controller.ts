@@ -46,6 +46,14 @@ export async function  getDoctor(req: Request, res: Response) {
   res.status(200).json(records);
 }
 
+export async function  getEspecialidad(req: Request, res: Response) {
+  const {idEspecialidad} = req.params;
+  const records = await Especialidad.findByPk(idEspecialidad);
+  res.status(200).json(records);
+}
+
+
+
 export async function getCitasDoctorFecha(req: Request, res: Response) {
   const {idDoctor,fecha} = req.params; 
   const records = await Cita.findAll({raw:true,where:{idDoctor,fecha}});

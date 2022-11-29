@@ -74,3 +74,21 @@ body{
     padding: 35px;
 }
 
+
+.class-body {
+    height: 100%;
+}
+.clas-html {
+    display: table;
+    margin: auto;
+}
+.class-body2 {
+    display: table-cell;
+    vertical-align: middle;
+    background: #4ECDC4;
+}
+
+.login-page {
+   width: 500px;
+}
+

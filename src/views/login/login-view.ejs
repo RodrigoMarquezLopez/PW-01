@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Compiled and minified CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="row">
+    <form class="col s12" method="post" action="/login/clinica">
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="correo" name="correo" type="text" class="validate">
+          <label for="correo">Correo</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">grain</i>
+          <input id="contrasenia" name="contrasenia" type="password" class="validate">
+          <label for="contrasenia">Contraseña</label>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Entrar
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
+    <% if(error==1){ %>
+      <span>Credenciales incorrectas</span>
+    <% } %>
+  </div>
+  
+</body>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/assets/js/http.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        M.AutoInit();
+    });
+</script>
+</html>

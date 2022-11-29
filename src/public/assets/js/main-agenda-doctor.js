@@ -1,3 +1,5 @@
+
+
 const mainDocAgenda = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     var $fechaBusqueda = document.getElementById("fecha-agenda");
@@ -8,15 +10,42 @@ const mainDocAgenda = (() => {
 
     const fechaActualCorrecta = anioActual+"-"+mesActual+"-"+hoy;
    
+        //const $cuerpoTabla = document.getElementById("tablabody");
+        var $fechaBusqueda = document.getElementById("fecha-agenda");
+        var botonReceta = null;
+        var terminar = null;
+        var $formDoctor;
+        var $fromFecha;
+        var $fromHora;
+        var $fromEspecialidad;
+        var $formPaciente;
+        var $formMotivo;
+        var $formDiagnostico;
+        var $formIndicaciones;
+
+    //const fechaActual = new Date().toISOString().toString().split('T')[0];
+    console.log(fechaActual);
     var identificadorPersona = null;
     //var cita;
     const BASE_URL = "http://localhost:4000/";
     const doctor = JSON.parse(OBJdoctor);
-     //$selectDoctor.selectmenu("disble");
+    var doctorPersona;
+    var especialidadDoc;
+    console.log(doctor);
     const $btnAgendaCita = document.getElementById("buscar-agenda")
     $fechaBusqueda.value=fechaActualCorrecta;
 
      const _GenerarAgenda = async () => {
+        especialidadDoc = await http.get(BASE_URL+`especialidad/${doctor["idEspecialidad"]}`);
+        doctorPersona = await http.get(BASE_URL+`persona/${doctor["idPersona"]}`);
+        $formDoctor = document.getElementById("form-doctor");
+        $fromFecha = document.getElementById("form-fecha");
+        $fromHora = document.getElementById("form-hora");
+        $fromEspecialidad= document.getElementById("form-especialidad");
+        $formPaciente= document.getElementById("form-paciente");
+        $formMotivo = document.getElementById("form-motivo");
+        $formDiagnostico = document.getElementById("form-diagnostico");
+        $formIndicaciones = document.getElementById("form-indicaciones"); 
         $btnAgendaCita.addEventListener("click", _actionFuntion);
       };
 
@@ -60,6 +89,7 @@ const mainDocAgenda = (() => {
             const $btn3 = document.createElement("button"); //la funcionalidad de este botón se le será asignada en la siguiente iteración
             $btn3.textContent = "Terminar";
             $btn3.className = "waves-effect blue darken-1 btn";
+            $btn3.disabled = true;
             
             if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])){
 
@@ -70,6 +100,17 @@ const mainDocAgenda = (() => {
             console.log(response3["idPersona"]);
             $btn.value = response3["idPersona"];
             $btn.addEventListener("click",_actionButtonHistoral);
+            $btn2.value = JSON.stringify({item,response3,$btn3});
+            $btn2.id = response3["idPersona"];
+            $btn3.id = "terminar"+response3["idPersona"];
+            $btn3.value = item["idCita"];
+
+            console.log("terminar"+response3["idPersona"]);
+
+            $btn2.addEventListener("click",_actionButtonReceta);
+
+
+            $btn3.addEventListener("click",_actionButtonTerminar);  
 
             $td.innerText = item["hora"];
             $td2.innerText = response3["nombres"]+" "+response3["apellidoP"]+" "+response3["apellidoM"];
@@ -88,11 +129,81 @@ const mainDocAgenda = (() => {
       };
 
       const _actionButtonHistoral = async (event) => {
+        const $tabla = document.getElementById("cuerpotabla");
+        while ($tabla.firstChild) {
+          $tabla.removeChild($tabla.lastChild);
+          console.log("entree");
+        }
           identificadorPersona = event.target.value;
+          console.log(identificadorPersona);
           mainHistorialModal.init(identificadorPersona);
           var elems = document.getElementById("modal2");
           var instance = M.Modal.getInstance(elems);
           instance.open();
+      }
+
+      const _actionButtonReceta = async (event) => {
+          if(botonReceta != null){
+            if(botonReceta != event.target){
+                terminar.disabled = true;
+            }  
+            
+          }
+          botonReceta = event.target;
+          identificadorPersona = JSON.parse(event.target.value);
+          console.log(identificadorPersona);
+          console.log(doctorPersona);
+          
+
+          $formDiagnostico.value = "";
+          $formIndicaciones.value = "";
+          $formDoctor.value = "Dr: "+doctorPersona["nombres"]+" "+doctorPersona["apellidoP"]+" "+doctorPersona["apellidoM"];
+          $fromEspecialidad.value = especialidadDoc["nombreEsp"]
+          $formMotivo.value = identificadorPersona["item"]["motivo"];
+          $fromFecha.value = identificadorPersona["item"]["fecha"].toString().split('T')[0];
+          $fromHora.value = identificadorPersona["item"]["hora"];
+          $formPaciente.value = identificadorPersona["response3"]["nombres"]+" "+identificadorPersona["response3"]["apellidoP"]+" "+identificadorPersona["response3"]["apellidoM"]
+          var elems = document.getElementById("modal3");
+          var instance = M.Modal.getInstance(elems);
+          terminar = document.getElementById("terminar"+event.target.id); 
+          instance.open();
+          
+            const $termianr = document.getElementById("terminar"+event.target.id); 
+            console.log("terminar"+event.target.id);
+            $termianr.disabled = false
+          
+           
+
+
+
+
+
+
+      };
+
+      const _actionButtonTerminar=async (event)=>{
+          if($formDiagnostico.value != "" && $formIndicaciones.value != ""){
+            const data ={
+              "url":BASE_URL+'doctor/receta/crear',
+              "body":{
+                    "idCita":event.target.value,
+                    "diagnostico":$formDiagnostico.value,
+                    "indicaciones":$formIndicaciones.value,
+                    },
+            };
+            await http.post(data);
+            console.log(event.target.value);
+            const datos = {
+              "url":BASE_URL+`doctor/cita/${event.target.value}`,
+              "body":{
+                  "estado":"finalizada"
+              },
+            };
+            await http.put(datos);
+            botonReceta.disabled = true;
+            event.target.disabled = true;
+          }
+
       }
 
 
@@ -155,12 +266,15 @@ const mainDocAgenda = (() => {
      const _getData = async (idP) => {
       persona = await http.get(BASE_URL+`persona/${idP}`);
         const response = await http.get(BASE_URL+"citas");
-        console.log(response.length);
+        console.log("Soy longitud response"+response.length);
         for(let index = 0; index < response.length; index++){
              _createRow(response[index]);
              console.log($cuerpoTabla.childNodes);
            
         }
+        
+        
+        
       };
 
       const _createRow = async (item = {}) =>{
@@ -207,26 +321,32 @@ const mainDocAgenda = (() => {
         const $modalEspecialidad= document.getElementById("modal-especialidad");
         const $modalPaciente= document.getElementById("modal-paciente");
         const $modalMotivo = document.getElementById("modal-motivo");
+        var $modalDiagnostico = document.getElementById("modal-diagnostico");
+        var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
+    
         const especialidades = await http.get(BASE_URL);
         console.log(event.target);
         var citaSeleccionada = JSON.parse(event.target.value);
+        const receta = await http.get(BASE_URL+`doctor/receta/${citaSeleccionada["item"]["idCita"]}`);
         console.log(citaSeleccionada["item"]["fecha"]);
         var elems = document.getElementById("modal1");
         var instance = M.Modal.getInstance(elems);
-        $modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
-        $modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
-        $modalHora.innerText = citaSeleccionada["item"]["hora"];
+        $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        $modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        $modalHora.value = citaSeleccionada["item"]["hora"];
         var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
         for(var i = 0; i < especialidades.length; i++){
             if(especialidadDoctor == especialidades[i]["idEspecialidad"]){
-              $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
+              $modalEspecialidad.value = especialidades[i]["nombreEsp"];
               break;
             }
         }
-        $modalPaciente.innerText = persona["nombres"]+" "+persona["apellidoP"]+" "+persona["apellidoM"];
-        $modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
-
-
+        $modalPaciente.value = persona["nombres"]+" "+persona["apellidoP"]+" "+persona["apellidoM"];
+        $modalMotivo.value = citaSeleccionada["item"]["motivo"];
+        $modalDiagnostico.value = receta["diagnostico"];
+        $modalIndicaciones.value = receta["indicaciones"]; 
+        $modalDiagnostico.innerText=receta["diagnostico"];
+        $modalIndicaciones.innerText=receta["indicaciones"];
         instance.open();
       }
 
@@ -244,5 +364,5 @@ const mainDocAgenda = (() => {
      
 
   })();
-  
+
   

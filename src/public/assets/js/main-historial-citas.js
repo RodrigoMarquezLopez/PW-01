@@ -5,8 +5,7 @@ const mainHistorial = (() => {
     var cita;
     const BASE_URL = "http://localhost:4000/";
     const persona = JSON.parse(OBJpersona);
-      
-
+    
     //Obteniendo los elementos pertenecientes al modal
 
     
@@ -65,31 +64,52 @@ const mainHistorial = (() => {
       };
 
       const _actionButton = async (event)=>{
-        const $modalDoctor = document.getElementById("modal-doctor");
-        const $modalFecha = document.getElementById("modal-fecha");
-        const $modalHora = document.getElementById("modal-hora");
-        const $modalEspecialidad= document.getElementById("modal-especialidad");
-        const $modalPaciente= document.getElementById("modal-paciente");
-        const $modalMotivo = document.getElementById("modal-motivo");
-        const especialidades = await http.get(BASE_URL);
+        var $modalDoctor = document.getElementById("modal-doctor");
+    var $modalFecha = document.getElementById("modal-fecha");
+    var $modalHora = document.getElementById("modal-hora");
+    var $modalEspecialidad= document.getElementById("modal-especialidad");
+    var $modalPaciente= document.getElementById("modal-paciente");
+    var $modalMotivo = document.getElementById("modal-motivo");
+    var $modalDiagnostico = document.getElementById("modal-diagnostico");
+    var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
+    //const $btnPDF = document.getElementById("btnPdf");
+
+        var especialidades = await http.get(BASE_URL);
         console.log(event.target);
         var citaSeleccionada = JSON.parse(event.target.value);
         console.log(citaSeleccionada["item"]["fecha"]);
+        console.log(BASE_URL+`doctor/receta/${citaSeleccionada["item"]["idCita"]}`);
+        const receta = await http.get(BASE_URL+`doctor/receta/${citaSeleccionada["item"]["idCita"]}`);
+        console.log(receta);
         var elems = document.getElementById("modal1");
         var instance = M.Modal.getInstance(elems);
-        $modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
-        $modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
-        $modalHora.innerText = citaSeleccionada["item"]["hora"];
+        //$modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        //$modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        //$modalHora.innerText = citaSeleccionada["item"]["hora"];
+        $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        $modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        $modalHora.value = citaSeleccionada["item"]["hora"];
         var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
         for(var i = 0; i < especialidades.length; i++){
             if(especialidadDoctor == especialidades[i]["idEspecialidad"]){
-              $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
+          //    $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
+              $modalEspecialidad.value = especialidades[i]["nombreEsp"];
               break;
             }
         }
-        $modalPaciente.innerText = persona["nombres"]+" "+persona["apellidoP"]+" "+persona["apellidoM"];
-        $modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
 
+        
+        console.log(receta);
+       // $modalPaciente.innerText = citaSeleccionada["item"]["motivo"];
+        $modalPaciente.value = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
+        //$modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
+        $modalMotivo.value= citaSeleccionada["item"]["motivo"];
+        
+        $modalDiagnostico.value = receta["diagnostico"];
+        $modalIndicaciones.value = receta["indicaciones"]; 
+        $modalDiagnostico.innerText=receta["diagnostico"];
+        $modalIndicaciones.innerText=receta["indicaciones"];
+        //$btnPDF.disabled = true;          
 
         instance.open();
       }
