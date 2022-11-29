@@ -91,11 +91,11 @@ const mainDocAgenda = (() => {
             $btn3.className = "waves-effect blue darken-1 btn";
             $btn3.disabled = true;
             
-            if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])){
+            if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])||item["estado"]==="terminada"){
 
-              //$btn.disabled=true;
-              //$btn2.disabled=true;
-              //$btn3.disabled=true;
+              $btn.disabled=true;
+              $btn2.disabled=true;
+              $btn3.disabled=true;
             }
             console.log(response3["idPersona"]);
             $btn.value = response3["idPersona"];

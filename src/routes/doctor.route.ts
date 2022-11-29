@@ -2,6 +2,7 @@ import {Router} from "express";
 import { //getVistaDoctor,
     getCitasDoctor,getAgenda,getDoctor2,getHistorialModal,generarPdf,getReceta,updateCita,createReceta} from "../controllers/doctor.controller";
 import { validacionRutasDoctor } from "../middlewares/doctor.middleware"; 
+import { validacionRutasPacienteDoctor } from "../middlewares/persona.middleware";
 
 const doctorRouter: Router = Router();
 
@@ -18,7 +19,7 @@ doctorRouter.get("/historial/:idPersona",validacionRutasDoctor,getHistorialModal
 
 doctorRouter.post("/receta",validacionRutasDoctor,generarPdf);
 
-doctorRouter.get("/receta/:idCita",validacionRutasDoctor,getReceta);
+doctorRouter.get("/receta/:idCita",validacionRutasPacienteDoctor,getReceta);
 
 doctorRouter.put("/cita/:idCita",validacionRutasDoctor,updateCita);
 

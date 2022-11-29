@@ -83,27 +83,27 @@ const mainHistorial = (() => {
         console.log(receta);
         var elems = document.getElementById("modal1");
         var instance = M.Modal.getInstance(elems);
-        //$modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
-        //$modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
-        //$modalHora.innerText = citaSeleccionada["item"]["hora"];
-        $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
-        $modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
-        $modalHora.value = citaSeleccionada["item"]["hora"];
+        $modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        $modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        $modalHora.innerText = citaSeleccionada["item"]["hora"];
+       // $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        //$modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        //$modalHora.value = citaSeleccionada["item"]["hora"];
         var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
         for(var i = 0; i < especialidades.length; i++){
             if(especialidadDoctor == especialidades[i]["idEspecialidad"]){
-          //    $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
-              $modalEspecialidad.value = especialidades[i]["nombreEsp"];
+              $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
+              //$modalEspecialidad.value = especialidades[i]["nombreEsp"];
               break;
             }
         }
 
         
         console.log(receta);
-       // $modalPaciente.innerText = citaSeleccionada["item"]["motivo"];
-        $modalPaciente.value = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
-        //$modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
-        $modalMotivo.value= citaSeleccionada["item"]["motivo"];
+       $modalPaciente.innerText = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
+        //$modalPaciente.value = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
+      $modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
+        //$modalMotivo.value= citaSeleccionada["item"]["motivo"];
         
         $modalDiagnostico.value = receta["diagnostico"];
         $modalIndicaciones.value = receta["indicaciones"]; 
