@@ -1,14 +1,20 @@
 const mainDocAgenda = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     var $fechaBusqueda = document.getElementById("fecha-agenda");
-    const fechaActual = new Date().toISOString().toString().split('T')[0];
-    console.log(fechaActual);
+    const fechaActual = new Date();
+    const anioActual = fechaActual.getFullYear();
+    const hoy = fechaActual.getDate();
+    const mesActual = fechaActual.getMonth() + 1; 
+
+    const fechaActualCorrecta = anioActual+"-"+mesActual+"-"+hoy;
+   
     var identificadorPersona = null;
     //var cita;
     const BASE_URL = "http://localhost:4000/";
     const doctor = JSON.parse(OBJdoctor);
      //$selectDoctor.selectmenu("disble");
     const $btnAgendaCita = document.getElementById("buscar-agenda")
+    $fechaBusqueda.value=fechaActualCorrecta;
 
      const _GenerarAgenda = async () => {
         $btnAgendaCita.addEventListener("click", _actionFuntion);
@@ -55,7 +61,7 @@ const mainDocAgenda = (() => {
             $btn3.textContent = "Terminar";
             $btn3.className = "waves-effect blue darken-1 btn";
             
-            if(fechaActual != (item["fecha"].toString().split('T')[0])){
+            if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])){
 
               //$btn.disabled=true;
               //$btn2.disabled=true;
