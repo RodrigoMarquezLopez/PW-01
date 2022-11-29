@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="class-body clas-html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Document</title>
+</head>
+<body class="class-body">
+    <h3 class="center-align">Crea tu usuario</h3>
+    <div>
+        <body class="class-body class-body2">
+            <div id="login-page" class="row login-page">
+                <div class="col s12 z-depth-6 card-panel">
+                  <form id="registrar" action="/create/user" method="post" >
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <label for="name">Nombre:</label>
+                        <input type="text" name="nombres" id="name">
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="apellidoP">Apellido Paterno:</label>
+                            <input type="text" name="apellidoP" id="apellidoP">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                            <label for="apellidoM">Apellido Materno:</label>
+                            <input type="text" name="apellidoM" id="apellidoM">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                            <label for="correo">Correo Electronico:</label>
+                            <input type="email" name="correo" id="correo">
+                        </div>
+                      </div>
+                    
+                      <div class="row">
+                        <div class="input-field col s12">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" name="contrasenia" id="contrasenia">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                            <label for="passwordConfirm">Confirmacion contraseña:</label>
+                            <input type="password" name="passwordConfirm" id="contraseniaConf">
+                        </div>
+                      </div>
+
+
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <button type="submit" class="btn waves-effect waves-light col s12">Create</button>
+                      </div>
+                    </div>
+                    
+            
+                  </form>
+                </div>
+              </div> </body>
+    </div>
+</body>
+
+</html>

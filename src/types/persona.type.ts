@@ -4,4 +4,8 @@ export default interface PersonaType {
     apellidoP?: string;
     apellidoM?: string;
     correo?: string;
+    contrasenia?: string;
+    estatus?: string;
+    rol?: string;
+    token_restauracion?: string;
 }

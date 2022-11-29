@@ -4,6 +4,7 @@ import RecetaType from "../types/receta.type";
 import { Doctor } from "./doctor.model";
 import { Cita } from "./cita.model";
 
+
 export class Receta extends Model<RecetaType> {}
 
 Receta.init(

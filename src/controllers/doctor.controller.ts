@@ -9,7 +9,7 @@ import express from "express";
 import fs from "fs";
 import { Receta } from "../models/receta.model";
 
-
+/*
 export async function getVistaDoctor(req: Request, res: Response) {
   //const {idPersona} = req.params;
     //const record = await Persona.findByPk(idPersona);
@@ -18,7 +18,7 @@ export async function getVistaDoctor(req: Request, res: Response) {
      
   res.status(200).render("doctor-completo");
     
-  }
+  }*/
 
   export async function getCitasDoctor(req: Request, res: Response) {
    const records = await Cita.findAll({ raw: true});
@@ -42,6 +42,10 @@ export async function getReceta(req: Request, res: Response) {
  export async function getAgenda(req: Request, res: Response) {
    const {idDoctor} = req.params;
    const record = await Doctor.findByPk(idDoctor);
+   const persona = await Persona.findByPk(record?.getDataValue("idPersona")); 
+   if(req.session.user?.idPersona != persona?.getDataValue("idPersona")){
+      return res.send("Que quieres aqui qliao");
+   }
    const data = {record:record}
    res.render("doctor-completo",data);
  }
