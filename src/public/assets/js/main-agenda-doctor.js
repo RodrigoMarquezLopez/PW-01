@@ -63,7 +63,7 @@ const mainDocAgenda = (() => {
             
             if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])){
 
-              $btn.disabled=true;
+              //$btn.disabled=true;
               //$btn2.disabled=true;
               //$btn3.disabled=true;
             }
