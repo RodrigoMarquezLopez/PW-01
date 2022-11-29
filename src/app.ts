@@ -7,6 +7,7 @@ dotenv.config();
 import registroCitasRouter from "./routes/regitrocitas.route";
 import emailRouter from "./routes/email.route";
 import doctorRouter from "./routes/doctor.route";
+import adminRouter from "./routes/admin.route";
 const app: Application = express();
 
 
@@ -28,6 +29,8 @@ app.use(express.static(path.join(__dirname,'./public')))
 app.use("/",registroCitasRouter);
 app.use("/correo",emailRouter);
 app.use("/doctor",doctorRouter);
+app.use("/admin",adminRouter);
+
 
 //app.use("/historialcitas",(req:Request,res:Response) =>{res.render("historial-citas-completo");});
 
