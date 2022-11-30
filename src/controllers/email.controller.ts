@@ -6,6 +6,8 @@ import { Cita } from "../models/cita.model";
 import { where } from "sequelize";
 
 
+
+
 export async function sendMail(req: Request, res: Response) {
       const {idCita,idPersona} = req.params;
       
@@ -35,3 +37,6 @@ export async function sendMail(req: Request, res: Response) {
       });
       
   }
+
+
+
