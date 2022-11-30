@@ -1,20 +1,28 @@
-<div>
-    <div>
-    <div class="row">
-        <h2 class="center-align">Infomacion de perfil</h2>
+<div class="card mx-basic my-basic">
+    <div class="center-align">
+    <div style="padding: 1% 0;">
+        <h5>Usuario</h5>
     </div>
-    <div class="row">
-        <h5>Nombre</h5>
-        <input type="text" class="blue lighten-5">
+    <div style="padding: 1% 0;">
+        
+        <label style="color:black;font-size:large;">Nombre: </label>
+        <label style="color:black;font-size:large;" id="user"></label>
     </div>
-    <div class="row">
-        <h5>Correo electronico</h5>
-        <input type="text" class="blue lighten-5">
+    <div style="padding: 1% 0;">
+        
+        <label style="color:black;font-size:large;" >Correo Electronico: </label>
+        <label style="color:black;font-size:large;" id="email"></label>
     </div>
-    <div class="row">
-        <h5>Contraseña</h5>
-        <input type="text" class="blue lighten-5">
+    <div style="padding: 1% 0;">
+
+        <label style="color:black;font-size:large;">Contraseña: </label>
+        <label style="color:black;font-size:large;" id="password"></label>
     </div>
-</div>
-<%- include("tabla-citas-agendadas.ejs")  -%>
+
+    <div style="padding: 3% 0;">
+        <h5>Citas agendadas</h5>
+        <%- include("tabla-citas-agendadas.ejs")  -%>
+    </div>
+
+
 </div>

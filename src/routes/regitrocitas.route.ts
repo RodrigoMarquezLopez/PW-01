@@ -14,4 +14,6 @@ registroCitasRouter.get("/registro/:idPersona",getRegistro);
 registroCitasRouter.post("/citas/registrar",createCita);
 registroCitasRouter.get("/historialcitas/:idPersona",getHistorial);
 
+
+
 export default registroCitasRouter;
