@@ -56,6 +56,7 @@
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
+                            <span id="errorContrasenia"></span>
                             <label for="passwordConfirm">Confirmacion contraseña:</label>
                             <input type="password" name="passwordConfirm" id="contraseniaConf">
                         </div>
@@ -64,6 +65,7 @@
 
                     <div class="row">
                       <div class="input-field col s12">
+                        
                         <button type="submit" class="btn waves-effect waves-light col s12">Create</button>
                       </div>
                     </div>
@@ -73,6 +75,8 @@
                 </div>
               </div> </body>
     </div>
+    <%- include("../comunes/modal-registro.ejs")  -%>
+    <script src="/assets/js/main-registro-persona.js"></script>
 </body>
 
 </html>

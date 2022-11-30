@@ -6,29 +6,48 @@ import { Cita } from "../models/cita.model";
 
 
 export async function getCitas(req: Request, res: Response) {
+  try{
     const {idPersona} = req.params;
     const records = await Cita.findAll({ raw: true, where:{idPersona}});
     res.status(200).json(records);
+  }catch(error){
+    res.status(500).send(error);
+  }
   }
 
   export async function getCitasGeneral(req: Request, res: Response) {
+    try{
     const records = await Cita.findAll({ raw: true});
   res.status(200).json(records);
+}catch(error){
+  res.status(500).send(error);
+}
   }
 
   export async function getCitaDatos(req: Request, res: Response) {
+    try{
     const {idPersona} = req.params;
     const {fecha,hora} = req.body;
     const records = await Cita.findAll({ raw: true, where:{idPersona}});
     res.status(200).json(records);
+  }catch(error){
+    res.status(500).send(error);
+  }
   }
 
 
   export async function getHistorial(req: Request, res: Response) {
+    try{
     const {idPersona} = req.params;
+    if(req.session.user?.idPersona != Number(idPersona)){
+      return res.send("Que quieres aqui qliao");
+   }
     const record = await Persona.findByPk(idPersona);
     const data = {record:record,verReceta:false}
     res.render("historial-citas-completo",data);
+  }catch(error){
+    res.status(500).send(error);
+  }
   }
 
   

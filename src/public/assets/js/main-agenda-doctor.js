@@ -8,7 +8,7 @@ const mainDocAgenda = (() => {
     const hoy = fechaActual.getDate();
     const mesActual = fechaActual.getMonth() + 1; 
 
-    const fechaActualCorrecta = anioActual+"-"+mesActual+"-"+hoy;
+    const fechaActualCorrecta = new Date().toString().split('T')[0];//anioActual+"-"+mesActual+"-"+hoy;
    
         //const $cuerpoTabla = document.getElementById("tablabody");
         var $fechaBusqueda = document.getElementById("fecha-agenda");
@@ -69,6 +69,7 @@ const mainDocAgenda = (() => {
       };
 
       const _createRow = async (item = {}) =>{
+        console.log(item);
         const response3 = await http.get(BASE_URL+`persona/${item["idPersona"]}`);
         if(item["idDoctor"]==doctor["idDoctor"] && (item["fecha"].toString().split('T')[0])==$fechaBusqueda.value){
         const $row2 = document.createElement("tr");
@@ -93,9 +94,9 @@ const mainDocAgenda = (() => {
             
             if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])||item["estado"]==="terminada"){
 
-              $btn.disabled=true;
-              $btn2.disabled=true;
-              $btn3.disabled=true;
+              //$btn.disabled=true;
+             // $btn2.disabled=true;
+              //$btn3.disabled=true;
             }
             console.log(response3["idPersona"]);
             $btn.value = response3["idPersona"];

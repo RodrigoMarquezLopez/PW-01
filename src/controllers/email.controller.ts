@@ -1,23 +1,45 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import {emailer} from "../email/email.config";
+import { Cita } from "../models/cita.model";
+import { Persona } from "../models/persona.model";
 
 
 
 
 export async function sendMail(req: Request, res: Response) {
-      const {correo} = req.body;
-      try {
-        let info = await emailer.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>', // sender address
-            to:     "eodiguiz@gmail.com", // list of receivers
-            subject: "Confirma tu cita", // Subject line
-            text: "Ya jalo esta madre wey, cambiale cosas y en putiza sale", // plain text body
-            html: 
-            "<h2>Recuerda confirmar tu cita</h2>", // html body
-          });
-      } catch (error) {
-        
-      }
-        res.status(200).send("Enviado");
+  const {idCita,idPersona} = req.params;
+  
+  const persona = await Persona.findByPk(idPersona);
+  const correo = await Persona.findAll({attributes:['correo'],where:{idPersona}} );
+  const cita = await Cita.findAll({attributes:['idCita'],where:{idCita}});
+  
+  console.log(correo);
+  
+  try {
+    let info = await emailer.sendMail({
+        from: '"Médicos Especialistas 🏥" <medicosespecialistas.clinica@gmail.com>', // sender address
+        to:     JSON.stringify(correo), // list of receivers 
+        subject: "Confirma tu cita" , // Subject line
+        text: "Ya jalo esta madre ", // plain text body
+        html: 
+        "<h2>Recuerda confirmar tu cita</h2>", // html body
+      });
+  } catch (error) {
+    console.log("nel prro");
   }
+  try{
+  await Cita.update({ estado:"confirmada" }, {
+    where: {
+      idCita
+    }
+    
+  });
+  const data = {httpCode:201,
+    message:"Registrado correctamente"};
+  res.status(200).json(data);
+}catch(error){
+
+}
+  
+}

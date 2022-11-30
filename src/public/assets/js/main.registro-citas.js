@@ -141,7 +141,7 @@ const _actionSelectDoctor = (event)=>{
         if(response.length > 0){
         for(let index = 0; index < response.length; index++){
             for(let i  = 0; i<arregloHoras.length;i++){
-              if(response[index]["estado"] != "cancelada"){
+              if(response[index]["estado"] != "cancelada" && response[index]["estado"] != "eliminada"){
                 if(response[index]["hora"]==arregloHoras[i]){
                     arregloHoras[i] = -1;
                 }
@@ -158,7 +158,7 @@ const _actionSelectDoctor = (event)=>{
     const _agregarHoras = (citasDisponibles = [])=>{
       for(let index = 0; index<citasDisponibles.length;index++){
         const $option = document.createElement("option");
-        if(citasDisponibles[index] != -1){
+        if(citasDisponibles[index] != - 1){
           $option.innerText = citasDisponibles[index];
           $selectHora.appendChild($option);
           
@@ -186,15 +186,22 @@ const _actionSelectDoctor = (event)=>{
                                    },
                              };
               console.log(data);
-              await http.post(data);    
-             //console.log(response);                   
+              console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
+              const resultado = await http.post(data);    
+              if(resultado["httpCode"]==201){
+                  modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",`/historialcitas/${persona["idPersona"]}`);
+              }else{
+                modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
+              }                
 
             }else{
-              alert("ya tienes una cita agendada con el doctor");
+              //alert("ya tienes una cita agendada con el doctor");
+              modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita agendada con este doctor",`/historialcitas/${persona["idPersona"]}`);
             }
               
           }else{
-            alert("ya tienes una cita para ese dia y hora");
+            //alert("ya tienes una cita para ese dia y hora");
+            modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita programada ese dia y a esa hora",`/historialcitas/${persona["idPersona"]}`);
           }
                      
       }else{
@@ -285,7 +292,9 @@ const _actionSelectDoctor = (event)=>{
               citaArreglo = citas[i];  
             if(citaArreglo["fecha"] == fecha ){
                 if(citaArreglo["hora"] == hora){
-                    return false;
+                    if(citaArreglo["estado"]!= "eliminada" && citaArreglo["estado"]!="cancelada"){
+                      return false;
+                    }
                 }
               }
           }
@@ -307,3 +316,6 @@ const _actionSelectDoctor = (event)=>{
 
       return {validacionDoctor,validacionesFechayHoraPersona}
    })();
+
+
+   
