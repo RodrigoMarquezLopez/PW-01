@@ -12,12 +12,43 @@
 <body>
     <%- include("administrador/barraIzq-Admin.ejs")  -%>
     <main >
+        <h4 class="my-basic">BUSCAR CITA</h4>  
+        <div class="card mx-basic my-basic">
+            <div class="row">
+                <div class="input-field col s4 ">
         
-        <h4 class="my-basic">BUSCAR CITAS</h4>
-        <%- include("administrador/buscar-cita.ejs")  -%>    
+                    <select class="browser-default blue lighten-5" name="selectEsp" id="listadoctor">
+                        <option value="especialidad" hidden selected>Ingrese al Doctor</option>
+                        <% doctores.forEach((doctor)=>{%>
+                        <option value=<%=doctor.idPersona%>>  </option>
+                        <% })%>
+                    </select>
+                </div>
+                <div class="input-field col s4 ">
+        
+                    <button type="button" class="waves-effect blue darken-1 btn" id="btn-buscar-cita">Buscar Cita</button>
+        
+                </div>
+        
+                <table>
+                    <thead>
+                        <th>Id de Cita</th>
+                        <th>Paciente</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                    </thead>
+                    <tbody id="tablabody">
+        
+                    </tbody>
+                </table>
+            </div>
+        
+        </div> 
         
    
     </main>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/assets/js/http.js"></script>
+<script src="/assets/js/main-buscar-citas.js"></script>
 </html>
