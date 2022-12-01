@@ -36,7 +36,14 @@ export async function logginUsuario(req: Request, res: Response) {
             req.session.user = userDoc;
             return res.redirect(`/doctor/agenda/${userDoc["doctor"]["idDoctor"]}`);
         }*/
+        const idPersona = user["idPersona"];
+        console.log(idPersona);
+        const sesionRegistro = await SesionModel.create({idPersona});
         req.session.user = user;
+        if(sesionRegistro !== null){
+          console.log("si enetre al json");
+        req.session.idSesion = JSON.parse(JSON.stringify(sesionRegistro));
+        }
         console.log(user["rol"]);
         if(user["rol"]=="1111"){
         return res.redirect(`/informacion/${user["idPersona"]}`);
@@ -65,10 +72,17 @@ export async function logginUsuario(req: Request, res: Response) {
 
 export async function loggout(req: Request, res: Response){
   try{
+    const idSesion = req.session.idSesion?.idSesion;
   req.session.destroy((err)=>{
     if(err){
       console.log("error al cerrar sesion");
     }
+    const fecha = new Date().toString();
+    const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
+      where: {
+        idSesion:idSesion
+      }
+    });
     res.redirect("/login/clinica/signin");
   });
 }catch(error){
