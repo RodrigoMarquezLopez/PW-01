@@ -1,23 +1,23 @@
 <div class="card mx-basic my-basic">
-    <form id="formProducto" action="/catalogo/producto/" method="post" enctype="multipart/form-data">
+    <form id="formAgregarDoctor" action="/catalogo/producto/" method="post" enctype="multipart/form-data">
 
         <div class="row">
             <div class="input-field col s4">
                 <p>
                     Nombre:
-                    <input type="text" class="blue lighten-5" id="nombre">
+                    <input type="text" class="blue lighten-5" id="nombre" name="nombre">
                 </p>
             </div>
             <div class="input-field col s4">
                 <p>
                     Apellido Paterno:
-                    <input type="text" class="blue lighten-5" id="apellidoP">
+                    <input type="text" class="blue lighten-5" id="apellidoP" name="apellidoP">
                 </p>
             </div>
             <div class="input-field col s4">
                 <p>
                     Apellido Materno:
-                    <input type="text" class="blue lighten-5" id="apellidoM">
+                    <input type="text" class="blue lighten-5" id="apellidoM" name="apellidoM">
                 </p>
             </div>
         </div>
@@ -26,20 +26,18 @@
             <div class="input-field col s4">
                 <p>
                     Corre Electronico:
-                    <input type="text" class="blue lighten-5" id="email">
+                    <input type="text" class="blue lighten-5" id="email" name="correo">
                 </p>
             </div>
             <div class="input-field col s4 ">
                 <p>Especialidad:
-                <select class="browser-default blue lighten-5" name="selectEsp" id="esp" >
-                    <option value="especialidad">Elige una especialidad</option>
-                </select>
+                <select class="browser-default blue lighten-5" name="selectEsp" id="esp" name="especialidad"></select>
                 </p>
             </div>
             <div class="input-field col s4">
                 <p>
                     Cedula:
-                    <input type="text" class="blue lighten-5" id="cedula">
+                    <input type="text" class="blue lighten-5" id="cedula" name="cedula">
                 </p>
             </div>
         
@@ -48,16 +46,12 @@
         <div class="row">
             <div class="input-field col s4 ">
                 <p>Hora de Entrada:
-                <select class="browser-default blue lighten-5" name="selectEsp" id="horaEntrada" >
-                    <option value="especialidad">Seleccione la Hora de Entrada</option>
-                </select>
+                <select class="browser-default blue lighten-5" name="selectEsp" id="horaEntrada" name="horaEntrada"></select>
                 </p>
             </div>
             <div class="input-field col s4 ">
                 <p>Hora de Salida:
-                <select class="browser-default blue lighten-5" name="selectEsp" id="horaSalida" >
-                    <option value="especialidad">Seleccione la Hora de Salida</option>
-                </select>
+                    <h6 id="horaSalida" name="horaSalida">Descripcion de la especialidad</h6>
                 </p>
             </div>
         
@@ -71,3 +65,5 @@
 
     </form>
 </div>
+<script src="/assets/js/http.js"></script>
+<script src="/assets/js/admin/main-registrar-doctor.js"></script>

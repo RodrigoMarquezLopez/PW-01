@@ -17,7 +17,7 @@ const http = (() => {
     },
     body:JSON.stringify(body)});
       const bodyResponse = await response.json();
-      //return bodyResponse;
+      return bodyResponse;
     };
     const _put = async (data = { url: "", body: {} }) => {
       console.log("here");

@@ -11,6 +11,7 @@ import doctorRouter from "./routes/doctor.route";
 import adminRouter from "./routes/admin.route";
 import logginRouter from "./routes/login.route";
 import usuarioRouter from "./routes/persona.route";
+import informacionRouter from "./routes/informacion.route"
 
 const app: Application = express();
 
@@ -37,7 +38,7 @@ app.use("/",registroCitasRouter);
 app.use("/correo",emailRouter);
 app.use("/doctor",doctorRouter);
 app.use("/admin",adminRouter);
-
+app.use("/informacion",informacionRouter);
 app.use("/login/clinica", logginRouter);
 app.use("/create",usuarioRouter);
 

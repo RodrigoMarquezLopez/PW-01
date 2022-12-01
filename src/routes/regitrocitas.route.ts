@@ -1,10 +1,10 @@
 import {Router} from "express";
 import {getEspecialidades,getPersona,getDoctores,getCitasDoctorFecha,getDoctor, createCita,getRegistro,getCitasPersona,getEspecialidad} from "../controllers/registro.citas.controller";
 import {getCitas,getCitasGeneral,getHistorial} from "../controllers/historial.citas.controller";
-import { validacionRutasPaciente,validacionRutasPacienteDoctor } from "../middlewares/persona.middleware";
+import { validacionRutasPaciente,validacionRutasPacienteDoctor,validacionSimple } from "../middlewares/persona.middleware";
 const registroCitasRouter: Router = Router();
 
-registroCitasRouter.get("/",validacionRutasPacienteDoctor,getEspecialidades);
+registroCitasRouter.get("/",validacionSimple,getEspecialidades);
 registroCitasRouter.get("/persona/:idPersona",validacionRutasPacienteDoctor,getPersona);
 registroCitasRouter.get("/doctor/:idEspecialidad",validacionRutasPacienteDoctor,getDoctores);
 registroCitasRouter.get("/doctor/buscar/:idDoctor",validacionRutasPacienteDoctor,getDoctor);

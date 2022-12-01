@@ -24,7 +24,7 @@ export function validacionRutasPaciente(req: Request, res: Response, next: NextF
           return res.redirect("/login/clinica/signin");
       }
       if( req.session.user.rol !== "1111"){
-          return res.send("Que quieres prro");
+          return res.redirect("/login/clinica/error");
           
       }
 
@@ -41,12 +41,25 @@ export function validacionRutasPacienteDoctor(req: Request, res: Response, next:
       }
       if( (req.session.user.rol !== "1111")){
         if(req.session.user.rol !== "2222"){
-          return res.send("Que quieres prro");
+          return res.redirect("/login/clinica/error");
           
         
         }
           
       }
+
+      next();
+  
+
+}
+export function validacionSimple(req: Request, res: Response, next: NextFunction){
+  console.log("entre en el middleware Paciente");
+  
+  console.log("Funcion return")
+      if (!req.session.user) {
+          return res.redirect("/login/clinica/signin");
+      }
+      
 
       next();
   

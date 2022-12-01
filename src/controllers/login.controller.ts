@@ -2,11 +2,16 @@ import { Request, Response } from "express";
 import { isValidPassword } from "../libraries/bycript.library";
 import { Doctor } from "../models/doctor.model";
 import { Persona } from "../models/persona.model";
+import {SesionModel} from "../models/sesion.model";
 
 
 export function logginView(req: Request, res: Response){
+  try{
   const {error} = req.query;
-  res.render("login/login-view",{error});
+  res.render("login/login-view-v2",{error});
+}catch(error){
+  res.status(500).send(error);
+}
 }
 
 
@@ -31,10 +36,17 @@ export async function logginUsuario(req: Request, res: Response) {
             req.session.user = userDoc;
             return res.redirect(`/doctor/agenda/${userDoc["doctor"]["idDoctor"]}`);
         }*/
+        const idPersona = user["idPersona"];
+        console.log(idPersona);
+        const sesionRegistro = await SesionModel.create({idPersona});
         req.session.user = user;
+        if(sesionRegistro !== null){
+          console.log("si enetre al json");
+        req.session.idSesion = JSON.parse(JSON.stringify(sesionRegistro));
+        }
         console.log(user["rol"]);
         if(user["rol"]=="1111"){
-        return res.redirect(`/historialcitas/${user["idPersona"]}`);
+        return res.redirect(`/informacion/${user["idPersona"]}`);
         }
         if(user["rol"]=="2222"){
           const idPersona = user["idPersona"];
@@ -44,6 +56,9 @@ export async function logginUsuario(req: Request, res: Response) {
           console.log(doctor["idDoctor"]);
           const idDoctor = doctor["doctorResponse"]["idDoctor"];
           return res.redirect(`/doctor/agenda/${idDoctor}`);
+        }
+        if(user["rol"]=="3333"){
+          return res.redirect(`/admin/buscarcita`);
         }
       }
     }
@@ -56,10 +71,30 @@ export async function logginUsuario(req: Request, res: Response) {
 }
 
 export async function loggout(req: Request, res: Response){
+  try{
+    const idSesion = req.session.idSesion?.idSesion;
   req.session.destroy((err)=>{
     if(err){
       console.log("error al cerrar sesion");
     }
-    res.redirect("/");
+    const fecha = new Date().toString();
+    const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
+      where: {
+        idSesion:idSesion
+      }
+    });
+    res.redirect("/login/clinica/signin");
   });
+}catch(error){
+  res.status(500).send(error);
+}
+}
+
+
+export async function vistaError(req: Request, res: Response){
+  try{
+  res.render("comunes/vista-error");
+}catch(error){
+  res.status(500).send(error);
+}
 }

@@ -10,7 +10,7 @@ export function validacionRutasDoctor(req: Request, res: Response, next: NextFun
             return res.redirect("/login/clinica/signin");
         }
         if( req.session.user.rol !== "2222"){
-            return res.send("Que quieres prro");
+            return res.redirect("/login/clinica/error");
             
         }
 

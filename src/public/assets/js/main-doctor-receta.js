@@ -1,5 +1,16 @@
 const mainModalReceta =  (() => {
     const BASE_URL = "http://localhost:4000/";
+    var doctor;
+    const iniciarModal = (item = {}) =>{
+        doctor = item;
+        var elems = document.getElementById("modal3");
+        var instance = M.Modal.getInstance(elems);
+        //$texto.innerText = texto;
+        instance.open();
+      };
+      
+
+   
     const _accionVerPDF = async () => {
         const $modalDoctor = document.getElementById("modal-doctor");
         const $modalFecha = document.getElementById("modal-fecha");
@@ -7,13 +18,15 @@ const mainModalReceta =  (() => {
         const $modalEspecialidad= document.getElementById("modal-especialidad");
         const $modalPaciente= document.getElementById("modal-paciente");
         const $modalMotivo = document.getElementById("modal-motivo");
+        console.log("Soy doctor modal"+doctor)
         const data ={
             "url":BASE_URL+'doctor/receta',
             "body":{
                   "nombreDoctor":$modalDoctor.innerText,
                   "fecha":$modalFecha.innerText,
                   "especialidad":$modalEspecialidad.innerText,
-                  "nombrePaciente":$modalPaciente.innerText
+                  "nombrePaciente":$modalPaciente.innerText,
+                  "cedula":doctor["cedula"]
                 },
           };
           console.log(data);
@@ -21,14 +34,16 @@ const mainModalReceta =  (() => {
     }
     
     const init = () =>{
-        const $btnPDF = document.getElementById("botonPdf");
-      //$btnPDF.addEventListener("click",_accionVerPDF);
+        const $btnPDF = document.getElementById("btnPdf");
+        //$btnPDF.addEventListener("click",_accionVerPDF);
     }
 
     return {
         inicio: () => {
           init();
+          console.log("Soy doctor modal"+doctor)
         },
+        iniciarModal
       }
 })();
 

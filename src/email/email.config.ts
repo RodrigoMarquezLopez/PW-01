@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
-const user = process.env.EM_USER as string;
-const password = process.env.EM_PASSWORD as string;
+const user = process.env.MAILER_USER as string;
+const password = process.env.MAILER_PASSWORD as string;
 
 export const emailer = nodemailer.createTransport({
     host: "smtp.gmail.com",

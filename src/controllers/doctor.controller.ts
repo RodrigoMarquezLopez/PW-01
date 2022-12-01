@@ -21,25 +21,37 @@ export async function getVistaDoctor(req: Request, res: Response) {
   }*/
 
   export async function getCitasDoctor(req: Request, res: Response) {
-   const records = await Cita.findAll({ raw: true});
- res.status(200).json(records);
+   try{
+    const records = await Cita.findAll({ raw: true});
+  res.status(200).json(records);
+}catch(error){
+  res.status(500).send(error);
+}
  }
 
  export async function getDoctor2(req: Request, res: Response) {
-  
+  try{
   const records = await Doctor.findAll({ raw: true});
   res.status(200).json(records);
+}catch(error){
+  res.status(500).send(error);
+}
 }
 
 
 export async function getReceta(req: Request, res: Response) {
+  try{
   const{idCita} = req.params;
-  const records = await Receta.findOne({raw:true,where:{idCita}});
+  const records = await Receta.findOne({raw:true,where:{idCita}});                
   res.status(200).json(records);
+}catch(error){
+  res.status(500).send(error);
+}
 }
 
 
  export async function getAgenda(req: Request, res: Response) {
+  try{
    const {idDoctor} = req.params;
    const record = await Doctor.findByPk(idDoctor);
    const persona = await Persona.findByPk(record?.getDataValue("idPersona")); 
@@ -48,42 +60,59 @@ export async function getReceta(req: Request, res: Response) {
    }
    const data = {record:record}
    res.render("doctor-completo",data);
+  }catch(error){
+    res.status(500).send(error);
+  }
  }
 
 export async function updateCita(req: Request, res: Response) {
+  try{
   const {idCita} = req.params;
   const {body} = req;
   const entity = await Cita.findByPk(idCita);
   await entity?.update(body);
   res.status(201).json(entity?.toJSON());
+}catch(error){
+  res.status(500).send(error);
+}
 }
 
 export async function createReceta(req: Request, res: Response) {
+  try{
   console.log(req.method);
-  const {idCita,diagnostico,indicaciones} = req.body;
-  const record = await Receta.create({idCita,diagnostico,indicaciones});
+  const {idCita,diagnostico,indicaciones,edad,peso,altura} = req.body;
+  const record = await Receta.create({idCita,diagnostico,indicaciones,edad,peso,altura});
   const data = {httpCode:201,
     message:"Registrado correctamente"};
   res.status(201).json(data);
+}catch(error){
+  res.status(500).send(error);
+}
 }
 
 
 
 
  export async function getHistorialModal(req:Request,res:Response){
+  try{
     console.log(req.params);
     const idPersona = req.params.idPersona;
     const record = await Persona.findOne({raw:true,where:{idPersona}});
     const data = {record:record};
     res.render("modal-historial-citas",data);
+  }catch(error){
+    res.status(500).send(error);
+  }
  }
 
  export async function generarPdf(req:Request,res:Response) {
+  try{
   console.log("NO di error");
   console.log(req.body);
   //var html;
-  const {doctor,fecha,especialidad,paciente} = req.body;
-    ejs.renderFile(__dirname+"/receta.ejs",{doctor,fecha,especialidad,paciente},(err,result)=>{
+  const {doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura} = req.body;
+  
+    ejs.renderFile(__dirname+"/receta.ejs",{doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura},(err,result)=>{
       if (err) {
         console.log(err);
         res.send(err);
@@ -91,14 +120,15 @@ export async function createReceta(req: Request, res: Response) {
       //html = result;
       console.log("NO di error");
       let options = {
-          "height": "5.5in",
+          "height": "11in",
           "width": "8.5in",
           "header": {
-              "height": "20mm"
+              "height": "10mm"
           },
           "footer": {
-              "height": "20mm",
+              "height": "10mm",
           },
+          "border": "0.5in", 
       };
       pdf.create(result,options).toFile(function (err,result) {
         console.log(result.filename);
@@ -109,6 +139,8 @@ export async function createReceta(req: Request, res: Response) {
   }
     });
     
-    
+  }catch(error){
+    res.status(500).send(error);
+  }
   }
 

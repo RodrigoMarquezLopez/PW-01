@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<div id="modalSalir" class="modal modal bottom-sheet">
+    
+  <div class="modal-content">
+    
+        <div class="card mx-basic my-basic">
+                <div class="row">
+                    <div class="center-align">
+                       <h4 lass="center-align">¿Seguro que quieres salir?</h4>
+                    </div>   
+                </div>
+                <div class="row">
+                       <h4 class="center-align" id="texto"></h4>
+                </div>
+                
+                
+        </div> 
+  </div>
+  <div class="modal-footer">
+    <a href="/login/clinica/loggout" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    <a href="" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+</div>
+<script>
+    var instances;
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    instances = M.Modal.init(elems, 
+    {
+        opacity:0.6,
+        preventScrolling:false
+    });
+  });
+  console.log(instances);
+
+</script>

@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import PersonaType from "../types/persona.type";
+import SesionType from "../types/sesion.type";
 
 declare module "express-session" {
   interface SessionData {
-    user: PersonaType;
+    user: PersonaType,
+    idSesion:SesionType,
   }
 }
 
