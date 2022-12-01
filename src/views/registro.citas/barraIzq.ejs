@@ -5,12 +5,14 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link rel="stylesheet" href="/assets/css/main.css">
+<%- include("../comunes/modalSalir.ejs")  -%>
 <ul id="slide-out" class="sidenav sidenav-fixed">
+    
     <li class="center-align"><h5>Clinica de Especialistas</h5><h7>"Especialistas de calidad"</h7></li>
     <li class="center-align"><img src="/assets/other/logo.png" alt=""></li>
     <li class="divider"></li>
     <li class="large" ><a href="/informacion/<%=record["idPersona"]  %> ">Informacion<i class="material-icons">person</i></a></li>
     <li class="large"><a href="/registro/<%=record["idPersona"]  %> ">Agendar Cita<i class="material-icons">add_circle</i></a></li>
     <li class="large"><a href="/historialcitas/<%=record["idPersona"]  %> ">Historial<i class="material-icons">filter_drama</i></a></li>
-    <li class="large"><a href="/login/clinica/loggout">Salir<i class="material-icons">filter_drama</i></a></li>
+    <li class="large"><a data-target="modalSalir" class="modal-trigger">Salir<i class="material-icons">filter_drama</i></a></li>
 </ul>

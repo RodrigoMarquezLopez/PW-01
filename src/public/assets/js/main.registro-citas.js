@@ -9,6 +9,7 @@ const main = (() => {
     const BASE_URL = "http://localhost:4000/";
     const persona = JSON.parse(OBJpersona);
     var doctor;
+    //var responseDoctor;
      //$selectDoctor.selectmenu("disble");
 
 
@@ -19,7 +20,7 @@ const main = (() => {
 
       }
       
-      
+      $selectFecha.disabled = true;
     };
     
     const _getDataDoctor = async (idEspecialidad)=>{
@@ -60,9 +61,16 @@ const main = (() => {
 
 };
 
-const _actionSelectDoctor = (event)=>{
+const _actionSelectDoctor = async (event)=>{
   _restablecerHora();
+  
   doctor = $selectDoctor.options[$selectDoctor.selectedIndex].getAttribute("iddoctor");
+  const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
+  if($selectFecha.value != ""){
+    
+    _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
+  }
+
   console.log("ME IMPRIMI");
   console.log(doctor);
   $selectFecha.disabled = false;
@@ -106,9 +114,11 @@ const _actionSelectDoctor = (event)=>{
 
     const _actionSelectFecha = async (event)=>{
       _restablecerHora();  
-      const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
+       const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
         console.log($selectFecha.value);
         _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
+        console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
+        console.log(new Date().getHours())
     }
     const _getDescription = async (nombreEsp)=>{
         const response = await http.get(BASE_URL);
@@ -151,7 +161,17 @@ const _actionSelectDoctor = (event)=>{
 
 
       }
-      console.log(arregloHoras);
+      var contadorHuecos=0;
+      for(let i  = 0; i<arregloHoras.length;i++){
+          if(arregloHoras[i] == -1){
+            contadorHuecos++;
+          }
+      }
+      if(contadorHuecos == arregloHoras.length){
+        modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas disponibles",``);
+        _restablecerHora();
+        $selectFecha.value = "";
+      }
       _agregarHoras(arregloHoras);
     };
 
@@ -186,7 +206,7 @@ const _actionSelectDoctor = (event)=>{
                                    },
                              };
               console.log(data);
-              console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
+              
               const resultado = await http.post(data);    
               if(resultado["httpCode"]==201){
                   modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",`/historialcitas/${persona["idPersona"]}`);
@@ -252,6 +272,22 @@ const _actionSelectDoctor = (event)=>{
       }else{
         salida = parseInt(horaSalida.substring(0,2));
       } 
+      console.log("===A===");
+      console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
+      console.log(validaciones.fechaFormatoCorrecto());
+      console.log(entrada+" "+parseInt(new Date().getHours()));
+      console.log(salida+" "+ parseInt(new Date().getHours()));
+      if(new Date($selectFecha.value).toISOString().split('T')[0] == validaciones.fechaFormatoCorrecto() && entrada < parseInt(new Date().getHours()) ){
+        if(salida > parseInt(new Date().getHours())){
+          entrada = new Date().getHours() +1;
+        }else{
+          modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas disponibles",``);
+        _restablecerHora();
+        $selectFecha.value = "";
+        return;
+        }  
+        //entrada = new Date().getHours() +1;
+      }
       console.log(entrada);
       console.log(salida);
       var arreglo = [10];
@@ -313,8 +349,13 @@ const _actionSelectDoctor = (event)=>{
           }
           return true;  
       };
-
-      return {validacionDoctor,validacionesFechayHoraPersona}
+      const fechaFormatoCorrecto = ()=>{
+        var yourDate = new Date();
+        const offset = yourDate.getTimezoneOffset();
+        yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+        return yourDate.toISOString().split('T')[0];
+      }
+      return {validacionDoctor,validacionesFechayHoraPersona,fechaFormatoCorrecto}
    })();
 
 

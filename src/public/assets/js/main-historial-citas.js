@@ -17,13 +17,19 @@ const mainHistorial = (() => {
 
 
      const _getData = async () => {
+      console.log($cuerpoTabla);
         const response = await http.get(BASE_URL+"citas");
+        
         console.log(response.length);
+        var $row;
         for(let index = 0; index < response.length; index++){
-             _createRow(response[index]);
-             console.log($cuerpoTabla.childNodes);
+               _createRow(response[index])
+              
+             
            
         }
+        console.log($cuerpoTabla.childNodes.length);
+        
       };
 
       const _createRow = async (item = {}) =>{
@@ -72,6 +78,10 @@ const mainHistorial = (() => {
     var $modalMotivo = document.getElementById("modal-motivo");
     var $modalDiagnostico = document.getElementById("modal-diagnostico");
     var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
+    var $modalEdad = document.getElementById("modal-edad");
+    var $modalPeso = document.getElementById("modal-peso");
+    var $modalAltura = document.getElementById("modal-altura");
+    var $modalCedula = document.getElementById("modal-cedula");
     //const $btnPDF = document.getElementById("btnPdf");
 
         var especialidades = await http.get(BASE_URL);
@@ -85,6 +95,7 @@ const mainHistorial = (() => {
         var instance = M.Modal.getInstance(elems);
         $modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
         $modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        $modalCedula.innerText = citaSeleccionada["response2"]["cedula"];
         $modalHora.innerText = citaSeleccionada["item"]["hora"];
        // $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
         //$modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
@@ -109,6 +120,12 @@ const mainHistorial = (() => {
         $modalIndicaciones.value = receta["indicaciones"]; 
         $modalDiagnostico.innerText=receta["diagnostico"];
         $modalIndicaciones.innerText=receta["indicaciones"];
+        $modalAltura.value = receta["altura"];
+        $modalEdad.value = receta["edad"];
+        $modalPeso.value = receta["peso"];
+        $modalAltura.innerText = receta["altura"];
+        $modalEdad.innerText = receta["edad"];
+        $modalPeso.innerText = receta["peso"];
         //$btnPDF.disabled = true;          
 
         instance.open();

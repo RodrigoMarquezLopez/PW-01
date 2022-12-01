@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<div id="modalResultado" class="modal modal-fixed-footer">
+<div id="modalSalir" class="modal modal-fixed-footer">
     
   <div class="modal-content">
     
-        <div class="card mx-basic my-basic">
+        <div>
                 <div class="row">
                     <div class="center-align">
                         <img src="" alt="" id="imagen">
@@ -18,7 +18,8 @@
         </div> 
   </div>
   <div class="modal-footer">
-    <a  class="modal-close waves-effect waves-green btn-flat" id="aceptar">Aceptar</a>
+    <a href="/login/clinica/loggout" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    <a href="" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
   </div>
 </div>
 <script>
@@ -27,10 +28,10 @@
     var elems = document.querySelectorAll('.modal');
     instances = M.Modal.init(elems, 
     {
-        opacity:0.6
+        opacity:0.6,
+        preventScrolling:false
     });
   });
   console.log(instances);
 
 </script>
-<script src="/assets/js/modal/modalResultado.js"></script>

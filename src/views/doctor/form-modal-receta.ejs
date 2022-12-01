@@ -6,56 +6,75 @@
           <h4>Receta</h4>
               <div class="card mx-basic my-basic">
                       <div class="row">
-                          <div class="col s4 offset-s1">
-                              <p>
-                                 Fecha:
-                                 <input type="text" id="form-fecha" name="fecha">
-                              </p>
-                          </div>
-                          <div class="col s5 offset-s1">
+                          
+                          <div class="col s4 ">
                               <p>
                                   Doctor:
                                   <input type="text" id="form-doctor" name="doctor">
-      
                                </p>
-                          </div>    
+                          </div>
+                          <div class="col s4 ">
+                              <p>
+                                  Cedula:
+                                  <input type="text" id="form-cedula" name="cedula">
+                               </p>
+                          </div>
+                          <div class="col s4">
+                            <p>
+                                Especialidad:
+                                <input type="text" id="form-especialidad" name="especialidad">
+    
+                             </p>
+                        </div>     
                       </div>
                       <div class="row">
-                          <div class="col s4 offset-s1">
+                        <div class="col s6">
+                            <p>
+                               Paciente:
+                               <input type="text" id="form-paciente" name="paciente">
+                            </p>
+                        </div>
+                        <div class="col s3">
+                            <p>
+                               Fecha:
+                               <input type="text" id="form-fecha" name="fecha">
+                            </p>
+                        </div>
+                          <div class="col s3">
                               <p>
                                  Hora:
                                  <input type="text" id="form-hora" name="hora">
                               </p>
                           </div>
-                          <div class="col s5 offset-s1">
-                              <p>
-                                  Especialidad:
-                                  <input type="text" id="form-especialidad" name="especialidad">
-      
-                               </p>
-                          </div>    
+                             
                       </div>
                       <div class="row">
-                          <div class="col s4 offset-s1">
-                              <p>
-                                 Paciente:
-                                 <input type="text" id="form-paciente" name="paciente">
-                              </p>
-                          </div>
-                          <div class="col s5 offset-s1">
-                              <p>
-                                  Motivo:
-                                  <input type="text" id="form-motivo" name="motivo">
+                        <div class="col s2">
+                            Edad:
+                            <input type="text" id="form-edad" name="edad">
+                        </div>
+                        <div class="col s2">
+                            Peso:
+                            <input type="text" id="form-peso" name="peso">
+                        </div>
+                        <div class="col s2">
+                            Altura:
+                            <input type="text" id="form-altura" name="altura">
+                        </div>    
+                        <div class="col s6">
+                              
+                            Motivo:
+                            <input type="text" id="form-motivo" name="motivo">
       
-                               </p>
+                               
                           </div>    
                       </div>
                       <div class="row">
                           <div class="col s12">
                               <p>
                                  Diagnostico:
-                                 <textarea name="diagnostico" id="form-diagnostico" cols="30" rows="10"></textarea>
-                                 <input type="text" id="form-diagnostico">
+                                 <textarea name="diagnostico" id="form-diagnostico" cols="30" rows="10" required></textarea>
+                                 
                               </p>
                           </div>
                             
@@ -64,7 +83,7 @@
                           <div class="col s12">
                               <p>
                                  Indicaciones:
-                                 <textarea name="indicaciones" id="form-indicaciones" cols="30" rows="10"></textarea>
+                                 <textarea name="indicaciones" id="form-indicaciones" cols="30" rows="10" required></textarea>
                                  
                               </p>
                           </div>
@@ -73,7 +92,7 @@
                       
                       <div class="row">
                             <div class="centrered">
-                                <button id="btnPdf"type="submit">PDF</button>
+                                <button id="btnPdf" type="submit">PDF</button>
                             </div>
                           
                       </div>
@@ -101,3 +120,4 @@
   console.log(instances);
 
 </script>
+<script src="/assets/js/main-doctor-receta.js"></script>

@@ -1,7 +1,7 @@
 const main = (() => {
    
    
-    const $cuerpoTabla = document.getElementById("cuerpotabla");
+    const $cuerpoTabla = document.getElementById("cuerpotablaI");
     var cita;
     const BASE_URL = "http://localhost:4000";
     const persona = JSON.parse(OBJpersona);

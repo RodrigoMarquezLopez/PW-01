@@ -19,6 +19,18 @@ Receta.init(
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    edad:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    peso:{
+        type:DataTypes.DECIMAL,
+        allowNull:false
+    },
+    altura:{
+       type:DataTypes.DECIMAL ,
+       allowNull:false
+    },
     diagnostico:{
         type: DataTypes.STRING(100),
         allowNull: false

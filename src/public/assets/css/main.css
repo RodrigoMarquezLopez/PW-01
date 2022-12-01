@@ -92,3 +92,16 @@ body{
    width: 500px;
 }
 
+.margenReceta{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.modal-info {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: 90% !important;
+    width: 90% !important; 
+    overflow-y: auto;
+  }

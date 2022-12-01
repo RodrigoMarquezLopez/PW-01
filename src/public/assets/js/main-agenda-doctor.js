@@ -1,3 +1,13 @@
+const generarFecha = (()=>{
+  const fechaFormatoCorrecto = ()=>{
+    var yourDate = new Date();
+    const offset = yourDate.getTimezoneOffset();
+    yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+    return yourDate.toISOString().split('T')[0];
+  }
+  return {fechaFormatoCorrecto}
+
+})();
 
 
 const mainDocAgenda = (() => {
@@ -8,7 +18,7 @@ const mainDocAgenda = (() => {
     const hoy = fechaActual.getDate();
     const mesActual = fechaActual.getMonth() + 1; 
 
-    const fechaActualCorrecta = new Date().toString().split('T')[0];//anioActual+"-"+mesActual+"-"+hoy;
+    const fechaActualCorrecta = generarFecha.fechaFormatoCorrecto();//new Date().toString().split('T')[0];//anioActual+"-"+mesActual+"-"+hoy;
    
         //const $cuerpoTabla = document.getElementById("tablabody");
         var $fechaBusqueda = document.getElementById("fecha-agenda");
@@ -22,6 +32,10 @@ const mainDocAgenda = (() => {
         var $formMotivo;
         var $formDiagnostico;
         var $formIndicaciones;
+        var $formCedula;
+        var $formAltura;
+        var $formPeso;
+        var $formEdad;
 
     //const fechaActual = new Date().toISOString().toString().split('T')[0];
     console.log(fechaActual);
@@ -46,7 +60,12 @@ const mainDocAgenda = (() => {
         $formMotivo = document.getElementById("form-motivo");
         $formDiagnostico = document.getElementById("form-diagnostico");
         $formIndicaciones = document.getElementById("form-indicaciones"); 
+        $formCedula = document.getElementById("form-cedula");
+        $formEdad= document.getElementById("form-edad");
+        $formAltura= document.getElementById("form-altura");
+        $formPeso = document.getElementById("form-peso");
         $btnAgendaCita.addEventListener("click", _actionFuntion);
+
       };
 
       const _actionFuntion = async () => {
@@ -94,10 +113,18 @@ const mainDocAgenda = (() => {
             
             if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])||item["estado"]==="terminada"){
 
-              //$btn.disabled=true;
-             // $btn2.disabled=true;
-              //$btn3.disabled=true;
+              $btn.disabled=true;
+              $btn2.disabled=true;
+              $btn3.disabled=true;
             }
+            const comprobarReceta = await http.get(BASE_URL+`doctor/receta/${item["idCita"]}`);
+              if(comprobarReceta != null){
+                $btn.disabled=true;
+               $btn2.disabled=true;
+                $btn3.disabled=true;
+              }
+
+
             console.log(response3["idPersona"]);
             $btn.value = response3["idPersona"];
             $btn.addEventListener("click",_actionButtonHistoral);
@@ -164,14 +191,15 @@ const mainDocAgenda = (() => {
           $fromFecha.value = identificadorPersona["item"]["fecha"].toString().split('T')[0];
           $fromHora.value = identificadorPersona["item"]["hora"];
           $formPaciente.value = identificadorPersona["response3"]["nombres"]+" "+identificadorPersona["response3"]["apellidoP"]+" "+identificadorPersona["response3"]["apellidoM"]
-          var elems = document.getElementById("modal3");
-          var instance = M.Modal.getInstance(elems);
+          $formCedula.value = doctor["cedula"]
+          //var elems = document.getElementById("modal3");
+          //var instance = M.Modal.getInstance(elems);
           terminar = document.getElementById("terminar"+event.target.id); 
-          instance.open();
-          
-            const $termianr = document.getElementById("terminar"+event.target.id); 
-            console.log("terminar"+event.target.id);
-            $termianr.disabled = false
+          //instance.open();
+          mainModalReceta.iniciarModal(doctor);
+          const $termianr = document.getElementById("terminar"+event.target.id); 
+          console.log("terminar"+event.target.id);
+          $termianr.disabled = false
           
            
 
@@ -190,6 +218,9 @@ const mainDocAgenda = (() => {
                     "idCita":event.target.value,
                     "diagnostico":$formDiagnostico.value,
                     "indicaciones":$formIndicaciones.value,
+                    "edad":$formEdad.value,
+                    "peso":$formPeso.value,
+                    "altura":$formAltura.value,
                     },
             };
             await http.post(data);
@@ -222,7 +253,6 @@ const mainDocAgenda = (() => {
   })();
   
   mainDocAgenda.init();
-
 
 
 
@@ -323,7 +353,11 @@ const mainDocAgenda = (() => {
         const $modalPaciente= document.getElementById("modal-paciente");
         const $modalMotivo = document.getElementById("modal-motivo");
         var $modalDiagnostico = document.getElementById("modal-diagnostico");
-        var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
+        var $modalIndicaciones = document.getElementById("modal-indicaciones");
+        var $modalCedula = document.getElementById("modal-cedula");
+        var $modalAltura = document.getElementById("modal-altura");
+        var $modalPeso = document.getElementById("modal-peso");
+        var $modalEdad = document.getElementById("modal-edad");
     
         const especialidades = await http.get(BASE_URL);
         console.log(event.target);
@@ -332,22 +366,29 @@ const mainDocAgenda = (() => {
         console.log(citaSeleccionada["item"]["fecha"]);
         var elems = document.getElementById("modal1");
         var instance = M.Modal.getInstance(elems);
-        $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
-        $modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
-        $modalHora.value = citaSeleccionada["item"]["hora"];
-        var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
+        $modalFecha.innerText = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
+        $modalDoctor.innerText = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
+        $modalHora.innerText = citaSeleccionada["item"]["hora"];
+        var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"];
+        $modalCedula.innerText = citaSeleccionada["response2"]["cedula"];
         for(var i = 0; i < especialidades.length; i++){
             if(especialidadDoctor == especialidades[i]["idEspecialidad"]){
-              $modalEspecialidad.value = especialidades[i]["nombreEsp"];
+              $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
               break;
             }
         }
-        $modalPaciente.value = persona["nombres"]+" "+persona["apellidoP"]+" "+persona["apellidoM"];
-        $modalMotivo.value = citaSeleccionada["item"]["motivo"];
+        $modalPaciente.innerText = persona["nombres"]+" "+persona["apellidoP"]+" "+persona["apellidoM"];
+        $modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
         $modalDiagnostico.value = receta["diagnostico"];
         $modalIndicaciones.value = receta["indicaciones"]; 
         $modalDiagnostico.innerText=receta["diagnostico"];
         $modalIndicaciones.innerText=receta["indicaciones"];
+        $modalAltura.value = receta["altura"];
+        $modalEdad.value = receta["edad"];
+        $modalPeso.value = receta["peso"];
+        $modalAltura.innerText = receta["altura"];
+        $modalEdad.innerText = receta["edad"];
+        $modalPeso.innerText = receta["peso"];
         instance.open();
       }
 

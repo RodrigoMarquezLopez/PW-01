@@ -14,28 +14,55 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="card mx-basic my-basic">
-        <div class="row">
-            <div class="col 4">
-                <img src="/assets/other/logoReceta.png">
-            </div>
-            <div class="col s8">
-                <p>CLINICA DE MEDICOS ESPECIALISTAS DE OAXACA
-                        "Especialistas de Calidad"
+    <div class="card">
+        <div class="card-content">
+            <div class="center-align">
+                <h5 class="center-align">
+                    CLINICA DE MEDICOS ESPECIALISTAS DE OAXACA
+                </h5>
+                <h6 class="center-align">
+                    "Especialistas de Calidad"
+                </h6>
+                <p class="center-align">
                     C. Macedonio Alcalá 305 · 951 516 6903
                 </p>
             </div>
         </div>
         <div class="row">
-            <div>
-                    <p>
-                                Doctor: <%=doctor%>   
-                                Fecha: <%=fecha%>           Especialidad: <%=especialidad%>
-                                Paciente: <%=paciente%>
-                    </p>
+            <div class="input-field">
+                    <p class="col s4"><%=doctor%></p>
+                    <p class="col s4">Especialidad: <%=especialidad%></p>
+                    <p class="col s4">Cedula:<%=cedula%></p>
+
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <p class="col s4">Paciente: <%=paciente%></p>
+                <p class="col s3">Fecha: <%=fecha%></p>
+                <p class="col s5">Motivo: <%=motivo%></p>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="input-field">
+                <p class="col s4">Edad: <%=edad%></p>
+                <p class="col s4">Peso: <%=peso%></p>
+                <p class="col s4">Altura: <%=altura%></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s10 offset-s1">
+                <p class="flow-text">Diagnostico:<%=diagnostico%></p>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s10 offset-s1">
+                <p class="flow-text">Indicaciones:<%=indicaciones%></p>
+                
+            </div>
+        </div>
     </div>
 </body>
 </html>
