@@ -72,17 +72,21 @@ export async function logginUsuario(req: Request, res: Response) {
 
 export async function loggout(req: Request, res: Response){
   try{
+    if(!req.session.user){
     const idSesion = req.session.idSesion?.idSesion;
-  req.session.destroy((err)=>{
-    if(err){
-      console.log("error al cerrar sesion");
-    }
     const fecha = new Date().toString();
     const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
       where: {
         idSesion:idSesion
       }
     });
+  }
+
+  req.session.destroy((err)=>{
+    if(err){
+      console.log("error al cerrar sesion");
+    }
+    
     res.redirect("/login/clinica/signin");
   });
 }catch(error){

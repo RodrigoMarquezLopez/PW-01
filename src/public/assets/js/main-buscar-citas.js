@@ -1,12 +1,24 @@
+const generarFecha = (()=>{
+  const fechaFormatoCorrecto = ()=>{
+    var yourDate = new Date();
+    const offset = yourDate.getTimezoneOffset();
+    yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+    return yourDate.toISOString().split('T')[0];
+  }
+  return {fechaFormatoCorrecto}
+
+})();
 const mainBuscarCitas = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     const $nombreDoctor = document.getElementById("listadoctor");
-    const fechaActual = new Date();
-    const anioActual = fechaActual.getFullYear();
-    const hoy = fechaActual.getDate();
-    const mesActual = fechaActual.getMonth() + 1; 
+    //const fechaActual = new Date();
+    //const anioActual = fechaActual.getFullYear();
+    //const hoy = fechaActual.getDate();
+    //const mesActual = fechaActual.getMonth() + 1; 
   
-    const fechaActualCorrecta = anioActual+"-"+mesActual+"-"+hoy;
+    const fechaActualCorrecta = generarFecha.fechaFormatoCorrecto();//anioActual+"-"+mesActual+"-"+hoy;
+    console.log("comprobacion de fecha");
+    console.log(fechaActualCorrecta);
     // var identificadorPersona = null;
     //var cita;
     const BASE_URL = "http://localhost:4000/";
@@ -47,7 +59,7 @@ const mainBuscarCitas = (() => {
   
         }
       } else {
-        alert("Seleccione un doctor");
+        modalResultado.iniciarModal("/assets/other/tache.png","Selecciona un doctor",``);
       }
     };
   
@@ -57,7 +69,8 @@ const mainBuscarCitas = (() => {
       const response3 = await http.get(BASE_URL + `admin/persona/${item["idPersona"]}`);
       console.log(item["idDoctor"]);
       console.log(response2["idDoctor"]);
-      if (item["idDoctor"] == response2["idDoctor"] && (item["fecha"].toString().split('T')[0])== fechaActualCorrecta) {
+      console.log("Comprobacion de if: "+(item["idDoctor"] == response2["idDoctor"])+ "Comprobacion fecha"+ ( item["fecha"]== fechaActualCorrecta));
+      if (item["idDoctor"] == response2["idDoctor"] && item["fecha"]== fechaActualCorrecta) {
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
   
@@ -89,6 +102,8 @@ const mainBuscarCitas = (() => {
       var instance = M.Modal.getInstance(elems);
       instance.open();
     }
+
+    
   
   
     const _initElements = () => {

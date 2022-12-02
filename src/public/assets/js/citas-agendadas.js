@@ -5,13 +5,13 @@ const main = (() => {
     var cita;
     const BASE_URL = "http://localhost:4000";
     const persona = JSON.parse(OBJpersona);
-
+    var numeroDeRows = 0;
 
 
      const _getData = async () => {
         const response = await http.get(BASE_URL+"/citas");
         console.log(response.length);
-
+         numeroDeRows = 0;
         for(let index = 0; index < response.length; index++){
           const $row1 = _createRow(response[index]);
           console.log($cuerpoTabla.childNodes);
@@ -36,6 +36,7 @@ const main = (() => {
         console.log(itemId);
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
+        numeroDeRows++;
             const $td = document.createElement("td");
             const $td2 = document.createElement("td");
             const $td3 = document.createElement("td");
@@ -109,6 +110,18 @@ const main = (() => {
 
       const _initElements = () => {
         _getData();
+        setTimeout(()=>{
+          console.log(numeroDeRows);
+       if(numeroDeRows == 0){
+          const $divTabla = document.getElementById("divTablaAg");
+          while($divTabla.firstChild){
+              $divTabla.removeChild($divTabla.lastChild);
+          }
+          const $letrero = document.createElement("h4");
+          $letrero.innerText = "NO tienes citas agendadas"
+          $divTabla.appendChild($letrero);
+       }
+        },1500);
       };
     
       return {

@@ -1,11 +1,13 @@
 
 
+
 const mainHistorial = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
     const BASE_URL = "http://localhost:4000/";
     const persona = JSON.parse(OBJpersona);
-    
+    var numeroDeRows = 0;
+
     //Obteniendo los elementos pertenecientes al modal
 
     
@@ -22,15 +24,21 @@ const mainHistorial = (() => {
         
         console.log(response.length);
         var $row;
+        numeroDeRows = 0;
         for(let index = 0; index < response.length; index++){
-               _createRow(response[index])
+               _createRow(response[index]);
+               console.log(numeroDeRows);
               
              
            
         }
-        console.log($cuerpoTabla.childNodes.length);
         
+       
+       console.log(numeroDeRows);
       };
+      
+  
+
 
       const _createRow = async (item = {}) =>{
         const value = item["idPersona"];
@@ -42,6 +50,8 @@ const mainHistorial = (() => {
         //const $row2 = document.getElementById("datos");
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
+        numeroDeRows++;
+        console.log(numeroDeRows);
             const $td = document.createElement("td");
             const $td2 = document.createElement("td");
             const $td3 = document.createElement("td");
@@ -133,7 +143,20 @@ const mainHistorial = (() => {
 
       const _initElements = async () => {
         
-        _getData();
+        _getData()
+        setTimeout(()=>{
+          console.log(numeroDeRows);
+       if(numeroDeRows == 0){
+          const $divTabla = document.getElementById("divTabla");
+          while($divTabla.firstChild){
+              $divTabla.removeChild($divTabla.lastChild);
+          }
+          const $letrero = document.createElement("h4");
+          $letrero.innerText = "No has tenido ninguna cita aun, agenda una"
+          $divTabla.appendChild($letrero);
+       }
+        },1500);
+        
         
       };
     
