@@ -84,6 +84,7 @@ const mainDocAgenda = (() => {
         }
         }else{
           alert("No ha seleccionado una fecha");
+          
         }
       };
 

@@ -8,6 +8,8 @@ import pdf from "html-pdf";
 import express from "express";
 import fs from "fs";
 import { Receta } from "../models/receta.model";
+import { StatusCodes } from "http-status-codes";
+import { sequelize } from "../database/database.config";
 
 /*
 export async function getVistaDoctor(req: Request, res: Response) {
@@ -24,8 +26,10 @@ export async function getVistaDoctor(req: Request, res: Response) {
    try{
     const records = await Cita.findAll({ raw: true});
   res.status(200).json(records);
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
  }
 
@@ -33,8 +37,10 @@ export async function getVistaDoctor(req: Request, res: Response) {
   try{
   const records = await Doctor.findAll({ raw: true});
   res.status(200).json(records);
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
@@ -44,8 +50,10 @@ export async function getReceta(req: Request, res: Response) {
   const{idCita} = req.params;
   const records = await Receta.findOne({raw:true,where:{idCita}});                
   res.status(200).json(records);
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
@@ -60,33 +68,45 @@ export async function getReceta(req: Request, res: Response) {
    }
    const data = {record:record}
    res.render("doctor-completo",data);
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
  }
 
 export async function updateCita(req: Request, res: Response) {
+  const t = await sequelize.transaction();
   try{
   const {idCita} = req.params;
   const {body} = req;
-  const entity = await Cita.findByPk(idCita);
-  await entity?.update(body);
+  const entity = await Cita.findByPk(idCita,{raw:true});
+  await entity?.update(body,{raw:true,transaction:t});
+  await t.commit();
   res.status(201).json(entity?.toJSON());
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  await t.rollback();
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
 export async function createReceta(req: Request, res: Response) {
+  const t = await sequelize.transaction();
   try{
   console.log(req.method);
   const {idCita,diagnostico,indicaciones,edad,peso,altura} = req.body;
-  const record = await Receta.create({idCita,diagnostico,indicaciones,edad,peso,altura});
+  const record = await Receta.create({idCita,diagnostico,indicaciones,edad,peso,altura},{raw:true,transaction:t});
   const data = {httpCode:201,
     message:"Registrado correctamente"};
+    await t.commit();
   res.status(201).json(data);
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  await t.rollback();
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
@@ -100,8 +120,10 @@ export async function createReceta(req: Request, res: Response) {
     const record = await Persona.findOne({raw:true,where:{idPersona}});
     const data = {record:record};
     res.render("modal-historial-citas",data);
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
  }
 
@@ -139,8 +161,10 @@ export async function createReceta(req: Request, res: Response) {
   }
     });
     
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
   }
 

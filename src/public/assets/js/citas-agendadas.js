@@ -77,7 +77,7 @@ const main = (() => {
         if(resultado["httpCode"]==201){
             modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha confimado correctamente",``);
         }else{
-          modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
+            modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
         } 
         const response = await http.get(BASE_URL+"/citas");
         

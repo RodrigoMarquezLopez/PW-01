@@ -68,7 +68,7 @@ const _actionSelectDoctor = async (event)=>{
   const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
   if($selectFecha.value != ""){
     
-    _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
+    _getCitas(doctor,new Date($selectFecha.value).toISOString().split('T')[0],response["horaEntrada"],response["horaSalida"]);
   }
 
   console.log("ME IMPRIMI");
@@ -116,7 +116,7 @@ const _actionSelectDoctor = async (event)=>{
       _restablecerHora();  
        const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
         console.log($selectFecha.value);
-        _getCitas(doctor,new Date($selectFecha.value).toISOString(),response["horaEntrada"],response["horaSalida"]);
+        _getCitas(doctor,new Date($selectFecha.value).toISOString().split('T')[0],response["horaEntrada"],response["horaSalida"]);
         console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
         console.log(new Date().getHours())
     }
@@ -151,8 +151,10 @@ const _actionSelectDoctor = async (event)=>{
         if(response.length > 0){
         for(let index = 0; index < response.length; index++){
             for(let i  = 0; i<arregloHoras.length;i++){
+              console.log(response[index]["estado"]);
               if(response[index]["estado"] != "cancelada" && response[index]["estado"] != "eliminada"){
                 if(response[index]["hora"]==arregloHoras[i]){
+                  
                     arregloHoras[i] = -1;
                 }
               }
@@ -190,7 +192,7 @@ const _actionSelectDoctor = async (event)=>{
       if($selectDoctor.value != "Doctor" && $selectFecha.value != "" && 
       $selectHora != "Elige una hora" && document.getElementById("motivo").value != ""){
           var citasPersona = await http.get(BASE_URL+`citas/${persona["idPersona"]}`);
-          if(validaciones.validacionesFechayHoraPersona(citasPersona,new Date($selectFecha.value).toISOString(),$selectHora.value)){
+          if(validaciones.validacionesFechayHoraPersona(citasPersona,new Date($selectFecha.value).toISOString().split("T")[0],$selectHora.value)){
             if(validaciones.validacionDoctor(doctor,citasPersona)){
               console.log("llegue");
               const data ={
@@ -211,7 +213,7 @@ const _actionSelectDoctor = async (event)=>{
               if(resultado["httpCode"]==201){
                   modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",`/historialcitas/${persona["idPersona"]}`);
               }else{
-                modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
+                modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","");
               }                
 
             }else{
@@ -239,7 +241,7 @@ const _actionSelectDoctor = async (event)=>{
       opciones.innerText="Hora";
       $selectHora.appendChild(opciones); 
       fecha.value = "";
-        alert("Hay campos vacios");
+      modalResultado.iniciarModal("/assets/other/tache.png","Hay campos vacios","");
 
 
           //const $selectDoctor = document.getElementById("selectDoctor");
@@ -272,13 +274,17 @@ const _actionSelectDoctor = async (event)=>{
       }else{
         salida = parseInt(horaSalida.substring(0,2));
       } 
+
+      console.log(entrada);
+      console.log(salida);
+
       console.log("===A===");
       console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
       console.log(validaciones.fechaFormatoCorrecto());
       console.log(entrada+" "+parseInt(new Date().getHours()));
       console.log(salida+" "+ parseInt(new Date().getHours()));
       if(new Date($selectFecha.value).toISOString().split('T')[0] == validaciones.fechaFormatoCorrecto() && entrada < parseInt(new Date().getHours()) ){
-        if(salida > parseInt(new Date().getHours())){
+        if(salida > (parseInt(new Date().getHours())-1)){
           entrada = new Date().getHours() +1;
         }else{
           modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas disponibles",``);
@@ -300,6 +306,9 @@ const _actionSelectDoctor = async (event)=>{
           arreglo[i] = index+":00";
           i++;
         }
+      }
+      if(entrada == salida){
+        return [];
       }
       return arreglo;
 
@@ -342,7 +351,7 @@ const _actionSelectDoctor = async (event)=>{
         var citaArreglo;
           for(var i = 0; i<citas.length;i++){
               var citaArreglo = citas[i];
-              if(citaArreglo["idDoctor"] == idDoctor && citaArreglo["estado"] == "agendada"){
+              if(citaArreglo["idDoctor"] == idDoctor && (citaArreglo["estado"] == "agendada" || citaArreglo["estado"] == "confirmada")){
                   return false;
               }
 

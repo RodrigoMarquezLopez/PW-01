@@ -3,6 +3,7 @@ import { Especialidad } from "../models/especialidad.model";
 import { Persona } from "../models/persona.model";
 import {Doctor}from "../models/doctor.model";
 import { Cita } from "../models/cita.model";
+import { StatusCodes } from "http-status-codes";
 
 
 export async function getCitas(req: Request, res: Response) {
@@ -10,8 +11,10 @@ export async function getCitas(req: Request, res: Response) {
     const {idPersona} = req.params;
     const records = await Cita.findAll({ raw: true, where:{idPersona}});
     res.status(200).json(records);
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
   }
 
@@ -19,8 +22,10 @@ export async function getCitas(req: Request, res: Response) {
     try{
     const records = await Cita.findAll({ raw: true});
   res.status(200).json(records);
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
   }
 
@@ -30,8 +35,10 @@ export async function getCitas(req: Request, res: Response) {
     const {fecha,hora} = req.body;
     const records = await Cita.findAll({ raw: true, where:{idPersona}});
     res.status(200).json(records);
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
   }
 
@@ -45,8 +52,10 @@ export async function getCitas(req: Request, res: Response) {
     const record = await Persona.findByPk(idPersona);
     const data = {record:record,verReceta:false}
     res.render("historial-citas-completo",data);
-  }catch(error){
-    res.status(500).send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
   }
 

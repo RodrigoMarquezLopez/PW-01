@@ -3,14 +3,18 @@ import { isValidPassword } from "../libraries/bycript.library";
 import { Doctor } from "../models/doctor.model";
 import { Persona } from "../models/persona.model";
 import {SesionModel} from "../models/sesion.model";
+import { StatusCodes } from "http-status-codes";
+import { sequelize } from "../database/database.config";
 
 
 export function logginView(req: Request, res: Response){
   try{
   const {error} = req.query;
   res.render("login/login-view-v2",{error});
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
@@ -65,32 +69,40 @@ export async function logginUsuario(req: Request, res: Response) {
 
     res.send("Nel prro");
     //res.redirect("/api/v1/loggin/signin?error=1");
-  } catch (error) {
-    res.send(error);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
   }
 }
 
 export async function loggout(req: Request, res: Response){
+  //const t = await sequelize.transaction();
   try{
-    if(!req.session.user){
+    /*
+    if(!req.session.idSesion){
     const idSesion = req.session.idSesion?.idSesion;
     const fecha = new Date().toString();
     const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
       where: {
         idSesion:idSesion
-      }
+      },transaction:t
     });
-  }
+  }*/
 
-  req.session.destroy((err)=>{
+  req.session.destroy(async (err)=>{
     if(err){
+      
       console.log("error al cerrar sesion");
     }
-    
+    //await t.commit()
     res.redirect("/login/clinica/signin");
   });
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+ // await t.rollback()
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
 
@@ -98,7 +110,9 @@ export async function loggout(req: Request, res: Response){
 export async function vistaError(req: Request, res: Response){
   try{
   res.render("comunes/vista-error");
-}catch(error){
-  res.status(500).send(error);
+} catch (e) {
+  const error = e as Error;
+  res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+  
 }
 }
