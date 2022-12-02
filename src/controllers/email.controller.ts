@@ -16,23 +16,29 @@ export async function sendMail(req: Request, res: Response) {
       const {idCita,idPersona} = req.params;
       
       const persona = await Persona.findByPk(idPersona);
-      const c2 = persona?.getDataValue('correo');
+      const correo = persona?.getDataValue('correo');
 
       const cita1 = await Cita.findByPk(idCita);
       const idCita1 = cita1?.getDataValue('idCita');
-      const hora = cita1?.getDataValue('idCita');
-      const idPersonaDoctor = Doctor.findOne({raw:true,});
+      const hora = cita1?.getDataValue('hora') + " hrs.";
 
-      const data ={c2,idCita1};
+      const idDoctor = cita1?.getDataValue('idDoctor');
+      const Doc = await Doctor.findByPk(idDoctor);
+      const idpersonaDoctor = Doc?.getDataValue('idPersona');
+      const personaDoctor = await Persona.findByPk(idpersonaDoctor);
+      const nombreDoctor = "Dr. "+ personaDoctor?.getDataValue('nombres') + " "+personaDoctor?.getDataValue('apellidoP') +" "+ personaDoctor?.getDataValue('apellidoM');
+
+
+      const data ={idCita1,hora,nombreDoctor};
 
       const htmlContent = await ejsLibrary.renderFileHtml({ file: "cuerpo-correo.ejs", data});
 
       try {
         let info = await emailer.sendMail({
             from: '"Médicos Especialistas 🏥" <medicosespecialistas.clinica@gmail.com>', // sender address
-            to:     c2, // list of receivers 
+            to:     correo, // list of receivers 
             subject: "Confirma tu cita" , // Subject line
-            text: "Ya jalo esta madre ", // plain text body
+            text: " ", // plain text body
             html: htmlContent, // html body
           });
       } catch (error) {
@@ -49,14 +55,6 @@ export async function sendMail(req: Request, res: Response) {
       
   }
 
-  export async function deReserva(){
-    //const correo = await Persona.findAll({attributes:['correo'],where:{idPersona}} );
-      //const cita = await Cita.findAll({attributes:['idCita'],where:{idCita}});
-      
-      
-      
-      
-  }
-
+ 
 
 
