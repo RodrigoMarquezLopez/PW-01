@@ -5,6 +5,10 @@ import { Persona } from "../models/persona.model";
 import { Cita } from "../models/cita.model";
 import { where } from "sequelize";
 
+import * as ejsLibrary from "../libraries/ejs.library";
+import { mailer } from "../libraries/mailer.library";
+import { Doctor } from "../models/doctor.model";
+
 
 
 
@@ -12,19 +16,24 @@ export async function sendMail(req: Request, res: Response) {
       const {idCita,idPersona} = req.params;
       
       const persona = await Persona.findByPk(idPersona);
-      const correo = await Persona.findAll({attributes:['correo'],where:{idPersona}} );
-      const cita = await Cita.findAll({attributes:['idCita'],where:{idCita}});
-      
-      console.log(correo);
-      
+      const c2 = persona?.getDataValue('correo');
+
+      const cita1 = await Cita.findByPk(idCita);
+      const idCita1 = cita1?.getDataValue('idCita');
+      const hora = cita1?.getDataValue('idCita');
+      const idPersonaDoctor = Doctor.findOne({raw:true,});
+
+      const data ={c2,idCita1};
+
+      const htmlContent = await ejsLibrary.renderFileHtml({ file: "cuerpo-correo.ejs", data});
+
       try {
         let info = await emailer.sendMail({
             from: '"Médicos Especialistas 🏥" <medicosespecialistas.clinica@gmail.com>', // sender address
-            to:     JSON.stringify(correo), // list of receivers 
+            to:     c2, // list of receivers 
             subject: "Confirma tu cita" , // Subject line
             text: "Ya jalo esta madre ", // plain text body
-            html: 
-            "<h2>Recuerda confirmar tu cita</h2>", // html body
+            html: htmlContent, // html body
           });
       } catch (error) {
         console.log("nel prro");
@@ -35,6 +44,17 @@ export async function sendMail(req: Request, res: Response) {
           idCita
         }
       });
+      
+    
+      
+  }
+
+  export async function deReserva(){
+    //const correo = await Persona.findAll({attributes:['correo'],where:{idPersona}} );
+      //const cita = await Cita.findAll({attributes:['idCita'],where:{idCita}});
+      
+      
+      
       
   }
 

@@ -51,6 +51,7 @@ export async function getDatos(req: Request, res: Response) {
 
   export async function elimCita(req: Request, res: Response) {
     const {idCita} =req.params;
+    
     await Cita.update({ estado:"eliminada" }, {
       where: {
         idCita

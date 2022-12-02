@@ -74,14 +74,10 @@ const main = (() => {
         console.log(idC);
         console.log(idP);
         const request = await http.get(BASE_URL+`/correo/confirmar/${idC}/${idP}`);
-        const response = await http.get(BASE_URL+"/citas");
+        
         
 
-        for(let index = 0; index < response.length; index++){
-          const $row1 = _createRow(response[index]);
-          console.log($cuerpoTabla.childNodes);
         
-     }
         
       };
     
