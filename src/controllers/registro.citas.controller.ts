@@ -33,7 +33,7 @@ export async function getRegistro(req: Request, res: Response) {
   try{
   const {idPersona} = req.params;
   if(req.session.user?.idPersona != Number(idPersona)){
-    return res.send("Que quieres aqui qliao");
+    return res.redirect("/login/clinica/error");
  }
   const record = await Persona.findByPk(idPersona);
   console.log(record);

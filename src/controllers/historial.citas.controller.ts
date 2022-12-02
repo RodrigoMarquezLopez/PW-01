@@ -47,7 +47,7 @@ export async function getCitas(req: Request, res: Response) {
     try{
     const {idPersona} = req.params;
     if(req.session.user?.idPersona != Number(idPersona)){
-      return res.send("Que quieres aqui qliao");
+      return res.redirect("/login/clinica/error");
    }
     const record = await Persona.findByPk(idPersona);
     const data = {record:record,verReceta:false}

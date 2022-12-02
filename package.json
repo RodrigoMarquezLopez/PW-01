@@ -11,14 +11,19 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "start": "npm run build && node dist/src/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "init": "npm install -D -s",
+    "copy-files":"npm run copy-views && npm run copy-public",
+    "copy-views":  "copyfiles -u 1 \"./src/views/**/*.ejs\" \"dist\"",
+    "copy-public":  "copyfiles -u 1 \"./src/public/**/*.*\" \"dist\""
   },
   "keywords": [],
-  "author": "AdrianHernandezIslas",
+  "author": "CalvoMarquezPerez",
   "license": "ISC",
   "devDependencies": {
     "@types/ejs": "^3.1.1",
     "@types/nodemailer": "^6.4.6",
+    "copyfiles": "^2.4.1",
     "nodemon": "^2.0.16",
     "rimraf": "^3.0.2",
     "ts-node": "^10.8.0"

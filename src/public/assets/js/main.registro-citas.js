@@ -211,19 +211,19 @@ const _actionSelectDoctor = async (event)=>{
               
               const resultado = await http.post(data);    
               if(resultado["httpCode"]==201){
-                  modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",`/historialcitas/${persona["idPersona"]}`);
+                  modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",`/informacion/${persona["idPersona"]}`);
               }else{
                 modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","");
               }                
 
             }else{
               //alert("ya tienes una cita agendada con el doctor");
-              modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita agendada con este doctor",`/historialcitas/${persona["idPersona"]}`);
+              modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita agendada con este doctor",`/informacion/${persona["idPersona"]}`);
             }
               
           }else{
             //alert("ya tienes una cita para ese dia y hora");
-            modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita programada ese dia y a esa hora",`/historialcitas/${persona["idPersona"]}`);
+            modalResultado.iniciarModal("/assets/other/tache.png","Ya tienes una cita programada ese dia y a esa hora",`/informacion/${persona["idPersona"]}`);
           }
                      
       }else{

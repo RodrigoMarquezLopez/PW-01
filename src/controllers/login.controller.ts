@@ -21,6 +21,7 @@ export function logginView(req: Request, res: Response){
 
 export async function logginUsuario(req: Request, res: Response) {
   console.log("entre");
+  //const t = sequelize.transaction();
   try {
     const { correo, contrasenia } = req.body;
     const usuarioResponse = await Persona.findOne({raw:true,where:{correo}});
@@ -42,7 +43,7 @@ export async function logginUsuario(req: Request, res: Response) {
         }*/
         const idPersona = user["idPersona"];
         console.log(idPersona);
-        const sesionRegistro = await SesionModel.create({idPersona});
+        const sesionRegistro = await SesionModel.create({idPersona},{raw:true});
         req.session.user = user;
         if(sesionRegistro !== null){
           console.log("si enetre al json");
@@ -67,8 +68,7 @@ export async function logginUsuario(req: Request, res: Response) {
       }
     }
 
-    res.send("Nel prro");
-    //res.redirect("/api/v1/loggin/signin?error=1");
+    res.redirect("/login/clinica/signin?error=1");
   } catch (e) {
     const error = e as Error;
     res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
@@ -77,18 +77,18 @@ export async function logginUsuario(req: Request, res: Response) {
 }
 
 export async function loggout(req: Request, res: Response){
-  //const t = await sequelize.transaction();
+  const t = await sequelize.transaction();
   try{
-    /*
-    if(!req.session.idSesion){
-    const idSesion = req.session.idSesion?.idSesion;
+    
+    if(!req.session){
+    const {user,idSesion}  = req.session;
     const fecha = new Date().toString();
     const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
       where: {
         idSesion:idSesion
       },transaction:t
     });
-  }*/
+  }
 
   req.session.destroy(async (err)=>{
     if(err){

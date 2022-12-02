@@ -26,7 +26,12 @@ export async function getDatos(req: Request, res: Response) {
     const records = await Persona.findByPk(idPersona);
     const data = {record: records}
     const data2 = {record: records}
+    
+    if(req.session.user?.idPersona != Number(idPersona)){
+      return res.redirect("/login/clinica/error");
+    }
     res.render("informacion-usuario-completo",data);
+    
   } catch (e) {
     const error = e as Error;
     res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
@@ -135,6 +140,10 @@ export async function getDatos(req: Request, res: Response) {
     const {idDoctor} = req.params;
     const records = await Doctor.findByPk(idDoctor);
     const data = {record: records}
+    const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
     res.render("informacion-doctor-completo",data);
   } catch (e) {
     const error = e as Error;

@@ -23,7 +23,7 @@ export async function createUsuario(req: Request, res: Response) {
       data: { correo: mail, nombreUsuario: nombre },
     });
     await t.commit();
-    res.status(StatusCodes.ACCEPTED).render("./login/registrar-persona");
+    res.status(StatusCodes.ACCEPTED).render("login/login-view-v2");
   } catch (e) {
     const error = e as Error;
     res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });

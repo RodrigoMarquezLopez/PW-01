@@ -74,11 +74,13 @@ const main = (() => {
         console.log(idC);
         console.log(idP);
         const resultado = await http.get(BASE_URL+`/correo/confirmar/${idC}/${idP}`);
+        $btn.disabled = true;
         if(resultado["httpCode"]==201){
-            modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha confimado correctamente",``);
+            modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha confimado correctamente",`/informacion/${persona["idPersona"]}`);
         }else{
-            modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
+            modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","");
         } 
+        /*
         const response = await http.get(BASE_URL+"/citas");
         
 
@@ -86,7 +88,7 @@ const main = (() => {
           const $row1 = _createRow(response[index]);
           console.log($cuerpoTabla.childNodes);
         
-     }
+     }*/
         
       };
     

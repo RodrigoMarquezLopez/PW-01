@@ -19,14 +19,15 @@ export const sessionConfig = session({
     secure: false,
     httpOnly: true,
     signed: true,
-    maxAge: 1 * (60 * 1000),
+    maxAge: 5 * (60 * 1000),
   },
 });
 
 export const sessionMiddleware = (req: Request, res: Response, next: NextFunction)=> {
-  const {user} =  req.session;
+  const {user,idSesion} =  req.session;
   console.log("a"+user);
   res.locals.user = user;
+  res.locals.idSesion = idSesion;
   console.log("as"+req.session);
   next();
 }

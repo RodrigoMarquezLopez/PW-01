@@ -224,7 +224,15 @@ const mainDocAgenda = (() => {
                     "altura":$formAltura.value,
                     },
             };
-            await http.post(data);
+            const resultado = await http.post(data);
+            if(resultado["httpCode"]==201){
+              botonReceta.disabled = true;
+              event.target.disabled = true;
+              modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",``);
+          }else{
+            modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","");
+          } 
+            /*
             console.log(event.target.value);
             const datos = {
               "url":BASE_URL+`doctor/cita/${event.target.value}`,
@@ -233,8 +241,8 @@ const mainDocAgenda = (() => {
               },
             };
             await http.put(datos);
-            botonReceta.disabled = true;
-            event.target.disabled = true;
+            */
+            
           }
 
       }
@@ -284,7 +292,7 @@ const mainDocAgenda = (() => {
     const BASE_URL = "http://localhost:4000/";
     //const persona = JSON.parse(OBJpersona);
      var persona;     
-
+      var numeroDeRows = 0;
     //Obteniendo los elementos pertenecientes al modal
 
     
@@ -299,6 +307,7 @@ const mainDocAgenda = (() => {
       persona = await http.get(BASE_URL+`persona/${idP}`);
         const response = await http.get(BASE_URL+"citas");
         console.log("Soy longitud response"+response.length);
+        numeroDeRows = 0;
         for(let index = 0; index < response.length; index++){
              _createRow(response[index]);
              console.log($cuerpoTabla.childNodes);
@@ -319,6 +328,7 @@ const mainDocAgenda = (() => {
         //const $row2 = document.getElementById("datos");
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
+        numeroDeRows++;
             const $td = document.createElement("td");
             const $td2 = document.createElement("td");
             const $td3 = document.createElement("td");
@@ -396,6 +406,18 @@ const mainDocAgenda = (() => {
       const _initElements = async (idP) => {
         
         _getData(idP);
+        setTimeout(()=>{
+          console.log(numeroDeRows);
+       if(numeroDeRows == 0){
+          const $divTabla = document.getElementById("divTabla");
+          while($divTabla.firstChild){
+              $divTabla.removeChild($divTabla.lastChild);
+          }
+          const $letrero = document.createElement("h4");
+          $letrero.innerText = "No has tenido ninguna cita aun, agenda una"
+          $divTabla.appendChild($letrero);
+       }
+        },1500);
         
       };
     

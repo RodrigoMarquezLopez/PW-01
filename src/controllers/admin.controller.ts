@@ -70,6 +70,10 @@ export async function doctorResponse(req: Request, res: Response) {
   try{
   const doctores = await getDoctoresAdmin();
   //console.log("Los doctores son", JSON.stringify(doctores));
+  const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
   return res.render("buscar-citas-completo",{ doctores});
 } catch (e) {
   const error = e as Error;
@@ -100,6 +104,10 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
       //console.log(record);
       //const data = {record:record}
      try{ 
+      const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
     res.status(200).render("agregar-doctor-completo");
   } catch (e) {
     const error = e as Error;
@@ -114,6 +122,10 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
       //console.log(record);
       //const data = {record:record}
        try{
+        const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
     res.status(200).render("agregar-esp-completo");
   } catch (e) {
     const error = e as Error;
@@ -170,6 +182,10 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
       //console.log(record);
       //const data = {record:record}
     try{   
+      const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
     res.status(200).render("buscar-citas-completo");
   } catch (e) {
     const error = e as Error;

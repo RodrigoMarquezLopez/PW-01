@@ -10,6 +10,8 @@ import fs from "fs";
 import { Receta } from "../models/receta.model";
 import { StatusCodes } from "http-status-codes";
 import { sequelize } from "../database/database.config";
+import { renderFileHtml, renderReceta } from "../libraries/ejs.library";
+import path from "path";
 
 /*
 export async function getVistaDoctor(req: Request, res: Response) {
@@ -64,7 +66,7 @@ export async function getReceta(req: Request, res: Response) {
    const record = await Doctor.findByPk(idDoctor);
    const persona = await Persona.findByPk(record?.getDataValue("idPersona")); 
    if(req.session.user?.idPersona != persona?.getDataValue("idPersona")){
-      return res.send("Que quieres aqui qliao");
+      return res.redirect("/login/clinica/error");
    }
    const data = {record:record}
    res.render("doctor-completo",data);
@@ -79,11 +81,13 @@ export async function updateCita(req: Request, res: Response) {
   const t = await sequelize.transaction();
   try{
   const {idCita} = req.params;
-  const {body} = req;
-  const entity = await Cita.findByPk(idCita,{raw:true});
-  await entity?.update(body,{raw:true,transaction:t});
-  await t.commit();
-  res.status(201).json(entity?.toJSON());
+  //const {body} = req;
+  const entity= await Cita.update({ estado:"finalizada" }, {
+    where: {
+      idCita
+    },transaction:t
+  });
+  res.status(201).json(entity);
 } catch (e) {
   const error = e as Error;
   await t.rollback();
@@ -98,6 +102,11 @@ export async function createReceta(req: Request, res: Response) {
   console.log(req.method);
   const {idCita,diagnostico,indicaciones,edad,peso,altura} = req.body;
   const record = await Receta.create({idCita,diagnostico,indicaciones,edad,peso,altura},{raw:true,transaction:t});
+  const entity= await Cita.update({ estado:"finalizada" }, {
+    where: {
+      idCita
+    },transaction:t
+  });
   const data = {httpCode:201,
     message:"Registrado correctamente"};
     await t.commit();
@@ -119,6 +128,10 @@ export async function createReceta(req: Request, res: Response) {
     const idPersona = req.params.idPersona;
     const record = await Persona.findOne({raw:true,where:{idPersona}});
     const data = {record:record};
+    //const {idPersona} = req.params;
+  if(req.session.user?.idPersona != Number(idPersona)){
+    return res.redirect("/login/clinica/error");
+ }
     res.render("modal-historial-citas",data);
   } catch (e) {
     const error = e as Error;
@@ -129,42 +142,40 @@ export async function createReceta(req: Request, res: Response) {
 
  export async function generarPdf(req:Request,res:Response) {
   try{
-  console.log("NO di error");
-  console.log(req.body);
-  //var html;
-  const {doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura} = req.body;
-  
-    ejs.renderFile(__dirname+"/receta.ejs",{doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura},(err,result)=>{
-      if (err) {
-        console.log(err);
-        res.send(err);
-  } else {
-      //html = result;
-      console.log("NO di error");
-      let options = {
-          "height": "11in",
-          "width": "8.5in",
-          "header": {
-              "height": "10mm"
-          },
-          "footer": {
-              "height": "10mm",
-          },
-          "border": "0.5in", 
-      };
-      pdf.create(result,options).toFile(function (err,result) {
-        console.log(result.filename);
-        var data =fs.readFileSync(result.filename);
-        res.contentType("application/pdf");
-        res.send(data);
-      })
-  }
-    });
-    
-  } catch (e) {
-    const error = e as Error;
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
-    
-  }
+    console.log("NO di error");
+    console.log(req.body);
+    //var html;
+    const {doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura} = req.body;
+    const filePath = path.join(__dirname, "..", "views","templates", "receta.ejs");
+      ejs.renderFile(filePath,{doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura},(err,result)=>{
+        if (err) {
+          console.log(err);
+          res.send(err);
+    } else {
+        //html = result;
+        console.log("NO di error");
+        let options = {
+            "height": "11in",
+            "width": "8.5in",
+            "header": {
+                "height": "10mm"
+            },
+            "footer": {
+                "height": "10mm",
+            },
+            "border": "0.5in", 
+        };
+        pdf.create(result,options).toFile(function (err,result) {
+          console.log(result.filename);
+          var data =fs.readFileSync(result.filename);
+          res.contentType("application/pdf");
+          res.send(data);
+        })
+    }
+      });
+      
+    }catch(error){
+      res.status(500).send(error);
+    }
   }
 
