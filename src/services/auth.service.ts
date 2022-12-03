@@ -5,7 +5,7 @@ export async function sendUserCredentials(params: { data: object | undefined; ma
   const { data, mail } = params;
   const htmlContent = await ejsLibrary.renderFileHtml({ data:data || {}, file: "credenciales-template.ejs"});
   const responseMailer = await mailer.sendMail({
-    from: process.env.MAILER_USER,
+    from: '"Médicos Especialistas 🏥" <medicosespecialistas.clinica@gmail.com>',
     to: mail,
     html: htmlContent,
     subject:"Credenciales de Acceso"

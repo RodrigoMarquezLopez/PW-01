@@ -141,9 +141,6 @@ export async function getDatos(req: Request, res: Response) {
     const records = await Doctor.findByPk(idDoctor);
     const data = {record: records}
     const {idPersona} = req.params;
-  if(req.session.user?.idPersona != Number(idPersona)){
-    return res.redirect("/login/clinica/error");
- }
     res.render("informacion-doctor-completo",data);
   } catch (e) {
     const error = e as Error;

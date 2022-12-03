@@ -63,12 +63,14 @@ export async function logginUsuario(req: Request, res: Response) {
           return res.redirect(`/doctor/agenda/${idDoctor}`);
         }
         if(user["rol"]=="3333"){
+          console.log("soy admin");
           return res.redirect(`/admin/buscarcita`);
         }
       }
+    }else{
+      res.redirect("/login/clinica/signin?error=1");
     }
 
-    res.redirect("/login/clinica/signin?error=1");
   } catch (e) {
     const error = e as Error;
     res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });

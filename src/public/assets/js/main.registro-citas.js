@@ -310,6 +310,9 @@ const _actionSelectDoctor = async (event)=>{
       if(entrada == salida){
         return [];
       }
+      if(arreglo[0]==10){
+        return [];
+      }
       return arreglo;
 
 
