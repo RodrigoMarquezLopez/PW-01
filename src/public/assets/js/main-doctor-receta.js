@@ -1,5 +1,5 @@
 const mainModalReceta =  (() => {
-    const BASE_URL = "http://localhost:10000/";
+    const BASE_URL = "https://clinicaesp-q.onrender.com/";
     var doctor;
     const iniciarModal = (item = {}) =>{
         doctor = item;
