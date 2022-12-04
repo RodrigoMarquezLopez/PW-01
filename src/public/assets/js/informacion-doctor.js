@@ -5,7 +5,7 @@ const mainDoctor = (()=>{
     const $cedula = document.getElementById("ced");
     const $horae = document.getElementById("he");
     const $horas = document.getElementById("hs");
-    const BASE_URL = "https://clinicaesp-q.onrender.com";
+    const BASE_URL = "https://clinicaesp-d.onrender.com";
     const persona = JSON.parse(OBJpersona);
     console.log(persona);
 

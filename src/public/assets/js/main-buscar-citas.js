@@ -21,7 +21,7 @@ const mainBuscarCitas = (() => {
     console.log(fechaActualCorrecta);
     // var identificadorPersona = null;
     //var cita;
-    const BASE_URL = "https://clinicaesp-q.onrender.com/";
+    const BASE_URL = "https://clinicaesp-d.onrender.com/";
     //$selectDoctor.selectmenu("disble");
     const $btnBuscarCita = document.getElementById("btn-buscar-cita");
     //console.log($nombreDoctor.getSelected);
