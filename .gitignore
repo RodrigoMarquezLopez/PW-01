@@ -1,6 +1,5 @@
 /node_modules
 /dist
-*.pdf
 *.zip
 .env
 package-lock.json

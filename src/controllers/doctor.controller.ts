@@ -165,7 +165,9 @@ export async function createReceta(req: Request, res: Response) {
             },
             "border": "0.5in", 
         };
-        pdf.create(result,options).toFile(function (err,result) {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
+        const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
+        pdf.create(result,options).toFile(pdfPath,function (err,result) {
           console.log(result.filename);
           var data =fs.readFileSync(result.filename);
           res.contentType("application/pdf");
