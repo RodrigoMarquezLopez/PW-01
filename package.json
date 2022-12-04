@@ -13,9 +13,9 @@
     "start": "npm run build && npm run copy-files && node dist/index.js",
     "dev": "nodemon src/index.ts",
     "init": "npm install -D -s",
-    "copy-files":"npm run copy-views && npm run copy-public",
-    "copy-views":  "copyfiles -u 1 \"./src/views/**/*.ejs\" \"dist\"",
-    "copy-public":  "copyfiles -u 1 \"./src/public/**/*.*\" \"dist\""
+    "copy-files": "npm run copy-views && npm run copy-public",
+    "copy-views": "copyfiles -u 1 \"./src/views/**/*.ejs\" \"dist\"",
+    "copy-public": "copyfiles -u 1 \"./src/public/**/*.*\" \"dist\""
   },
   "keywords": [],
   "author": "CalvoMarquezPerez",
@@ -48,6 +48,7 @@
     "nodemailer": "^6.8.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "phantomjs-prebuilt": "^2.1.16",
     "sequelize": "^6.20.0",
     "typescript": "^4.7.2"
   }
