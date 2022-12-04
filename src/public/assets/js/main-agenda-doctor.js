@@ -120,9 +120,9 @@ const mainDocAgenda = (() => {
             }
             const comprobarReceta = await http.get(BASE_URL+`doctor/receta/${item["idCita"]}`);
               if(comprobarReceta != null){
-                $btn.disabled=true;
-               $btn2.disabled=true;
-                $btn3.disabled=true;
+              $btn.disabled=true;
+              $btn2.disabled=true;
+              $btn3.disabled=true;
               }
 
 
