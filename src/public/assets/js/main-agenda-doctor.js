@@ -114,9 +114,9 @@ const mainDocAgenda = (() => {
             
             if(fechaActualCorrecta != (item["fecha"].toString().split('T')[0])||item["estado"]==="terminada"){
 
-              $btn.disabled=true;
-              $btn2.disabled=true;
-              $btn3.disabled=true;
+              //$btn.disabled=true;
+              //$btn2.disabled=true;
+              //$btn3.disabled=true;
             }
             const comprobarReceta = await http.get(BASE_URL+`doctor/receta/${item["idCita"]}`);
               if(comprobarReceta != null){
