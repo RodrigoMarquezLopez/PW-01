@@ -66,6 +66,8 @@ export async function logginUsuario(req: Request, res: Response) {
           console.log("soy admin");
           return res.redirect(`/admin/buscarcita`);
         }
+      }else{
+        res.redirect("/login/clinica/signin?error=1");
       }
     }else{
       res.redirect("/login/clinica/signin?error=1");

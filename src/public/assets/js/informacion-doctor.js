@@ -5,7 +5,7 @@ const mainDoctor = (()=>{
     const $cedula = document.getElementById("ced");
     const $horae = document.getElementById("he");
     const $horas = document.getElementById("hs");
-    const BASE_URL = "http://localhost:4000";
+    const BASE_URL = "http://localhost:10000";
     const persona = JSON.parse(OBJpersona);
     console.log(persona);
 

@@ -12,7 +12,7 @@ const mainAgregarDoctor = (()=>{
     const $horaEntrada = document.getElementById("horaEntrada");
     const $horaSalida = document.getElementById("horaSalida");
     const $btn = document.getElementById("guardar");
-    const BASE_URL = "http://localhost:4000/";
+    const BASE_URL = "http://localhost:10000/";
     
     const cargarValores = async ()=>{
         const response = await http.get(BASE_URL);

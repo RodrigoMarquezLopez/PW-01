@@ -7,6 +7,7 @@ const DB_HOST = process.env.DB_HOST as string;//"postgres://clinica_user:6E1trAf
 const DB_PORT = process.env.DB_PORT as string;
 const DB_DIALECT = "postgres";
 
+
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   
   host: DB_HOST,
