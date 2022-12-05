@@ -165,6 +165,7 @@ export async function createReceta(req: Request, res: Response) {
             },
             "border": "0.5in", 
         };
+        /*
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
         const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
         const pdfResultado = pdf.create(result,options).toFile(pdfPath,function (err,result) {
@@ -177,6 +178,29 @@ export async function createReceta(req: Request, res: Response) {
               return res.send(err);
           }
         })
+          */
+         pdf.create(result,options).toStream((err,pdfStream)=>{
+          if (err) {   
+            // handle error and return a error response code
+            console.log(err)
+            return res.sendStatus(500)
+          } else {
+            // send a status code of 200 OK
+            res.statusCode = 200             
+      
+            // once we are done reading end the response
+            pdfStream.on('end', () => {
+              // done reading
+              return res.end()
+            })
+      
+            // pipe the contents of the PDF directly to the response
+            pdfStream.pipe(res)
+          }
+
+         });
+
+
     }
       });
       
