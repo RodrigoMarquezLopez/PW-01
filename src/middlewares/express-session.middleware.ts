@@ -22,7 +22,12 @@ export const sessionConfig = session({
     maxAge: 5 * (60 * 1000),
   },
 });
-
+/**
+ * Configuiracion de los parametros para una cookie
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const sessionMiddleware = (req: Request, res: Response, next: NextFunction)=> {
   const {user,idSesion} =  req.session;
   console.log("a"+user);

@@ -3,7 +3,11 @@ import path from "path";
 import pdf from "html-pdf";
 import fs from "fs";
 
-
+/**
+ * FUncion para renderizar un archivo ejs a html
+ * @param params 
+ * @returns 
+ */
 export async function renderFileHtml(params: { file:string, data:object }) {
   const { file, data } = params;
   const filePath = path.join(__dirname, "..", "views","templates", file);

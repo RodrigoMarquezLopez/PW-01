@@ -5,7 +5,11 @@ import {Doctor}from "../models/doctor.model";
 import { Cita } from "../models/cita.model";
 import { StatusCodes } from "http-status-codes";
 
-
+/**
+ * Funcion para obtener la citas de acuerdo a la persona
+ * @param req idPersona
+ * @param res json
+ */
 export async function getCitas(req: Request, res: Response) {
   try{
     const {idPersona} = req.params;
@@ -17,7 +21,11 @@ export async function getCitas(req: Request, res: Response) {
     
   }
   }
-
+/**
+ * Funcion para obtener todas las citas de la base de datos
+ * @param req 
+ * @param res json
+ */
   export async function getCitasGeneral(req: Request, res: Response) {
     try{
     const records = await Cita.findAll({ raw: true});
@@ -29,6 +37,11 @@ export async function getCitas(req: Request, res: Response) {
 }
   }
 
+/**
+ * Obtine las citas de una persona por su idPersona
+ * @param req idPersona
+ * @param res json
+ */  
   export async function getCitaDatos(req: Request, res: Response) {
     try{
     const {idPersona} = req.params;
@@ -42,7 +55,12 @@ export async function getCitas(req: Request, res: Response) {
   }
   }
 
-
+/**
+ * FUncion para renderizar la vista con el historial del usuario
+ * @param req idPersona
+ * @param res render ejs
+ * @returns 
+ */
   export async function getHistorial(req: Request, res: Response) {
     try{
     const {idPersona} = req.params;

@@ -7,7 +7,11 @@ import { StatusCodes } from "http-status-codes";
 import * as authService from "../services/auth.service";
 import { sequelize } from "../database/database.config";
 
-
+/**
+ * Funcion que regresa todas las citas de la base de datos
+ * @param req 
+ * @param res json
+ */
 
 export async function getCitasGeneral2(req: Request, res: Response) {
   try{
@@ -20,6 +24,12 @@ export async function getCitasGeneral2(req: Request, res: Response) {
 }
 }
 
+/**
+ * Funcion que regresa todas las personas registradas en la base datos 
+ * @param req 
+ * @param res json
+ */
+
 export async function getPersonaGeneral2(req: Request, res: Response) {
   try{
   const records = await Persona.findAll({ raw: true});
@@ -31,6 +41,11 @@ export async function getPersonaGeneral2(req: Request, res: Response) {
 }
 }
 
+/**
+ * Funcion que regresa todos los doctores de la base de datos
+ * @param req 
+ * @param res json
+ */
 export async function getDoctoresGeneral2(req: Request, res: Response) {
   try{
   const records = await Doctor.findAll({ raw: true});
@@ -41,7 +56,11 @@ res.status(200).json(records);
   
 }
 }
-
+/**
+ * Funcion que regresa una persona por llave primaria
+ * @param req idPersona
+ * @param res json
+ */
 export async function getPersona2(req: Request, res: Response) {
   try{
   const {idPersona} = req.params; 
@@ -53,7 +72,11 @@ export async function getPersona2(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * Funcion que busca un doctor por idPersona 
+ * @param req idPersona
+ * @param res json
+ */
 export async function  getDoctor2(req: Request, res: Response) {
   try{
   const {idPersona} = req.params;
@@ -65,7 +88,12 @@ export async function  getDoctor2(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * Funcion que genera la vista de las citas de los doctores
+ * @param req -
+ * @param res render ejs o error
+ * @returns render ejs o error
+ */
 export async function doctorResponse(req: Request, res: Response) {
   try{
   const doctores = await getDoctoresAdmin();
@@ -80,7 +108,10 @@ export async function doctorResponse(req: Request, res: Response) {
   
 }
 
-
+/**
+ * Funcion auxiliar que regresa todos los doctores de la base de datos
+ * @returns object
+ */
 export async function getDoctoresAdmin() {
   return await Doctor.findAll()
   .then((doctores) => {
@@ -94,7 +125,11 @@ export async function getDoctoresAdmin() {
   });
 }
   
-
+/**
+ * Funcion que genera la vista para agregar un nuevo doctor
+ * @param req -
+ * @param res render ejs
+ */
 export async function getVistaAddDoctor(req: Request, res: Response) {
     //const {idPersona} = req.params;
       //const record = await Persona.findByPk(idPersona);
@@ -109,7 +144,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
     
   }
   }
-
+/**
+ * Funcion que genera la vista para agregar una nueva especialidad
+ * @param req -
+ * @param res render ejs
+ */
   export async function getVistaAddEsp(req: Request, res: Response) {
     //const {idPersona} = req.params;
       //const record = await Persona.findByPk(idPersona);
@@ -125,7 +164,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
   }
 
-
+/**
+ * Funcion para insertar un nuevo doctor 
+ * @param req nombres,apellidoP,apellidoM,correo,contrasenia,contraseniaUnhash,idEspecialidad,cedula,horaEntrada,horaSalida
+ * @param res json
+ */
   export async function createDoctor(req: Request, res: Response) {
     const t = await sequelize.transaction();
     try {
@@ -149,7 +192,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
     }
   }
 
-
+/**
+ * Funcion para insertar una nueva especialidad
+ * @param req nombreEsp,descripcion
+ * @param res json
+ */
   export async function createEspecialidad(req: Request, res: Response) {
       const t = await sequelize.transaction();
       try{
@@ -166,7 +213,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
         res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
       }
   }
-
+/**
+ * 
+ * @param req 
+ * @param res 
+ */
   export async function getVistaAdminCitas(req: Request, res: Response) {
     //const {idPersona} = req.params;
       //const record = await Persona.findByPk(idPersona);

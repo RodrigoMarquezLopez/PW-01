@@ -6,7 +6,11 @@ import {SesionModel} from "../models/sesion.model";
 import { StatusCodes } from "http-status-codes";
 import { sequelize } from "../database/database.config";
 
-
+/**
+ * FUncion para cargar la vista del login
+ * @param req error
+ * @param res render ejs
+ */
 export function logginView(req: Request, res: Response){
   try{
   const {error} = req.query;
@@ -18,7 +22,12 @@ export function logginView(req: Request, res: Response){
 }
 }
 
-
+/**
+ * Funcion para crear la sesion del usuario y poder insertarlo en la tabla sesiones
+ * @param req correo, contraseña
+ * @param res render ejs
+ * @returns 
+ */
 export async function logginUsuario(req: Request, res: Response) {
   console.log("entre");
   //const t = sequelize.transaction();
@@ -79,7 +88,11 @@ export async function logginUsuario(req: Request, res: Response) {
     
   }
 }
-
+/**
+ * Funcion para comprobar salidas adecuatas del sistema
+ * @param req 
+ * @param res 
+ */
 export async function loggout(req: Request, res: Response){
   const t = await sequelize.transaction();
   try{
@@ -110,7 +123,11 @@ export async function loggout(req: Request, res: Response){
 }
 }
 
-
+/**
+ * Renderizacion de la vista errores
+ * @param req 
+ * @param res 
+ */
 export async function vistaError(req: Request, res: Response){
   try{
   res.render("comunes/vista-error");

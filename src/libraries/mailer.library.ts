@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
-
+/**
+ * Configuraciond el transporte de la libreria nodemailer
+ */
 export const mailer = nodemailer.createTransport({
     service: process.env.MAILER_SERVICE,
     auth: {

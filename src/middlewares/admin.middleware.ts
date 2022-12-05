@@ -1,7 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 
 
-
+/**
+ * Validacion de que la ruta sea para un administrativo
+ * @param req sesion
+ * @param res redirecionamiento en caso de error
+ * @param next 
+ * @returns 
+ */
 export function validacionRutasAdmin(req: Request, res: Response, next: NextFunction){
     console.log("entre en el middleware Loggin");
     

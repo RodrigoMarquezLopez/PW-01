@@ -6,7 +6,11 @@ import { Doctor } from "../models/doctor.model";
 import { sequelize } from "../database/database.config";
 import * as authService from "../services/auth.service";
 
-
+/**
+ * Funcion que envia un correo por confirmar una cita
+ * @param req idCita,idPersona
+ * @param res json
+ */
 
 
 export async function sendMail(req: Request, res: Response) {

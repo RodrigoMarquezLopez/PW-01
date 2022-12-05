@@ -23,7 +23,11 @@ export async function getVistaDoctor(req: Request, res: Response) {
   res.status(200).render("doctor-completo");
     
   }*/
-
+/**
+ * Funcion que genera todas las citas para doctores
+ * @param req 
+ * @param res json
+ */
   export async function getCitasDoctor(req: Request, res: Response) {
    try{
     const records = await Cita.findAll({ raw: true});
@@ -34,7 +38,11 @@ export async function getVistaDoctor(req: Request, res: Response) {
   
 }
  }
-
+/**
+ * Funcion para recuperar los doctores de la base de datos
+ * @param req 
+ * @param res json
+ */
  export async function getDoctor2(req: Request, res: Response) {
   try{
   const records = await Doctor.findAll({ raw: true});
@@ -46,7 +54,11 @@ export async function getVistaDoctor(req: Request, res: Response) {
 }
 }
 
-
+/**
+ * Funcion para buscar una receta por id de Cita
+ * @param req idCita
+ * @param res json
+ */
 export async function getReceta(req: Request, res: Response) {
   try{
   const{idCita} = req.params;
@@ -59,7 +71,12 @@ export async function getReceta(req: Request, res: Response) {
 }
 }
 
-
+/**
+ * Funcion para generar generar la vista de agenda
+ * @param req idDoctor
+ * @param res render ejs
+ * @returns 
+ */
  export async function getAgenda(req: Request, res: Response) {
   try{
    const {idDoctor} = req.params;
@@ -76,7 +93,11 @@ export async function getReceta(req: Request, res: Response) {
     
   }
  }
-
+/**
+ * Funcion para actualizar el estado de la cita a finalizada
+ * @param req idCita
+ * @param res json
+ */
 export async function updateCita(req: Request, res: Response) {
   const t = await sequelize.transaction();
   try{
@@ -95,7 +116,11 @@ export async function updateCita(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * Funcion para insertar una receta en la base de datos
+ * @param req idCita,diagnostico,indicaciones,edad,peso,altura
+ * @param res json
+ */
 export async function createReceta(req: Request, res: Response) {
   const t = await sequelize.transaction();
   try{
@@ -120,7 +145,12 @@ export async function createReceta(req: Request, res: Response) {
 }
 
 
-
+/**
+ * Renderiza la vista de un modal con los datos del historial
+ * @param req idPersona
+ * @param res render ejs
+ * @returns inicio de sesion no comprobado
+ */
 
  export async function getHistorialModal(req:Request,res:Response){
   try{
@@ -139,6 +169,12 @@ export async function createReceta(req: Request, res: Response) {
     
   }
  }
+
+ /**
+  * Funcion para generar pdf, solo funciona de manera local debido a permisos
+  * @param req doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura
+  * @param res pipe.stream
+  */
 
  export async function generarPdf(req:Request,res:Response) {
   try{

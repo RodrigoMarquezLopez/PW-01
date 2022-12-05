@@ -7,7 +7,11 @@ import { StatusCodes } from "http-status-codes";
 import { sequelize } from "../database/database.config";
 
 
-//Tambien lo usa admin
+/**
+ * Funcion para obtener las especialidad que se tiene
+ * @param req 
+ * @param res json
+ */
 export async function getEspecialidades(req: Request, res: Response) {
   try{
   const records = await Especialidad.findAll({ raw: true});
@@ -29,6 +33,12 @@ const {idDoctor} = req.params;
    const data = {record:record}
    res.render("doctor-completo",data);
 */ 
+/**
+ * Funcion para renderizar la vista del registro
+ * @param req idPersona
+ * @param res rende ejs con informacion de la persona
+ * @returns 
+ */
 export async function getRegistro(req: Request, res: Response) {
   try{
   const {idPersona} = req.params;
@@ -46,7 +56,11 @@ export async function getRegistro(req: Request, res: Response) {
 }
   
 }
-
+/**
+ * Funcion que regresa las citas de una persona
+ * @param req idPersona
+ * @param res json
+ */
 export async function getCitasPersona(req: Request, res: Response) {
   try{
   const {idPersona} = req.params; 
@@ -59,7 +73,11 @@ export async function getCitasPersona(req: Request, res: Response) {
 }
 }
 
-
+/**
+ * Funcion para obtener la informaicon completa de una persona
+ * @param req idPersona
+ * @param res json
+ */
 export async function getPersona(req: Request, res: Response) {
   try{
   const {idPersona} = req.params; 
@@ -71,7 +89,11 @@ export async function getPersona(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * Funcion apra obtener los doctores por especialidad
+ * @param req idEpecialidad
+ * @param res json
+ */
 export async function getDoctores(req: Request, res: Response) {
   try{
   const {idEspecialidad} = req.params; 
@@ -83,7 +105,11 @@ export async function getDoctores(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * FUncion para busacar doctores por su llave primaria
+ * @param req idDoctor
+ * @param res json
+ */
 export async function  getDoctor(req: Request, res: Response) {
   try{
   const {idDoctor} = req.params;
@@ -95,7 +121,11 @@ export async function  getDoctor(req: Request, res: Response) {
   
 }
 }
-
+/**
+ * Funcion para buscar una especialidad por el identificador primario
+ * @param req idEspecialidad
+ * @param res json
+ */
 export async function  getEspecialidad(req: Request, res: Response) {
   try{
   const {idEspecialidad} = req.params;
@@ -109,7 +139,11 @@ export async function  getEspecialidad(req: Request, res: Response) {
 }
 
 
-
+/**
+ * Funcion para obtener las citas de un doctor de acuerdo con la fecha
+ * @param req idDoctor,fecha
+ * @param res json
+ */
 export async function getCitasDoctorFecha(req: Request, res: Response) {
   try{
   const {idDoctor,fecha} = req.params; 
@@ -122,7 +156,11 @@ export async function getCitasDoctorFecha(req: Request, res: Response) {
 }
 }
 
-
+/**
+ * Funcion para insertar una nueva cita en la base de datos
+ * @param req idPersona,idDoctor,fecha,hora,motivo,estado
+ * @param res json 
+ */
 export async function createCita(req: Request, res: Response) {
   const t = await sequelize.transaction();
   try{

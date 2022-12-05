@@ -6,11 +6,19 @@ import * as authService from "../services/auth.service";
 
 
 
-
+/**
+ * Funcion para renderizar el login
+ * @param req 
+ * @param res render ejs
+ */
 export async function registrarView(req: Request, res: Response) {
     res.render("./login/registrar-persona");    
   }
-
+/**
+ * Funcion para insertar los datos de la sesion cuando esta cierr
+ * @param req nombres,apellidoP,apellidoM,correo,contrasenia
+ * @param res render ejs
+ */
 export async function createUsuario(req: Request, res: Response) {
   const t = await sequelize.transaction();
   try {

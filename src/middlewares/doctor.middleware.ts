@@ -1,7 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 
 
-
+/**
+ * Validadciones de rutas para un doctor
+ * @param req 
+ * @param res 
+ * @param next 
+ * @returns 
+ */
 export function validacionRutasDoctor(req: Request, res: Response, next: NextFunction){
     console.log("entre en el middleware Loggin");
     

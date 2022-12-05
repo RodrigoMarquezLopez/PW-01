@@ -6,7 +6,11 @@ import { Cita } from "../models/cita.model";
 import { StatusCodes } from "http-status-codes";
 import { sequelize } from "../database/database.config";
 
-
+/**
+ * Buscar persona de acuerdo a su identificador unico
+ * @param req idPersona
+ * @param res json
+ */
 export async function getPersona(req: Request, res: Response) {
   try{
     const {idPersona} = req.params; 
@@ -19,7 +23,12 @@ export async function getPersona(req: Request, res: Response) {
   }
     
   }
-
+/**
+ * Funcion para renderizar la vista con los datos de una persona 
+ * @param req idPersona
+ * @param res render ejs
+ * @returns 
+ */
 export async function getDatos(req: Request, res: Response) {
     try{
     const {idPersona} = req.params;
@@ -38,7 +47,11 @@ export async function getDatos(req: Request, res: Response) {
     
   }
   }
-
+/**
+ * Funcion que regresa todas las personas de la base de datos
+ * @param req -
+ * @param res json
+ */
   export async function getUsuarios(req: Request, res: Response) {
     try{
     const records = await Persona.findAll({ raw: true});
@@ -49,7 +62,11 @@ export async function getDatos(req: Request, res: Response) {
     
   }
   }
-
+/**
+ * Funcion para buscar todas las citas 
+ * @param req 
+ * @param res json
+ */
   export async function getCitasGeneral(req: Request, res: Response) {
     try{
     const records = await Cita.findAll({ raw: true});
@@ -60,7 +77,11 @@ export async function getDatos(req: Request, res: Response) {
   
 }
   }
-
+/**
+ * Funcion para obtener las citas de una persona
+ * @param req idPersona
+ * @param res json
+ */
   export async function getCitasPersona(req: Request, res: Response) {
     try{
     const {idPersona} = req.params; 
@@ -72,7 +93,11 @@ export async function getDatos(req: Request, res: Response) {
     
   }
   }
-
+/**
+ * Funcion para actualizar el estado de la cita
+ * @param req idCita
+ * @param res json
+ */
   export async function confCita(req: Request, res: Response) {
     const t = await sequelize.transaction();
     try{
@@ -90,7 +115,11 @@ export async function getDatos(req: Request, res: Response) {
       
     }
   }
-
+/**
+ * Funcion para establecer cita como eliminada
+ * @param req idCita
+ * @param res json
+ */
   export async function elimCita(req: Request, res: Response) {
     const t = await sequelize.transaction();
     try{
@@ -112,7 +141,11 @@ export async function getDatos(req: Request, res: Response) {
     }
     
   }
-
+/**
+ * Funcion para actualizar una cita
+ * @param req idCita
+ * @param res json
+ */
   export async function updatePersona(req: Request, res: Response) {
     const t = await sequelize.transaction();
     try{
@@ -134,7 +167,11 @@ export async function getDatos(req: Request, res: Response) {
     }
   }
 
-
+/**
+ * Funcion para obtner los datos de un doctor en la tabla persona
+ * @param req idDoctor
+ * @param res json
+ */
   export async function getDatosDoctor(req: Request, res: Response) {
     try{
     const {idDoctor} = req.params;
@@ -149,7 +186,11 @@ export async function getDatos(req: Request, res: Response) {
   }
     
   }
-
+/**
+ * Funcion para obtener todos los doctores
+ * @param req 
+ * @param res json
+ */
   export async function getDoctores(req: Request, res: Response) {
     try{
     const records = await Doctor.findAll({ raw: true});

@@ -1,7 +1,9 @@
 import nodemailer from "nodemailer";
 const user = process.env.MAILER_USER as string;
 const password = process.env.MAILER_PASSWORD as string;
-
+/**
+ * Funcion que crea el transporte la enviar los correos
+ */
 export const emailer = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
