@@ -6,7 +6,7 @@ const main = (() => {
     const $selectFecha = document.getElementById("fecha");
     const $selectHora = document.getElementById("selectHora");
     const $guardar = document.getElementById("guardar");
-    const BASE_URL = "http://localhost:4000/";
+    const BASE_URL = "https://clinicaesp-d.onrender.com/";
     const persona = JSON.parse(OBJpersona);
     var doctor;
     //var responseDoctor;
