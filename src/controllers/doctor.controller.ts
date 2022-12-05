@@ -168,12 +168,12 @@ export async function createReceta(req: Request, res: Response) {
         
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
         const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
-        const pdfResultado = pdf.create(result,options).toFile(pdfPath,function (err,result) {
+         pdf.create(result,options).toFile(pdfPath,function (err,result) {
           try{
           console.log(pdfPath);
           var data =fs.readFileSync(pdfPath);
           //res.contentType("application/pdf");
-          return res.download(result.filename);
+          return  res.download(result.filename);
           }catch(err){
               return res.send(err);
           }
