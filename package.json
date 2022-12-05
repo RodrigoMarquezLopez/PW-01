@@ -12,7 +12,7 @@
     "clean": "rimraf dist",
     "start": "npm run build && npm run copy-files && node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "init": "npm install -D -s && npm instal html-pdf -g",
+    "init": "npm install -D -s && npm install html-pdf -g",
     "copy-files": "npm run copy-views && npm run copy-public && npm run copy-tmp",
     "copy-views": "copyfiles -u 1 \"./src/views/**/*.ejs\" \"dist\"",
     "copy-public": "copyfiles -u 1 \"./src/public/**/*.*\" \"dist\"",
