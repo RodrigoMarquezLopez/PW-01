@@ -9,7 +9,7 @@ export function createLogginMiddleware(rolUser:string[]){
     console.log("entre en el middleware Loggin");
     return (req: Request, res: Response, next: NextFunction) => {
     
-        if (!req.session.user) {
+        if (!req.session.user || !req.session.idSesion) {
             return res.redirect("/login/clinica/signin");
         }
         
