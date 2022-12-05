@@ -1,3 +1,4 @@
+
 const generarFecha = (()=>{
   const fechaFormatoCorrecto = ()=>{
     var yourDate = new Date();
@@ -25,7 +26,7 @@ const mainBuscarCitas = (() => {
     //$selectDoctor.selectmenu("disble");
     const $btnBuscarCita = document.getElementById("btn-buscar-cita");
     //console.log($nombreDoctor.getSelected);
-  
+    var numeroCitas=0;
     const _BuscarCita = async () => {
   
       const persona = await http.get(BASE_URL + "admin/personas");
@@ -54,10 +55,16 @@ const mainBuscarCitas = (() => {
       if ($nombreDoctor.value != "especialidad") {
         console.log("funciono xd")
         const response = await http.get(BASE_URL + "admin/citas");
+        numeroCitas = 0;
         for (let index = 0; index < response.length; index++) {
           _createRow(response[index]);
   
         }
+        setTimeout(()=>{
+            if(numeroCitas==0){
+              modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas programadas",``);
+            }
+        },1500);
       } else {
         modalResultado.iniciarModal("/assets/other/tache.png","Selecciona un doctor",``);
       }
@@ -73,7 +80,7 @@ const mainBuscarCitas = (() => {
       if (item["idDoctor"] == response2["idDoctor"] && item["fecha"]== fechaActualCorrecta) {
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
-  
+        numeroCitas++;
   
         const $td = document.createElement("td");
         const $td2 = document.createElement("td");

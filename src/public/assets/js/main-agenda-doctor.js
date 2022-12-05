@@ -1,3 +1,4 @@
+
 const generarFecha = (()=>{
   const fechaFormatoCorrecto = ()=>{
     var yourDate = new Date();
@@ -45,6 +46,7 @@ const mainDocAgenda = (() => {
     const doctor = JSON.parse(OBJdoctor);
     var doctorPersona;
     var especialidadDoc;
+    var numeroCitas;
     console.log(doctor);
     const $btnAgendaCita = document.getElementById("buscar-agenda")
     $fechaBusqueda.value=fechaActualCorrecta;
@@ -78,12 +80,23 @@ const mainDocAgenda = (() => {
         }
         if($fechaBusqueda.value != ""){
         const response = await http.get(BASE_URL+"doctor/agenda/citas");
-        for(let index = 0; index < response.length; index++){
-             _createRow(response[index]);
-           
+        numeroCitas=0;
+          for(let index = 0; index < response.length; index++){
+            _createRow(response[index]);
+          
+       }
+
+       setTimeout(()=>{
+        if(numeroCitas==0){
+          modalResultado.iniciarModal("/assets/other/tache.png","No hay citas :(","");
         }
+
+       },1500);
+        
+        
         }else{
-          alert("No ha seleccionado una fecha");
+          //alert("No ha seleccionado una fecha");
+          modalResultado.iniciarModal("/assets/other/tache.png","No ha seleccionado una fecha","");
           
         }
       };
@@ -91,10 +104,10 @@ const mainDocAgenda = (() => {
       const _createRow = async (item = {}) =>{
         console.log(item);
         const response3 = await http.get(BASE_URL+`persona/${item["idPersona"]}`);
-        if(item["idDoctor"]==doctor["idDoctor"] && (item["fecha"].toString().split('T')[0])==$fechaBusqueda.value){
+        if(item["idDoctor"]==doctor["idDoctor"] && (item["fecha"].toString().split('T')[0])==$fechaBusqueda.value&&item["estado"]!="eliminada"){
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
-
+          numeroCitas++;
 
             const $td = document.createElement("td");
             const $td2 = document.createElement("td");

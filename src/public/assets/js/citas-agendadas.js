@@ -1,3 +1,4 @@
+
 const main = (() => {
    
    
@@ -79,6 +80,7 @@ const main = (() => {
         console.log(idC);
         console.log(idP);
         const resultado = await http.get(BASE_URL+`/correo/confirmar/${idC}/${idP}`);
+        console.log(resultado)
         $btn.disabled = true;
         if(resultado["httpCode"]==201){
             modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha confimado correctamente",`/informacion/${persona["idPersona"]}`);
@@ -106,7 +108,7 @@ const main = (() => {
         const resultado = await http.get(BASE_URL+`/informacion/cita/eliminar/${idC}`);
         console.log(resultado);
         if(resultado["httpCode"]==201){
-            modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha eliminado correctamente",``);
+            modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha eliminado correctamente",`/informacion/${persona["idPersona"]}`);
         }else{
           modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","#!");
         } 

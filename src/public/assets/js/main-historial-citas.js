@@ -1,6 +1,5 @@
 
 
-
 const mainHistorial = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;

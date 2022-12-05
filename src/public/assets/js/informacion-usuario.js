@@ -1,3 +1,4 @@
+
 const main2 = (()=>{
     const $usuario = document.getElementById("user");
     const $correo = document.getElementById("email");
