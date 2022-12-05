@@ -228,7 +228,7 @@ const mainDocAgenda = (() => {
             if(resultado["httpCode"]==201){
               botonReceta.disabled = true;
               event.target.disabled = true;
-              modalResultado.iniciarModal("/assets/other/realizado.png","Su cita se ha registrado correctamente",``);
+              modalResultado.iniciarModal("/assets/other/realizado.png","La cita ha finalizado",``);
           }else{
             modalResultado.iniciarModal("/assets/other/tache.png","Algo salio mal","");
           } 

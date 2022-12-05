@@ -41,7 +41,10 @@ export async function sendMail(req: Request, res: Response) {
             },transaction:t
           });
           await t.commit();
-          res.status(200).json(data);
+          const datos = {httpCode:201,
+            message:"Registrado correctamente"};
+            await t.commit();
+          res.status(200).json(datos);
         } catch (e) {
           
           const error = e as Error;

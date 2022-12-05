@@ -32,7 +32,7 @@ const main = (() => {
         const correo = persona2["correo"];
 
 
-        if(value==persona["idPersona"] && item["estado"]=="agendada"){
+        if(value==persona["idPersona"] && (item["estado"]=="agendada"||item["estado"]=="confirmada")){
         console.log(itemId);
         const $row2 = document.createElement("tr");
         $cuerpoTabla.appendChild($row2);
@@ -47,7 +47,12 @@ const main = (() => {
             $row2.appendChild($td);
             $row2.appendChild($td2);
             $row2.appendChild($td3);
-            $row2.appendChild(_createBtnAction(itemId,value, "Confirmar","blue", _actionButtonConfirmar));
+            var $botonConfirmar = _createBtnAction(itemId,value, "Confirmar","blue", _actionButtonConfirmar)
+            if(item["estado"]=="confirmada"){
+                $botonConfirmar.disabled = true;
+            }
+            $row2.appendChild($botonConfirmar);
+            
             $row2.appendChild(_createBtnAction(itemId,value, "Eliminar","red",_actionButtonEliminar));
           return $row2;
           
