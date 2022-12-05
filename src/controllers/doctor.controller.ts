@@ -174,7 +174,7 @@ export async function createReceta(req: Request, res: Response) {
           res.contentType("application/pdf");
           return res.send(data);
           }catch(err){
-              return res.send("error");
+              return res.send(err);
           }
         })
     }
