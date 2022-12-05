@@ -99,7 +99,7 @@ export async function doctorResponse(req: Request, res: Response) {
   const doctores = await getDoctoresAdmin();
   //console.log("Los doctores son", JSON.stringify(doctores));
   
-  return res.render("buscar-citas-completo",{ doctores});
+  return res.render("buscar-citas-completo",{doctores});
 } catch (e) {
   const error = e as Error;
   res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });

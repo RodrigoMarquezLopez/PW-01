@@ -64,7 +64,7 @@ const mainBuscarCitas = (() => {
             if(numeroCitas==0){
               modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas programadas",``);
             }
-        },1500);
+        },3000);
       } else {
         modalResultado.iniciarModal("/assets/other/tache.png","Selecciona un doctor",``);
       }
