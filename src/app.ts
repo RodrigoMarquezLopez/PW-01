@@ -2,8 +2,8 @@ import express, { Application } from "express";
 import { Request, Response } from "express"; //Se va a quitar
 import morgan from "morgan";
 import path from "path"
-import dotenv from "dotenv";
-dotenv.config();
+//import dotenv from "dotenv";
+//dotenv.config();
 import {sessionConfig, sessionMiddleware} from "./middlewares/express-session.middleware";
 import registroCitasRouter from "./routes/regitrocitas.route";
 import emailRouter from "./routes/email.route";

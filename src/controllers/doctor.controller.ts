@@ -165,21 +165,23 @@ export async function createReceta(req: Request, res: Response) {
             },
             "border": "0.5in", 
         };
-        /*
+        
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
         const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
         const pdfResultado = pdf.create(result,options).toFile(pdfPath,function (err,result) {
           try{
           console.log(pdfPath);
           var data =fs.readFileSync(pdfPath);
-          res.contentType("application/pdf");
-          return res.send(data);
+          //res.contentType("application/pdf");
+          return res.download(result.filename);
           }catch(err){
               return res.send(err);
           }
         })
-          */
-         pdf.create(result,options).toStream((err,pdfStream)=>{
+          
+        /* 
+        pdf.create(result,options).toStream((err,pdfStream)=>{
+          
           if (err) {   
             // handle error and return a error response code
             console.log(err)
@@ -197,8 +199,9 @@ export async function createReceta(req: Request, res: Response) {
             // pipe the contents of the PDF directly to the response
             pdfStream.pipe(res)
           }
+          
 
-         });
+         });*/
 
 
     }
