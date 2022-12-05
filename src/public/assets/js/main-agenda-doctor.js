@@ -41,7 +41,7 @@ const mainDocAgenda = (() => {
     console.log(fechaActual);
     var identificadorPersona = null;
     //var cita;
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "http://localhost:4000/";
     const doctor = JSON.parse(OBJdoctor);
     var doctorPersona;
     var especialidadDoc;
@@ -289,7 +289,7 @@ const mainDocAgenda = (() => {
   const mainHistorialModal = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "http://localhost:4000/";
     //const persona = JSON.parse(OBJpersona);
      var persona;     
       var numeroDeRows = 0;
@@ -406,7 +406,7 @@ const mainDocAgenda = (() => {
       const _initElements = async (idP) => {
         
         _getData(idP);
-        setTimeout(()=>{
+        /*setTimeout(()=>{
           console.log(numeroDeRows);
        if(numeroDeRows == 0){
           const $divTabla = document.getElementById("divTabla");
@@ -417,7 +417,7 @@ const mainDocAgenda = (() => {
           $letrero.innerText = "No has tenido ninguna cita aun, agenda una"
           $divTabla.appendChild($letrero);
        }
-        },1500);
+        },1500)*/;
         
       };
     

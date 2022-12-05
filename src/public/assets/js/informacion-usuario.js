@@ -2,7 +2,7 @@ const main2 = (()=>{
     const $usuario = document.getElementById("user");
     const $correo = document.getElementById("email");
     const $contrasena = document.getElementById("password");
-    const BASE_URL = "https://clinicaesp-d.onrender.com";
+    const BASE_URL = "http://localhost:4000";
     const persona = JSON.parse(OBJpersona);
     console.log(persona);
 

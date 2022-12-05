@@ -167,11 +167,15 @@ export async function createReceta(req: Request, res: Response) {
         };
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
         const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
-        pdf.create(result,options).toFile(pdfPath,function (err,result) {
-          console.log(result.filename);
-          var data =fs.readFileSync(result.filename);
+        const pdfResultado = pdf.create(result,options).toFile(pdfPath,function (err,result) {
+          try{
+          console.log(pdfPath);
+          var data =fs.readFileSync(pdfPath);
           res.contentType("application/pdf");
-          res.send(data);
+          return res.send(data);
+          }catch(err){
+              return res.send("error");
+          }
         })
     }
       });
