@@ -94,33 +94,41 @@ export async function logginUsuario(req: Request, res: Response) {
  * @param res 
  */
 export async function loggout(req: Request, res: Response){
+  req.session.destroy((err)=>{
+    if(err){
+      console.log("error al cerrar sesion");
+    }
+    res.redirect("/login/clinica/signin");
+  });
+  /*
   const t = await sequelize.transaction();
   try{
-    
-    if(!req.session){
+    console.log(req.session);
+    if(req.session){
     const {user,idSesion}  = req.session;
     const fecha = new Date().toString();
     const sesion =  SesionModel.update({ fecha_cierre:fecha }, {
       where: {
-        idSesion:idSesion
+        idSesion:idSesion?.idSesion
       },transaction:t
+    });
+    req.session.destroy(async (err)=>{
+      if(err){
+        
+        console.log("error al cerrar sesion");
+      }
+      await t.commit()
+      res.redirect("/login/clinica/signin");
     });
   }
 
-  req.session.destroy(async (err)=>{
-    if(err){
-      
-      console.log("error al cerrar sesion");
-    }
-    //await t.commit()
-    res.redirect("/login/clinica/signin");
-  });
+  
 } catch (e) {
   const error = e as Error;
- // await t.rollback()
+   await t.rollback()
   res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
   
-}
+}*/
 }
 
 /**

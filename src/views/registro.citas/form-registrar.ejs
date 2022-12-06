@@ -72,9 +72,20 @@
     var instances = M.Datepicker.init(elems,{
         format:"yyyy-mm-dd",
         disableWeekends:true,
-        minDate:fechaActual
+        minDate:fechaActual,
+        i18n:{
+        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        weekdaysShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        weekdaysAbbrev: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        cancel:	'Cancelar',
+        done:"Aceptar"
+        }
+
     });
-    
+    //M.AutoInit();
+        
     //const persona = record;
     //idPersona,idDoctor,fecha,hora,motivo,estado
   });

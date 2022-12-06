@@ -182,8 +182,15 @@ export async function createReceta(req: Request, res: Response) {
     console.log(req.body);
     //var html;
     const {doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura} = req.body;
-    const filePath = path.join(__dirname, "..", "views","templates", "receta.ejs");
-      ejs.renderFile(filePath,{doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura},(err,result)=>{
+    //const filePath = path.join(__dirname, "..", "views","templates", "receta.ejs");
+    const htmlContent = await renderFileHtml({ data:req.body || {}, file: "receta.ejs"});
+    const data = {httpCode:201,
+      message:"Registrado correctamente",
+    htmlContent};
+    console.log(htmlContent);
+    return res.send(data);
+
+      /*ejs.renderFile(filePath,{doctor,fecha,cedula,especialidad,paciente,motivo,diagnostico,indicaciones,edad,peso,altura},(err,result)=>{
         if (err) {
           console.log(err);
           res.send(err);
@@ -201,7 +208,7 @@ export async function createReceta(req: Request, res: Response) {
             },
             "border": "0.5in", 
         };
-        /*
+        
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)+".pdf";
         const pdfPath = path.join(__dirname, "..","tmp",uniqueSuffix);
          pdf.create(result,options).toFile(pdfPath,function (err,result) {
@@ -213,7 +220,7 @@ export async function createReceta(req: Request, res: Response) {
           }catch(err){
               return res.send(err);
           }
-        })*/
+        })
           
         
         pdf.create(result,options).toStream((err,pdfStream)=>{
@@ -241,9 +248,10 @@ export async function createReceta(req: Request, res: Response) {
 
 
     }
-      });
+      });*/
       
     }catch(error){
+      console.log(error);
       res.status(500).send(error);
     }
   }
