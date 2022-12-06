@@ -1,6 +1,6 @@
 import {Router} from "express";
 import { //getVistaDoctor,
-    getCitasDoctor,getAgenda,getDoctor2,getHistorialModal,generarPdf,getReceta,updateCita,createReceta} from "../controllers/doctor.controller";
+    getCitasDoctor,getAgenda,getDoctor2,getHistorialModal,generarPdf,getReceta,updateCita,createReceta,getHistorialPaciente} from "../controllers/doctor.controller";
 import { validacionRutasDoctor } from "../middlewares/doctor.middleware"; 
 import { validacionRutasPacienteDoctor } from "../middlewares/persona.middleware";
 import { getDatosDoctor } from "../controllers/informacion.controller";
@@ -24,6 +24,9 @@ doctorRouter.get("/receta/:idCita",validacionRutasPacienteDoctor,getReceta);
 doctorRouter.put("/cita/:idCita",validacionRutasDoctor,updateCita);
 
 doctorRouter.post("/receta/crear",validacionRutasDoctor,createReceta);
+
 doctorRouter.get("/informacion/:idDoctor",validacionRutasDoctor,getDatosDoctor);
+
+doctorRouter.get("/historialpaciente/:idDoctor",validacionRutasDoctor,getHistorialPaciente);
 
 export default doctorRouter;

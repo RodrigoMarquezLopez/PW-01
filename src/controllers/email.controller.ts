@@ -22,6 +22,7 @@ export async function sendMail(req: Request, res: Response) {
       const cita1 = await Cita.findByPk(idCita);
       const idCita1 = cita1?.getDataValue('idCita');
       const hora = cita1?.getDataValue('hora') + " hrs.";
+      const fecha = " "+ cita1?.getDataValue('fecha');
 
       const idDoctor = cita1?.getDataValue('idDoctor');
       const Doc = await Doctor.findByPk(idDoctor);
@@ -30,7 +31,7 @@ export async function sendMail(req: Request, res: Response) {
       const nombreDoctor = "Dr. "+ personaDoctor?.getDataValue('nombres') + " "+personaDoctor?.getDataValue('apellidoP') +" "+ personaDoctor?.getDataValue('apellidoM');
 
 
-      const data ={idCita1,hora,nombreDoctor};
+      const data ={idCita1,fecha,hora,nombreDoctor};
 
       //const htmlContent = await ejsLibrary.renderFileHtml({ file: "cuerpo-correo.ejs", data});
       const t = await sequelize.transaction();

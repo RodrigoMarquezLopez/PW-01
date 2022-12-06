@@ -19,7 +19,7 @@ export const sessionConfig = session({
     secure: false,
     httpOnly: true,
     signed: true,
-    maxAge: 3 * (60 * 1000),
+    maxAge: 40 * (60 * 1000),
   },
 });
 /**

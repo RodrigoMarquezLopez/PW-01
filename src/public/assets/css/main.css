@@ -105,3 +105,23 @@ body{
     width: 90% !important; 
     overflow-y: auto;
   }
+
+
+
+  .informacionClass{
+    color:black;
+    font-size:large;
+  }
+
+  .informacionLarger{
+    color:black;
+    font-size:larger;
+  }
+
+  .divInfo{
+    padding: 1% 0;
+  }
+
+  .divTablaInfo{
+    padding: 3% 0;
+  }

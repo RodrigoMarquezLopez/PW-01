@@ -256,3 +256,17 @@ export async function createReceta(req: Request, res: Response) {
     }
   }
 
+
+
+  export async function getHistorialPaciente(req: Request, res: Response) {
+    try{
+    const {idDoctor} = req.params;
+    const record = await Doctor.findByPk(idDoctor);
+    const data = {record:record}
+    res.render("historial-paciente-completo",data);
+  } catch (e) {
+    const error = e as Error;
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ nameError: error.name, detail: error.message });
+    
+  }
+  }
