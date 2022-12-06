@@ -179,3 +179,10 @@ export async function createReceta(req: Request, res: Response) {
     }
   }
 
+  export async function getHistorialPaciente(req: Request, res: Response) {
+    const {idDoctor} = req.params;
+    const record = await Doctor.findByPk(idDoctor);
+    const data = {record:record}
+    res.render("historial-paciente-completo",data);
+  }
+
