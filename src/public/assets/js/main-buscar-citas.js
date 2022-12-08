@@ -16,12 +16,12 @@ const mainBuscarCitas = (() => {
     //const anioActual = fechaActual.getFullYear();
     //const hoy = fechaActual.getDate();
     //const mesActual = fechaActual.getMonth() + 1; 
-    const $divContenedor = document.getElementById("bProgreso");
-    var barra = document.createElement("div");
-        barra.className = "progress blue darken-1";
-    var barraInterna = document.createElement("div");
-        barraInterna.className = "indeterminate";
-        barra.appendChild(barraInterna);
+   // const $divContenedor = document.getElementById("bProgreso");
+    //var barra = document.createElement("div");
+      //  barra.className = "progress blue darken-1";
+    //var barraInterna = document.createElement("div");
+      //  barraInterna.className = "indeterminate";
+       // barra.appendChild(barraInterna);
     
     var activo = false;
     const fechaActualCorrecta = generarFecha.fechaFormatoCorrecto();//anioActual+"-"+mesActual+"-"+hoy;
@@ -35,14 +35,14 @@ const mainBuscarCitas = (() => {
     //console.log($nombreDoctor.getSelected);
     var numeroCitas=0;
     const _BuscarCita = async () => {
-      $divContenedor.appendChild(barra);
+      //$divContenedor.appendChild(barra);
 
       const persona = await http.get(BASE_URL + "admin/personas");
       for (let index = 0; index < persona.length; index++) {
         _RellenarNombreDoctor(persona[index]);
       }
       $btnBuscarCita.addEventListener("click", _actionFuntion);
-      $divContenedor.removeChild($divContenedor.lastChild);
+      //$divContenedor.removeChild($divContenedor.lastChild);
     };
   
     const _RellenarNombreDoctor = async (item = {}) => {
