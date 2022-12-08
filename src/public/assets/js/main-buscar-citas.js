@@ -16,11 +16,13 @@ const mainBuscarCitas = (() => {
     //const anioActual = fechaActual.getFullYear();
     //const hoy = fechaActual.getDate();
     //const mesActual = fechaActual.getMonth() + 1; 
+    const $divContenedor = document.getElementById("bProgreso");
     var barra = document.createElement("div");
         barra.className = "progress blue darken-1";
     var barraInterna = document.createElement("div");
         barraInterna.className = "indeterminate";
         barra.appendChild(barraInterna);
+    
     var activo = false;
     const fechaActualCorrecta = generarFecha.fechaFormatoCorrecto();//anioActual+"-"+mesActual+"-"+hoy;
     console.log("comprobacion de fecha");
