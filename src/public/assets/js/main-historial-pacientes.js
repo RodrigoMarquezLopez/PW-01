@@ -32,7 +32,7 @@ const mainHistorialPaciente = (() => {
     var numeroDeRows = 0;
     var persona = null;
     //var cita;
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "https://clinicaesp-q.onrender.com/";
     const doctor = JSON.parse(OBJdoctor);
     var especialidadDoctor;
     console.log(doctor["idDoctor"] );

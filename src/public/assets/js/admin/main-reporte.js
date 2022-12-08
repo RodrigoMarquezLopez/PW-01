@@ -33,7 +33,7 @@ fechaIni.init();
 const mainReporte = ( ()=>{
     const $fechaInc = document.getElementById("fechaInicio");
     const $fechaFin = document.getElementById("fechaFin");
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "https://clinicaesp-q.onrender.com/";
     const $graficaDoc = document.getElementById("graficaDoc");
     const $graficaHoras = document.getElementById("graficaHoras"); 
     const $graficaEsp = document.getElementById("graficaEsp");

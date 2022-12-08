@@ -1,5 +1,5 @@
 const mainAgregarEspecialidad = (()=>{
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "https://clinicaesp-q.onrender.com/";
     const $nombreEsp = document.getElementById("nombreEsp");
     const $descripcion = document.getElementById("descripcion");
     const $guardar = document.getElementById("guardarEsp");

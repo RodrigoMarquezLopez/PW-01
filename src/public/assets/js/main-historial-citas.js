@@ -3,7 +3,7 @@
 const mainHistorial = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
-    const BASE_URL = "https://clinicaesp-d.onrender.com/";
+    const BASE_URL = "https://clinicaesp-q.onrender.com/";
     const persona = JSON.parse(OBJpersona);
     var numeroDeRows = 0;
 
