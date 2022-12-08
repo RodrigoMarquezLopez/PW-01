@@ -154,7 +154,7 @@ const mainHistorial = (() => {
           $letrero.innerText = "No has tenido ninguna cita aun, agenda una"
           $divTabla.appendChild($letrero);
        }
-        },3000);
+        },10000);
         
         
       };

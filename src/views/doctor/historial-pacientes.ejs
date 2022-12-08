@@ -1,4 +1,5 @@
 <div class="card mx-basic my-basic">
+    <div id="bProgreso"></div>
     <div class="row">
         <div class="input-field col 5 offset-5">
             <p>Ingrese el nombre del paciente:</p>
@@ -8,11 +9,15 @@
         </div>
         <div class="input-field col 5 offset-5">
             <button type="button" class="waves-effect blue darken-1 btn" id="buscar-paciente">Buscar paciente</button>
-        </div>    
+        </div>
+        <div class="input-field col 5 offset-5">
+            <button type="button" class="waves-effect blue darken-1 btn" id="restablecer">Restablecer</button>
+        </div>     
         <table>
             <thead>
                 <th>Fecha</th>
                 <th>Hora</th>
+                <th>Nombre</th>
                 <th>Motivo</th>
             </thead>
             <tbody id="tablabody">

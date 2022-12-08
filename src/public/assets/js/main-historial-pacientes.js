@@ -1,3 +1,14 @@
+const generarFecha = (()=>{
+  const fechaFormatoCorrecto = ()=>{
+    var yourDate = new Date();
+    const offset = yourDate.getTimezoneOffset();
+    yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+    return yourDate.toISOString().split('T')[0];
+  }
+  return {fechaFormatoCorrecto}
+
+})();
+
 const mainHistorialPaciente = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     var $NombrePaciente = document.getElementById("nombre-paciente");
@@ -5,22 +16,69 @@ const mainHistorialPaciente = (() => {
     const anioActual = fechaActual.getFullYear();
     const hoy = fechaActual.getDate();
     const mesActual = fechaActual.getMonth() + 1; 
-
+    var $modalDoctor = document.getElementById("modal-doctor");
+        var $modalFecha = document.getElementById("modal-fecha");
+        var $modalHora = document.getElementById("modal-hora");
+        var $modalEspecialidad= document.getElementById("modal-especialidad");
+        var $modalPaciente= document.getElementById("modal-paciente");
+        var $modalMotivo = document.getElementById("modal-motivo");
+        var $modalDiagnostico = document.getElementById("modal-diagnostico");
+        var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
+        var $modalEdad = document.getElementById("modal-edad");
+        var $modalPeso = document.getElementById("modal-peso");
+        var $modalAltura = document.getElementById("modal-altura");
+        var $modalCedula = document.getElementById("modal-cedula");
     const fechaActualCorrecta = anioActual+"-"+mesActual+"-"+hoy;
     var numeroDeRows = 0;
     var persona = null;
     //var cita;
     const BASE_URL = "https://clinicaesp-d.onrender.com/";
     const doctor = JSON.parse(OBJdoctor);
+    var especialidadDoctor;
     console.log(doctor["idDoctor"] );
      //$selectDoctor.selectmenu("disble");
     const $btnBuscarPaciente = document.getElementById("buscar-paciente")
+//<button type="button" class="waves-effect blue darken-1 btn" id="restablecer">Restablecer</button>
+    const $btnRestablecer = document.getElementById("restablecer");
+    //Bara de carga
+    const $divContenedor = document.getElementById("bProgreso");
+    var barra = document.createElement("div");
+        barra.className = "progress blue darken-1";
+    var barraInterna = document.createElement("div");
+        barraInterna.className = "indeterminate";
+        barra.appendChild(barraInterna);
+
 
      const _GenerarAgenda = async () => {
+        $btnRestablecer.disabled = true;
+        $divContenedor.appendChild(barra);
+
+        const response = await http.get(BASE_URL+"doctor/agenda/citas");
+        console.log(response);
+        for(let index = 0; index < response.length; index++){
+             _createHistorial(response[index]);
+            }
+         especialidadDoctor = await http.get(BASE_URL+`especialidad/${doctor["idEspecialidad"]}`);
         $btnBuscarPaciente.addEventListener("click", _actionFuntion);
+        $divContenedor.removeChild($divContenedor.lastChild);
       };
 
+      const _actionRestablecer = (event)=>{
+        event.target.disabled = true;
+        if($cuerpoTabla.childNodes.length>0){
+          var contador = $cuerpoTabla.childNodes.length;
+          numeroDeRows = 0;
+          for(i=0; i<contador;i++){
+            $cuerpoTabla.removeChild($cuerpoTabla.childNodes[0]);
+          }
+        }
+          _GenerarAgenda();
+      }
+      
+
       const _actionFuntion = async () => {
+        $divContenedor.appendChild(barra);
+        $btnRestablecer.disabled = false;
         console.log("funciono xd")
         if($cuerpoTabla.childNodes.length>0){
           var contador = $cuerpoTabla.childNodes.length;
@@ -36,15 +94,17 @@ const mainHistorialPaciente = (() => {
              _createRow(response[index]);
            
         }
+        $divContenedor.removeChild($divContenedor.lastChild);
         }else{
             modalResultado.iniciarModal("/assets/other/tache.png","Ingresa un nombre recuerda es el nombre completo",``);
         }
+        //$divContenedor.removeChild($divContenedor.lastChild);
         setTimeout(()=>{
             console.log(numeroDeRows);
          if(numeroDeRows == 0){
             modalResultado.iniciarModal("/assets/other/tache.png","Paciente sin historial",``);
          }
-          },3000);
+          },10000);
       };
 
       const _createRow = async (item = {}) =>{
@@ -60,47 +120,78 @@ const mainHistorialPaciente = (() => {
             const $td2 = document.createElement("td");
             const $td3 = document.createElement("td");
             const $td4 = document.createElement("td");
+            const $td5 = document.createElement("td");
 
             const $btn = document.createElement("button"); //la funcionalidad de este botón se le será asignada en la siguiente iteración
             $btn.textContent = "Receta";
             $btn.className = "waves-effect blue darken-1 btn";
-            $btn.value = JSON.stringify({item,response2,response3});
+            $btn.value = JSON.stringify({item,response2,response3,persona});
             $btn.addEventListener("click",_actionButtonHistoral);
             
             
             
             $td.innerText = item["fecha"].toString().split('T')[0];
             $td2.innerText = item["hora"];
-            $td3.innerText = item["motivo"];
-            $td4.appendChild($btn);
+            $td3.innerText = response4["nombres"]+" "+response4["apellidoP"]+" "+response4["apellidoM"];
+            $td4.innerText = item["motivo"];
+            $td5.appendChild($btn);
             
             $row2.appendChild($td);
             $row2.appendChild($td2);
             $row2.appendChild($td3);
             $row2.appendChild($td4);
+            $row2.appendChild($td5);
+          return $row2;
+          
+        }
+      };
+
+      const _createHistorial = async (item = {}) =>{
+        const response2 = await http.get(BASE_URL+`doctor/buscar/${item["idDoctor"]}`);
+        const response4 = await http.get(BASE_URL+`persona/${item["idPersona"]}`);
+        const response3 = await http.get(BASE_URL+`persona/${response2["idPersona"]}`);
+        if(item["idDoctor"]==doctor["idDoctor"]&&item["estado"]=="finalizada"){
+        const $row2 = document.createElement("tr");
+        $cuerpoTabla.appendChild($row2);
+            numeroDeRows++;
+            persona = response4;
+            const $td = document.createElement("td");
+            const $td2 = document.createElement("td");
+            const $td3 = document.createElement("td");
+            const $td4 = document.createElement("td");
+            const $td5 = document.createElement("td");
+
+            const $btn = document.createElement("button"); //la funcionalidad de este botón se le será asignada en la siguiente iteración
+            $btn.textContent = "Receta";
+            $btn.className = "waves-effect blue darken-1 btn";
+            $btn.value = JSON.stringify({item,response2,response3,persona});
+            $btn.addEventListener("click",_actionButtonHistoral);
+            
+            
+            
+            $td.innerText = item["fecha"].toString().split('T')[0];
+            $td2.innerText = item["hora"];
+            $td3.innerText = response4["nombres"]+" "+response4["apellidoP"]+" "+response4["apellidoM"];
+            $td4.innerText = item["motivo"];
+            $td5.appendChild($btn);
+            
+            $row2.appendChild($td);
+            $row2.appendChild($td2);
+            $row2.appendChild($td3);
+            $row2.appendChild($td4);
+            $row2.appendChild($td5);
           return $row2;
           
         }
       };
 
       const _actionButtonHistoral = async (event) => {
-        var $modalDoctor = document.getElementById("modal-doctor");
-        var $modalFecha = document.getElementById("modal-fecha");
-        var $modalHora = document.getElementById("modal-hora");
-        var $modalEspecialidad= document.getElementById("modal-especialidad");
-        var $modalPaciente= document.getElementById("modal-paciente");
-        var $modalMotivo = document.getElementById("modal-motivo");
-        var $modalDiagnostico = document.getElementById("modal-diagnostico");
-        var $modalIndicaciones = document.getElementById("modal-indicaciones"); 
-        var $modalEdad = document.getElementById("modal-edad");
-        var $modalPeso = document.getElementById("modal-peso");
-        var $modalAltura = document.getElementById("modal-altura");
-        var $modalCedula = document.getElementById("modal-cedula");
+        
         //const $btnPDF = document.getElementById("btnPdf");
     
             var especialidades = await http.get(BASE_URL);
             console.log(event.target);
-            var citaSeleccionada = JSON.parse(event.target.value);
+            const citaSeleccionada = JSON.parse(event.target.value);
             console.log(citaSeleccionada["item"]["fecha"]);
             console.log(BASE_URL+`doctor/receta/${citaSeleccionada["item"]["idCita"]}`);
             const receta = await http.get(BASE_URL+`doctor/receta/${citaSeleccionada["item"]["idCita"]}`);
@@ -114,18 +205,10 @@ const mainHistorialPaciente = (() => {
            // $modalFecha.value = citaSeleccionada["item"]["fecha"].toString().split('T')[0];
             //$modalDoctor.value = "Dr. "+citaSeleccionada["response3"]["nombres"]+" "+citaSeleccionada["response3"]["apellidoP"]+" "+citaSeleccionada["response3"]["apellidoM"];
             //$modalHora.value = citaSeleccionada["item"]["hora"];
-            var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
-            for(var i = 0; i < especialidades.length; i++){
-                if(especialidadDoctor == especialidades[i]["idEspecialidad"]){
-                  $modalEspecialidad.innerText = especialidades[i]["nombreEsp"];
-                  //$modalEspecialidad.value = especialidades[i]["nombreEsp"];
-                  break;
-                }
-            }
-    
-            
+           // var especialidadDoctor = citaSeleccionada["response2"]["idEspecialidad"]
+            $modalEspecialidad.innerText = especialidadDoctor["nombreEsp"];
             console.log(receta);
-           $modalPaciente.innerText = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
+           $modalPaciente.innerText = citaSeleccionada["persona"]["nombres"] + " "+citaSeleccionada["persona"]["apellidoP"]+" "+citaSeleccionada["persona"]["apellidoM"];
             //$modalPaciente.value = persona["nombres"] + " "+persona["apellidoP"]+" "+persona["apellidoM"];
           $modalMotivo.innerText = citaSeleccionada["item"]["motivo"];
             //$modalMotivo.value= citaSeleccionada["item"]["motivo"];
@@ -148,6 +231,7 @@ const mainHistorialPaciente = (() => {
 
       const _initElements = () => {
         _GenerarAgenda();
+       $btnRestablecer.addEventListener("click",_actionRestablecer);
       };
     
       return {

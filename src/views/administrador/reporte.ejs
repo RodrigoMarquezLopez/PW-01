@@ -1,0 +1,59 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+<div class="card mx-basic my-basic">
+    <div id="bProgreso"></div>
+    <div class="row">
+        <div class="input-field col s1">
+            <p>Fecha Inc:</p>
+        </div>
+        <div class="input-field col s3 offset-5">
+            <input type="text" class="datepicker blue lighten-5 " id="fechaInicio">
+        </div>
+        <div class="input-field col s1 offset-2">
+            <p>Fecha Fin:</p>
+        </div>
+        <div class="input-field col s3">
+            <input type="text" class="datepicker blue lighten-5 " id="fechaFin">
+        </div>
+        <div class="input-field col s3">
+            <button type="button" class="waves-effect blue darken-1 btn" id="generar">Generar</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <h5 class="center-align" id="tDoc"></h5>
+            <canvas id="graficaDoc"></canvas>
+        </div>
+        <div class="col s6">
+            <h5 class="center-align" id="tHora"></h5>
+            <canvas id="graficaHoras"></canvas>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="input-field">
+            <div class="col s5" disabled id="">
+                <div class="valign-wrapper card blue darken-1 hide" id="totales">
+                  <div class="card-content white-text">
+                    <span class="card-title">TOTALES</span>
+                    <p id="totalCitas"></p>
+                    <p id="totalFinal"></p>
+                    <p id="totalCanceladas"></p>
+                  </div>
+                </div>
+              </div>
+            <div class="col s4 offset-s1">
+                <h5 class="center-align" id="tEsp"></h5>
+                <canvas id="graficaEsp"></canvas>
+            </div>
+        </div>
+    </div>
+
+  
+
+
+
+
+
+</div>
+<script src="/assets/js/http.js"></script>

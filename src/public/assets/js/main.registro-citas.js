@@ -191,7 +191,7 @@ const _actionSelectDoctor = async (event)=>{
 
     const _actionRegistrar = async (event) => {
       if($selectDoctor.value != "Doctor" && $selectFecha.value != "" && 
-      $selectHora != "Elige una hora" && document.getElementById("motivo").value != ""){
+      $selectHora != "Hora" && $selectHora != "Elige una hora" && document.getElementById("motivo").value != ""){
           var citasPersona = await http.get(BASE_URL+`citas/${persona["idPersona"]}`);
           if(validaciones.validacionesFechayHoraPersona(citasPersona,new Date($selectFecha.value).toISOString().split("T")[0],$selectHora.value)){
             if(validaciones.validacionDoctor(doctor,citasPersona)){
