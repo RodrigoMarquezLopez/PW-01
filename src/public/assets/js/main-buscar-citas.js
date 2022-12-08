@@ -16,7 +16,12 @@ const mainBuscarCitas = (() => {
     //const anioActual = fechaActual.getFullYear();
     //const hoy = fechaActual.getDate();
     //const mesActual = fechaActual.getMonth() + 1; 
-  
+    var barra = document.createElement("div");
+        barra.className = "progress blue darken-1";
+    var barraInterna = document.createElement("div");
+        barraInterna.className = "indeterminate";
+        barra.appendChild(barraInterna);
+    var activo = false;
     const fechaActualCorrecta = generarFecha.fechaFormatoCorrecto();//anioActual+"-"+mesActual+"-"+hoy;
     console.log("comprobacion de fecha");
     console.log(fechaActualCorrecta);
@@ -64,7 +69,7 @@ const mainBuscarCitas = (() => {
             if(numeroCitas==0){
               modalResultado.iniciarModal("/assets/other/tache.png","No se tienen citas programadas",``);
             }
-        },3000);
+        },30000);
       } else {
         modalResultado.iniciarModal("/assets/other/tache.png","Selecciona un doctor",``);
       }
