@@ -130,7 +130,7 @@ const main = (() => {
           $letrero.innerText = "NO tienes citas agendadas"
           $divTabla.appendChild($letrero);
        }
-        },10000);
+        },30000);
       };
     
       return {

@@ -104,7 +104,7 @@ const mainHistorialPaciente = (() => {
          if(numeroDeRows == 0){
             modalResultado.iniciarModal("/assets/other/tache.png","Paciente sin historial",``);
          }
-          },10000);
+          },30000);
       };
 
       const _createRow = async (item = {}) =>{

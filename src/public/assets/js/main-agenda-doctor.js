@@ -91,7 +91,7 @@ const mainDocAgenda = (() => {
           modalResultado.iniciarModal("/assets/other/tache.png","No hay citas :(","");
         }
 
-       },3000);
+       },30000);
         
         
         }else{
