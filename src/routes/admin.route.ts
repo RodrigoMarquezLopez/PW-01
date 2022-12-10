@@ -6,6 +6,10 @@ import { createContraseniaUsuarioMiddleware,cifrarContraseniaUsuarioMiddleware }
 import { validacionRutasAdmin } from "../middlewares/admin.middleware";
 const adminRouter: Router = Router();
 
+/**
+ * Aqui se encuentran declaradas todas las rutas que son necearias para mostrar las vistas y obtner 
+ * la informacion de la vista del administrador
+ */
 
 adminRouter.use("/buscarcita",validacionRutasAdmin,doctorResponse);
 

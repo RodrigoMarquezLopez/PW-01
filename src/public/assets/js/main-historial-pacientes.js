@@ -9,6 +9,13 @@ const generarFecha = (()=>{
 
 })();
 
+/**
+ * Funcion que añade la funcionalidad a la vista historial del doctor, esta vista
+ * presenta todas las citas que el doctor a realizado, y ademas permite ver las recetas
+ * que se han generado a partir de cada cita, esta muestra un filtrado por nombre del 
+ * paciente
+ */
+
 const mainHistorialPaciente = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     var $NombrePaciente = document.getElementById("nombre-paciente");
@@ -48,6 +55,10 @@ const mainHistorialPaciente = (() => {
         barraInterna.className = "indeterminate";
         barra.appendChild(barraInterna);
 
+        /**
+         * Esta funcion se encarga de cargar toda los registros en la tabla, 
+         * sin aplicar ningun fitrado
+         */
 
      const _GenerarAgenda = async () => {
         $btnRestablecer.disabled = true;
@@ -63,6 +74,11 @@ const mainHistorialPaciente = (() => {
         $divContenedor.removeChild($divContenedor.lastChild);
       };
 
+      /**
+       * Funcion del boton reestablcer que reinicia la tabla, sin tener en cuenta 
+       * el filtrado realizado 
+       * @param {click} event 
+       */
       const _actionRestablecer = (event)=>{
         event.target.disabled = true;
         if($cuerpoTabla.childNodes.length>0){
@@ -75,7 +91,9 @@ const mainHistorialPaciente = (() => {
           _GenerarAgenda();
       }
       
-
+      /**
+       * Funcionalidad para la accion del boton para la ejecucion del filtrado
+       */
       const _actionFuntion = async () => {
         $divContenedor.appendChild(barra);
         $btnRestablecer.disabled = false;
@@ -107,6 +125,12 @@ const mainHistorialPaciente = (() => {
           },30000);
       };
 
+        /**
+         * Funcion que se encarga del llenado de la tabla de acuerdo a los valores ingresados en el nombre 
+         * del paciente a buscar
+         * @param {citas} item 
+         * @returns 
+         */
       const _createRow = async (item = {}) =>{
         const response2 = await http.get(BASE_URL+`doctor/buscar/${item["idDoctor"]}`);
         const response4 = await http.get(BASE_URL+`persona/${item["idPersona"]}`);
@@ -146,6 +170,11 @@ const mainHistorialPaciente = (() => {
         }
       };
 
+      /**
+       * Funcionq que carga todos los datos a la tabla ignorando el filtrado
+       * @param {*} item 
+       * @returns 
+       */
       const _createHistorial = async (item = {}) =>{
         const response2 = await http.get(BASE_URL+`doctor/buscar/${item["idDoctor"]}`);
         const response4 = await http.get(BASE_URL+`persona/${item["idPersona"]}`);
@@ -184,6 +213,12 @@ const mainHistorialPaciente = (() => {
           
         }
       };
+
+      /**
+       * Funcion que se encarga de cargar los datos de la receta de la cita seleccionada, ademas de abrir el modal 
+       * correspondiente a la receta
+       * @param {*} event 
+       */
 
       const _actionButtonHistoral = async (event) => {
         

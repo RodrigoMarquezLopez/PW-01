@@ -1,4 +1,6 @@
-
+/**
+ * Funcion principal para la vista de informacion del doctor
+ */
 const mainDoctor = (()=>{
     const $usuario = document.getElementById("user");
     const $correo = document.getElementById("email");

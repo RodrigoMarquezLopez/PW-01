@@ -1,4 +1,6 @@
-
+/**
+ * Funcion que se encarga de cargar los datos del usuario que ha iniciado la sesion
+ */
 const main2 = (()=>{
     const $usuario = document.getElementById("user");
     const $correo = document.getElementById("email");

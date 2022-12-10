@@ -6,6 +6,9 @@ import { logginUsuario,logginView, loggout,vistaError } from "../controllers/log
 
 const logginRouter: Router = Router();
 
+/**
+ * Rutas necesariaos para el login, se incluye tambien la vista de error
+ */
 
 logginRouter.get("/signin",logginView);
 logginRouter.get("/loggout",loggout);

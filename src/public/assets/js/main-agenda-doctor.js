@@ -1,3 +1,15 @@
+/**
+ * Funcion general que da el funcionamiento a la vista de la agenda del doctor
+ * la funcionalidad de esta vista esta basada en buscar una fecha y mostrar las
+ * citas que se tienen o se tuvieron en ese dia.
+ * La informacion esta presentada con una tabla la cual tiene 3 botones por cada
+ * registro
+ *  1.- El primero permite ver todo el historial de citas del paciente
+ *  2.- Permite realizar una receta sobre la cita
+ *  3.- Finalizar la cita
+ * Estos 3 botones solo estaran activos si la cita no ha finalizado
+ *
+ */
 
 const generarFecha = (()=>{
   const fechaFormatoCorrecto = ()=>{
@@ -50,7 +62,10 @@ const mainDocAgenda = (() => {
     console.log(doctor);
     const $btnAgendaCita = document.getElementById("buscar-agenda")
     $fechaBusqueda.value=fechaActualCorrecta;
-
+      /**
+       * Funcion encargada de incializar los datos de la agenda y buscar los parametros importantes del doctor que estan ligados 
+       * a otras tablas como es la tabla persona y la tabla especialidad
+       */
      const _GenerarAgenda = async () => {
         especialidadDoc = await http.get(BASE_URL+`especialidad/${doctor["idEspecialidad"]}`);
         doctorPersona = await http.get(BASE_URL+`persona/${doctor["idPersona"]}`);
@@ -69,7 +84,11 @@ const mainDocAgenda = (() => {
         $btnAgendaCita.addEventListener("click", _actionFuntion);
 
       };
-
+      /**
+       * Funcion que se encarga de cargar los datos en la tabla de acuerdo a lo solicitado
+       * en el selector de fecha y tambien se encarga de vaciar la tabla
+       * esta funcion es ejecutada cada que se busca una nueva fecha
+       */
       const _actionFuntion = async () => {
         console.log("funciono xd")
         if($cuerpoTabla.childNodes.length>0){
@@ -100,6 +119,13 @@ const mainDocAgenda = (() => {
           
         }
       };
+
+      /**
+       * Funcion complementaria para la creacion de la agenda, esta se encarag de generar las
+       * filas para la tabla 
+       * @param {citas} item 
+       * @returns 
+       */
 
       const _createRow = async (item = {}) =>{
         console.log(item);
@@ -170,6 +196,13 @@ const mainDocAgenda = (() => {
         }
       };
 
+      /**
+       * Como se ha mencionado anteriormente la tabla cuenta con 3 botones, el primero de ellos
+       * es el historial y este se encarga de mostrar en un modal todas las citas que ha tenido 
+       * el paciente en la clinica, esta funcion se complementa con el funcionamiento de la vista historial
+       * pero la cual esta dirijida al paciente
+       * @param {click} event 
+       */
       const _actionButtonHistoral = async (event) => {
         const $tabla = document.getElementById("cuerpotabla");
         while ($tabla.firstChild) {
@@ -183,6 +216,12 @@ const mainDocAgenda = (() => {
           var instance = M.Modal.getInstance(elems);
           instance.open();
       }
+
+      /**
+       * Funcion encargada de la funcionalidad para la el boton receta de la tabla
+       * se encarga de generar un modal con el formulario de la receta 
+       * @param {click} event 
+       */
 
       const _actionButtonReceta = async (event) => {
           if(botonReceta != null){
@@ -223,7 +262,11 @@ const mainDocAgenda = (() => {
 
 
       };
-
+      /**
+       * Funcion que termina la cita, desactiva los demas botones en la tabla y cambia el status en la base de datos 
+       * a finalizada
+       * @param {"click"} event 
+       */
       const _actionButtonTerminar=async (event)=>{
           if($formDiagnostico.value != "" && $formIndicaciones.value != ""){
             const data ={
@@ -296,7 +339,11 @@ const mainDocAgenda = (() => {
 
 
 
-
+  /**
+   * Esta funcion es similar a la utilizada para mostrar el historial en las vistas del paciente 
+   * pero aqui se tiene que pasar un id de persona diferente cada vez por lo que es necesario utlizar el codgio de 
+   * esa vista en su totalidad
+   */
 
 
   const mainHistorialModal = (() => {

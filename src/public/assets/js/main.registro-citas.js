@@ -1,4 +1,7 @@
-
+/**
+ * Funcion principal para vista de registrar cita, ha esta vista solo tiene acceso el usuario
+ * 
+ */
 const main = (() => {
     
     const $selectEsp = document.getElementById("selectEsp");
@@ -13,7 +16,9 @@ const main = (() => {
     //var responseDoctor;
      //$selectDoctor.selectmenu("disble");
 
-
+    /**
+     * Carga los datos de las especialidades en el selector
+     */
     const _getData = async () => {
       const response = await http.get(BASE_URL);
       for(let index = 0; index < response.length; index++){
@@ -23,7 +28,11 @@ const main = (() => {
       
       $selectFecha.disabled = true;
     };
-    
+      /**
+       * Funcion que se encarga de cargar en el selector todos los doctores
+       * pertenecientes a la especialidad seleccionada
+       * @param {int} idEspecialidad 
+       */
     const _getDataDoctor = async (idEspecialidad)=>{
       while ($selectDoctor.firstChild) {
         $selectDoctor.removeChild($selectDoctor.lastChild);
@@ -40,7 +49,10 @@ const main = (() => {
       }
     };
 
-
+    /**
+     * Funncion auxiliar que permite crear options para el selector
+     * @param {*} item 
+     */
    const _createOptionDoctor = async (item={})=>{
     const $option = document.createElement("option");
     console.log(item)
@@ -62,6 +74,11 @@ const main = (() => {
 
 };
 
+/**
+ * Funcion par el selector de doctor, se encarga de reestablcer las horas que se
+ * pueden seleccionar si este selector cambia de valor de doctor
+ * @param {change} event 
+ */
 const _actionSelectDoctor = async (event)=>{
   _restablecerHora();
   
@@ -78,7 +95,11 @@ const _actionSelectDoctor = async (event)=>{
 }
 
 
-
+    /**
+     * Creacion del objeto option para el selector de la especialidad
+     * @param {*} item 
+     * @param {*} itemId 
+     */
     const _createOption = (item={},itemId = "")=>{
         const $option = document.createElement("option");
         for(const key in item){
@@ -91,6 +112,12 @@ const _actionSelectDoctor = async (event)=>{
 
     };
 
+    /**
+     * Funcion adicional del seletor de especialidaad
+     * ya que una vez se cambia la especialidad el selector de hora debe de estar completamente vacio
+     * @param {*} event 
+     */
+
     const _actionSelectEsp = (event) =>{
       _restablecerHora();
         const $selectEvent = event.target;
@@ -100,7 +127,9 @@ const _actionSelectDoctor = async (event)=>{
         $selectFecha.disabled = true;
        // $descripcionEsp.innerText = 
     };
-
+    /**
+     * Funcion que vacia el selector de hora en el formulario
+     */
     const _restablecerHora = ()=>{
       while ($selectHora.firstChild) {
         $selectHora.removeChild($selectHora.lastChild);
@@ -113,6 +142,11 @@ const _actionSelectDoctor = async (event)=>{
 
     };
 
+    /**
+     * Funcion adicional al selector de la fucha, pues si la fecha es cambiada, se deben de vaciar las horas quese 
+     * tengagn disponibles, esto se hace evitar conflictos
+     * @param {*} event 
+     */
     const _actionSelectFecha = async (event)=>{
       _restablecerHora();  
        const response = await http.get(BASE_URL+"doctor/buscar/"+doctor);
@@ -121,6 +155,10 @@ const _actionSelectDoctor = async (event)=>{
         console.log(new Date($selectFecha.value).toISOString().split('T')[0]);
         console.log(new Date().getHours())
     }
+    /**
+     * Se encarga de carga r las descripcion del al especialidad cada vez que el valor del selector cambia
+     * @param {*} nombreEsp 
+     */
     const _getDescription = async (nombreEsp)=>{
         const response = await http.get(BASE_URL);
         var selidEsp;
@@ -143,7 +181,15 @@ const _actionSelectDoctor = async (event)=>{
       }
 
     }
-
+    /**
+     * Funcion que se encargade carga de generar la citas que se tengan 
+     * disponibles, se requiere que las citas que ya han sido agendadas
+     * 
+     * @param {*} idDoctor 
+     * @param {*} fecha 
+     * @param {*} horaEntrada 
+     * @param {*} horaSalida 
+     */
     const _getCitas = async (idDoctor,fecha,horaEntrada,horaSalida)=>{
         const response = await http.get(BASE_URL+`citas/${idDoctor}/${fecha}`);
         console.log(response);
@@ -178,6 +224,10 @@ const _actionSelectDoctor = async (event)=>{
       _agregarHoras(arregloHoras);
     };
 
+    /**
+     * Funcion que se encarga de añadir opciones al selector de la hora
+     * @param {*} citasDisponibles 
+     */
     const _agregarHoras = (citasDisponibles = [])=>{
       for(let index = 0; index<citasDisponibles.length;index++){
         const $option = document.createElement("option");
@@ -188,7 +238,11 @@ const _actionSelectDoctor = async (event)=>{
         }
       }
     };
-
+    /**
+     * Funcion encargada de almacenar la cita en la base de datos por lo que es necesario muchas validadciones
+     * antes de permitri que se ingrese algun valor erroneo
+     * @param {*} event 
+     */
     const _actionRegistrar = async (event) => {
       if($selectDoctor.value != "Doctor" && $selectFecha.value != "" && 
       $selectHora != "Hora" && $selectHora != "Elige una hora" && document.getElementById("motivo").value != ""){
@@ -260,7 +314,9 @@ const _actionSelectDoctor = async (event)=>{
       
      };
 
-
+     /**
+      * Funcion encargada de generar un arreglo con las horas que tiene el doctor disponibles
+      */
     const _generarArrgeloComparacion = (horaEntrada,horaSalida)=>{
       var entrada;
       var salida;
@@ -334,7 +390,20 @@ const _actionSelectDoctor = async (event)=>{
   main.init();
 
 
+
+  /**
+   * En este apartado se generan los distintos datos que se tienen acerca del la persona, 
+   * las citas, estas validaciones sontulizadas antes de permitir insertar un registro 
+   * en la base de datos 
+   */
   const validaciones = (() => {
+    /**
+     * Validadion que la persona tiene la hora del dia disponible para una cita
+     * @param {*} citas 
+     * @param {*} fecha 
+     * @param {*} hora 
+     * @returns 
+     */
     const validacionesFechayHoraPersona = (citas = [], fecha,hora)=>{
         var citaArreglo;
           for(var i = 0; i<citas.length;i++){
@@ -350,7 +419,12 @@ const _actionSelectDoctor = async (event)=>{
           return true;
       };
 
-
+      /**
+       * Validacion de que no se tenga una cita ya agendada con ese doctor
+       * @param {*} idDoctor 
+       * @param {*} citas 
+       * @returns 
+       */
       const validacionDoctor = (idDoctor,citas = []) =>{
         var citaArreglo;
           for(var i = 0; i<citas.length;i++){

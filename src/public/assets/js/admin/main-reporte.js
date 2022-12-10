@@ -1,3 +1,6 @@
+/**
+ * Funcion que permite inicializar el modal de seleccion de horas
+ */
 const fechaIni = (()=>{
     const init = ()=>{
         document.addEventListener('DOMContentLoaded', function() {
@@ -30,6 +33,14 @@ const fechaIni = (()=>{
 
 })();
 fechaIni.init();
+
+/**
+ * Funcion prinicpal de la vista que genera un reporte para el administrador
+ * el reporte genera una grafica con las citas por doctor en un intervalo de 
+ * tiempo definido, ademas de los horarios más concurridos y las especialidades
+ * más solicitadas
+ * 
+ */
 const mainReporte = ( ()=>{
     const $fechaInc = document.getElementById("fechaInicio");
     const $fechaFin = document.getElementById("fechaFin");
@@ -65,7 +76,15 @@ const mainReporte = ( ()=>{
     var graficaDoctor;
     var graficaHoras;
     var graficaEspCount;
-   
+    
+    /**
+     * Funcion principal genera las graficas con los datos tomados de la base de datos,
+     * se encarga de separar los datos y generar los arreglos con la informacion para
+     * las graficas; realiza el traspaso de la informacion e inicia la graficacion de la
+     * misma
+     * 
+     */
+
     const rellenarPorcentajeCitasEspecialidad = async ()=>{
         try{
         $totales.className = "valign-wrapper card blue darken-1 hide"; 
@@ -191,11 +210,23 @@ const mainReporte = ( ()=>{
         }
     };
 
+    /**
+     * Funcion genera un color rgb alatorio en modo string para las graficas
+     * @returns String "rgb(?,?,?)"
+     */
+
     const generarColor = ()=>{
         const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
         return `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`
     }
 
+
+     /**
+      * Funcion que cuenta todas las citas sucedidas en un intervalo de tiempo
+      * correspondiente a a cada epecialidad
+      * @param {especialidades} array 
+      * @returns {countEspecialidades} array
+      */   
     const countEspCita = async (array=[])=>{
         //array especialidades
        // /admin/countDocId/2022-12-06/2022-12-06/1
@@ -215,6 +246,13 @@ const mainReporte = ( ()=>{
         return data;
     };
 
+    /**
+     * Funcion para generar un arreglo con los nombres de los doctores
+     * de aceurdo a latabla doctores y persona
+     * @param {doctores} array 
+     * @returns {string}
+     */
+
     const personasDoc = async (array =[])=>{
         var pDoc = [array.length];
         for(let i = 0; i<array.length;i++){
@@ -225,6 +263,12 @@ const mainReporte = ( ()=>{
         return pDoc;
     };
 
+    /**
+     * Funcion que genera un arreglo con las citas de cada doctor
+     * @param {{doctor,countDoc}} array 
+     * @returns arreglo con los valores de cada doctor
+     */
+
     const cantidadCitas = (array=[])=>{
         var nCitas = [array.length];
         for(let i = 0; i<array.length;i++){
@@ -233,7 +277,11 @@ const mainReporte = ( ()=>{
         return nCitas;
     };
 
-
+    /**
+     * Funcion para generar las etiquetas que estaran el la grafica de horas
+     * @param {{horas}} array 
+     * @returns [string]
+     */
     const etiquetasHoras = (array=[])=>{
         var etqHoras = [array.length];
         for(let i = 0; i<array.length;i++){
@@ -242,6 +290,12 @@ const mainReporte = ( ()=>{
         return etqHoras;
     };
 
+
+    /**
+     * Genera un arreglo con las cantidades correspondientes a cada hora 
+     * @param {horas} array 
+     * @returns {int}
+     */
     const valoresHoras = (array=[])=>{
         var valHoras = [array.length];
         for(let i = 0; i<array.length;i++){
@@ -250,6 +304,11 @@ const mainReporte = ( ()=>{
         return valHoras;
     };
 
+
+    /**
+     * Funcion para el boton de generar reporte
+     * @param {"click"} event 
+     */
     const acitonBoton = (event)=>{
         // var graficaDoctor;
                     //var graficaHoras;
@@ -270,6 +329,11 @@ const mainReporte = ( ()=>{
 
     //adminRouter.use("/all/especialidades",getAllEsp);
 
+    /**
+     * Genera un arreglo de las especialidades
+     * @param {*} array 
+     * @returns 
+     */
     const etiquetasEsp = (array=[])=>{
         var valEsp = [array.length];
         for(let i = 0; i<array.length;i++){

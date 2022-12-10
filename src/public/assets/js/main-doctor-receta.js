@@ -1,7 +1,15 @@
+/**
+ * Funcionalidad para el modal que abre la receta, es para genear una receta de la vista dada
+ * por lo tanto el botnon que esta en la agenda solo se encarga de abrir este modal
+ */
 const mainModalReceta =  (() => {
     const BASE_URL = "https://clinicaesp-q.onrender.com/";
     var doctor;
 
+    /**
+     * Funcion para abirar el modal cargando las datos del doctor
+     * @param {doctor} item 
+     */
     const iniciarModal = (item = {}) =>{
         doctor = JSON.stringify(item);
         var elems = document.getElementById("modal3");
@@ -11,7 +19,12 @@ const mainModalReceta =  (() => {
       };
       
 
-   
+      /**
+       * Esta receta tiene que tener la opcion de generar un pdf de la receta realizada por lo que 
+       * se le pasan todos los paramentros del doctor y los que hayan sifdo rellenados por el doctor
+       * por lo que se encarga de tomar la informacion de los campos y pasarlo 
+       * a un arreglo json
+       */
     const _accionVerPDF = async () => {
         const $modalDoctor = document.getElementById("form-doctor");
         const $modalFecha = document.getElementById("form-fecha");

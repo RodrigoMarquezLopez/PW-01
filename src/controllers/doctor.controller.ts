@@ -257,6 +257,11 @@ export async function createReceta(req: Request, res: Response) {
   }
 
 
+  /**
+   * Funcion que renderiza la vista de historial de pacientes atendidos
+   * @param req idDoctor
+   * @param res render
+   */
 
   export async function getHistorialPaciente(req: Request, res: Response) {
     try{

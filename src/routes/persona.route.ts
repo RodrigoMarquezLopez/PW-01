@@ -7,6 +7,11 @@ import {
 
 const usuarioRouter: Router = Router();
 
+/**
+ * Rutas necesarias para renderizar la vista de crear un usuario y 
+ * la ruta de insercion del usuario en la base de datos
+ */
+
 usuarioRouter.post("/user",cifrarContraseniaUsuarioMiddleware,createUsuario);
 
 usuarioRouter.get("/view",registrarView);

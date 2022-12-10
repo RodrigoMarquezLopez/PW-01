@@ -9,6 +9,15 @@ const generarFecha = (()=>{
   return {fechaFormatoCorrecto}
 
 })();
+
+/**
+ * Funcion prinicipal para la busqueda de citas
+ * agraga la funcionalidad de cargar las citas que tiene cada doctor 
+ * al dia, solo muestra las citas que al dia, y se filtran de acuedo al
+ *  nombre del doctor
+ * 
+ */
+
 const mainBuscarCitas = (() => {
     const $cuerpoTabla = document.getElementById("tablabody");
     const $nombreDoctor = document.getElementById("listadoctor");
@@ -34,6 +43,11 @@ const mainBuscarCitas = (() => {
     const $btnBuscarCita = document.getElementById("btn-buscar-cita");
     //console.log($nombreDoctor.getSelected);
     var numeroCitas=0;
+    /**
+     * Funcionalidad para rellenar la tabla con las citas que se tengan
+     * ademas se encarga de cargar la funcionalidad del boton de buscar 
+     * 
+     */
     const _BuscarCita = async () => {
       //$divContenedor.appendChild(barra);
 
@@ -45,6 +59,10 @@ const mainBuscarCitas = (() => {
       //$divContenedor.removeChild($divContenedor.lastChild);
     };
   
+    /**
+     * Funcion para rellenar el  selector del doctor 
+     * @param {personas} item 
+     */
     const _RellenarNombreDoctor = async (item = {}) => {
       for (var i = 0; i < (($nombreDoctor.childNodes.length) - 1); i++) {
         var contador = i + 1;
@@ -54,6 +72,11 @@ const mainBuscarCitas = (() => {
       }
     }
   
+
+    /**
+     * Funcion que se encarga de limpiar la tabla y rellenarla con los valores de acuerdo 
+     * al selector, esta en la funcion asignada como la funcion del boton buscar citas
+     */
     const _actionFuntion = async () => {
       if ($cuerpoTabla.childNodes.length > 0) {
         var contador = $cuerpoTabla.childNodes.length;
@@ -79,6 +102,12 @@ const mainBuscarCitas = (() => {
       }
     };
   
+
+    /**
+     * Funcion encargada de añadir los valores a la tabla de las citas
+     * @param {citas} item 
+     * @returns 
+     */
     const _createRow = async (item = {}) => {
       var value = $nombreDoctor.options[$nombreDoctor.selectedIndex].value;
       const response2 = await http.get(BASE_URL + `admin/doctor/${value}`);
@@ -110,7 +139,7 @@ const mainBuscarCitas = (() => {
   
       }
     };
-  
+    
     const _actionButtonHistoral = async (event) => {
       identificadorPersona = event.target.value;
       mainHistorialModal.init(identificadorPersona);

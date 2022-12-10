@@ -8,6 +8,11 @@ const doctorRouter: Router = Router();
 
 
 //doctorRouter.use("/agenda/vista",getVistaDoctor);
+/**
+ * Aqui se encuentran declaradas todas las rutas que son necearias para mostrar las vistas y obtner 
+ * la informacion de la vista del doctor
+ */
+
 
 doctorRouter.use("/agenda/citas",validacionRutasDoctor,getCitasDoctor);
 

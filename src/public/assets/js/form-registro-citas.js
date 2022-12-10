@@ -1,5 +1,6 @@
-
-//Inicializacion del selector de fecha Codigo necesario
+/**
+ * Inicalizador de fechas 
+ */
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.datepicker');
     var instances = M.Datepicker.init(elems,{

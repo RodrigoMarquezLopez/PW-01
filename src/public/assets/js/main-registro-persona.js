@@ -1,3 +1,7 @@
+/**
+ * Funciones para la validacion del formaulario para la creacion del usuario
+ */
+
 const formRegistrar = (()=>{
     const $formRegistrar = document.getElementById("registrar");
     const $nombre = document.getElementById("name");

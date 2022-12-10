@@ -4,6 +4,10 @@ import {getCitas,getCitasGeneral,getHistorial} from "../controllers/historial.ci
 import { validacionRutasPaciente,validacionRutasPacienteDoctor,validacionSimple } from "../middlewares/persona.middleware";
 const registroCitasRouter: Router = Router();
 
+/**
+ * Rutas necesarias par ael registro de citas, inclucye la vista de registro de citas y la vista del historial
+ */
+
 registroCitasRouter.get("/",validacionSimple,getEspecialidades);
 registroCitasRouter.get("/persona/:idPersona",validacionRutasPacienteDoctor,getPersona);
 registroCitasRouter.get("/doctor/:idEspecialidad",validacionRutasPacienteDoctor,getDoctores);

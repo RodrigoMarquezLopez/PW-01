@@ -1,4 +1,9 @@
-
+/**
+ * Funcion principal para ela tabla del paciente, aqui se añade la funcionalidad a la tabla 
+ * en la cual vera las citas agendadas, a esta tabla se accedede mediante el apartado de informacion
+ * del usuario
+ * 
+ */
 const main = (() => {
    
    
@@ -8,7 +13,10 @@ const main = (() => {
     const persona = JSON.parse(OBJpersona);
     var numeroDeRows = 0;
 
-
+    /**
+     * FUncion encargada de generar los datos para la tabla, estos datos son cargados 
+     * y estan en funcion de las citas agendadas que tenga el paciente
+     */
      const _getData = async () => {
         const response = await http.get(BASE_URL+"/citas");
         console.log(response.length);
@@ -21,7 +29,12 @@ const main = (() => {
         
         
       };
-
+      /**
+       * Funcion interna para la generacion de la fila, se encarga de buscar las citas agendadas 
+       * por el paciente y añadiralas a la tabla con solo los datos necesarios
+       * @param {cita} item 
+       * @returns {tr} 
+       */
       const _createRow = async (item = {}) =>{
         const value = item["idPersona"];
         const itemId =item["idCita"];
@@ -60,6 +73,15 @@ const main = (() => {
         }
       };
 
+      /**
+       * 
+       * @param {*} citaId 
+       * @param {*} personaId 
+       * @param {*} labelBtn 
+       * @param {*} color 
+       * @param {*} _actionFuntion 
+       * @returns 
+       */
       
       const _createBtnAction = (citaId = 0, personaId=0, labelBtn = "",color="", _actionFuntion = () => {}) => {
         

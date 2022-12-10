@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 
 /**
- * Validadciones de rutas para un doctor
+ * Validadciones de rutas para un doctor, el rol del doctor esta identificado con "2222"
  * @param req 
  * @param res 
  * @param next 

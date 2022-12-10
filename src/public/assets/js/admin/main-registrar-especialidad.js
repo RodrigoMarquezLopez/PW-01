@@ -1,3 +1,9 @@
+/**
+ * Funcion principal de la vista agregar especialidad, funcionalidad del
+ * administrador
+ *
+ */
+
 const mainAgregarEspecialidad = (()=>{
     const BASE_URL = "https://clinicaesp-q.onrender.com/";
     const $nombreEsp = document.getElementById("nombreEsp");
@@ -26,6 +32,13 @@ const mainAgregarEspecialidad = (()=>{
         }
     };*/
 
+    /**
+     * Funcion que da accion al boton registrar especialidad
+     * verifica que los campos de nombre de especialidad y descripcion esten debidamente
+     * requisitados
+     * @param {click} event 
+     */
+    
     const acitonBoton = async (event)=>{
         if($nombreEsp.value == "" || $descripcion.value==""){
             modalResultado.iniciarModal("/assets/other/tache.png","Todos los campos son necesarios","");
@@ -50,10 +63,16 @@ const mainAgregarEspecialidad = (()=>{
         }
     };
 
+    /**
+     * Funcion que añade el evento al boton
+     */
     const iniciar = ()=>{
         $guardar.addEventListener("click",acitonBoton);
     };
 
+    /**
+     * Funcion de aranque
+     */
     return {
         init: () => {
           iniciar();

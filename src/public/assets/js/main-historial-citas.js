@@ -1,5 +1,9 @@
 
-
+/**
+ * Funcion principal de la vista historial a lacual tienen acceso el paciente
+ * en este caso la tabla contara ocn la fecha y el nombre del doctor con el que se agendo
+ * la cita
+ */
 const mainHistorial = (() => {
     const $cuerpoTabla = document.getElementById("cuerpotabla");
     var cita;
@@ -15,7 +19,10 @@ const mainHistorial = (() => {
     
     //const instancia = M.Modal.init($modalReceta);
      //$selectDoctor.selectmenu("disble");
-
+    /**
+     * Se encarga de cargar la informacion de la vista 
+     * se apoya de lafuncion craterow para las creacion de als filas
+     */
 
      const _getData = async () => {
       console.log($cuerpoTabla);
@@ -37,7 +44,12 @@ const mainHistorial = (() => {
       };
       
   
-
+      /**
+       * Funcion para cargar las filas en la tabla del historial, esta funcion recibe las citas
+       * y las filtra de acuerdo al id de la persona y el estado este finalizado 
+       * @param {*} item 
+       * @returns 
+       */
 
       const _createRow = async (item = {}) =>{
         const value = item["idPersona"];
@@ -77,6 +89,14 @@ const mainHistorial = (() => {
           
         }
       };
+
+      /**
+       * Accion del boton encargado de abrir el modal con la informaicon de al 
+       * receta de las citas encontradas en la tabla historial
+       * esta funcion toma todos los itmes del ejs y les asigna los valores de acuerdo a la cita que se 
+       * solicitando
+       * @param {*} event 
+       */
 
       const _actionButton = async (event)=>{
         var $modalDoctor = document.getElementById("modal-doctor");

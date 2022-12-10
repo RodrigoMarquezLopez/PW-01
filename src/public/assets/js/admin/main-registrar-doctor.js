@@ -1,5 +1,14 @@
 
-
+/**
+ * Funcion general para registrar un nuevo doctor
+ * se requieren los campos de:
+ *  1.- Hora entrada, hora salida
+ *  2.- Nombre, apellido paterno y apellido materno
+ *  3.- correo
+ *  4.-Especialidad a la que pertenece
+ *  5.- Cedula profesional
+ *  
+ */
 const mainAgregarDoctor = (()=>{
     const horasEntrada = ["07:00","08:00","09:00","10:00","11:00","12:00","13:00"];
     const $form = document.getElementById("formAgregarDoctor");
@@ -14,6 +23,10 @@ const mainAgregarDoctor = (()=>{
     const $btn = document.getElementById("guardar");
     const BASE_URL = "https://clinicaesp-q.onrender.com/";
     
+    /**
+     *  Funcion que catrga los varloes de la especialidad y las 
+     *  horas en los selectores
+     */
     const cargarValores = async ()=>{
         const response = await http.get(BASE_URL);
         
@@ -29,6 +42,12 @@ const mainAgregarDoctor = (()=>{
       $btn.addEventListener("click",acitonBoton);
     };
 
+    /**
+     * Funcion que genera las opciones el selector de hora para indicar la hora de entrada
+     * esta realicionada directamente con la hora salida la cual siempre estara en un 
+     * intervalo de 8 horas generado automaticamente
+     */
+
     const _createOptionHora = ()=>{
         var $option;
         for(let index = 0; index<horasEntrada.length;index++){
@@ -38,6 +57,12 @@ const mainAgregarDoctor = (()=>{
             $horaEntrada.appendChild($option);
         }
     }
+
+    /**
+     * Funcion que genera las opciones para la especialidad
+     * @param {*} item especialidad
+     * @param {*} itemId -
+     */
 
     const _createOption = (item={},itemId = "")=>{
         const $option = document.createElement("option");
@@ -51,6 +76,12 @@ const mainAgregarDoctor = (()=>{
         }
 
     };
+
+    /**
+     * Funcion que se encarga de actualizar la hora de salida
+     * cada vez que se cambia la hora de entrada en el selector
+     * @param {change} event change sobre el selector
+     */
 
     const _actionSelecHora=(event)=>{
         var entrada;
@@ -77,6 +108,13 @@ const mainAgregarDoctor = (()=>{
             $form.submit();
         }
     };*/
+
+    /**
+     * Accion para el boton guardar doctor, realiza las validaciones de los campos
+     * los cuales deben de esatr debidamente requisitados y crea al doctor 
+     * llamando a una ruta del backend en administrador
+     * @param {click} event 
+     */
 
     const acitonBoton = async (event)=>{
         if($nombre.value == "" || $apellidoM.value=="" ||

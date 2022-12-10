@@ -10,6 +10,10 @@ declare module "express-session" {
   }
 }
 
+/**
+ * Configuracion para la cookie, se indica principalmente 
+ * el tiempo que esta va a ser almacenada
+ */
 export const sessionConfig = session({
   name: "session-cookie",
   secret: "secreto123",
@@ -23,7 +27,9 @@ export const sessionConfig = session({
   },
 });
 /**
- * Configuiracion de los parametros para una cookie
+ * Configuiracion de la creacion de la cookie de inicio de sesion, este
+ * middleware permite actualizar la cookie cada que se realiza algo en la 
+ * pagina
  * @param req 
  * @param res 
  * @param next 

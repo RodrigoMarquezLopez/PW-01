@@ -217,7 +217,7 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
       }
   }
 /**
- * 
+ * Funcion que renderiza la vista para buscar citas del dia
  * @param req 
  * @param res 
  */
@@ -236,7 +236,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
       
   }
-
+  /**
+   * Funcion que renderiza la vision con el reporte 
+   * @param req 
+   * @param res 
+   */
 
   export async function getVistaReporte(req: Request, res: Response) {
     //const {idPersona} = req.params;
@@ -253,6 +257,13 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
       
   }
+
+  /**
+   * Funcion que regresa un objeto con el numero de citas en las diferentes horas
+   * @param req Intervalo de tiempo "yyyy-mm-dd"
+   * @param res json
+   */
+
 
   export async function getHoraReporte(req: Request, res: Response) {
     const {fechaInc,fechaFin} = req.params;
@@ -275,6 +286,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
    res.status(200).json(countHoras);                        
   }
 
+  /**
+   * Funcion que genera las citas totales de un doctor en un intervalo de tiempo
+   * @param req Intervalo de tiempo de tiempo en forma "yyyy-mm-dd", id Doctor
+   * @param res  json
+   */
   export async function getCountCitasDoc(req: Request, res: Response) {
     const {fechaInc,fechaFin,idDoctor} = req.params;
     const fI = new Date(fechaInc);
@@ -301,7 +317,11 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
 
 
-
+  /**
+   * Funcion que genera el total de citas atendidas por cada doctor 
+   * @param req Intervalo de tiempo en formato "yyyy-mm-dd"
+   * @param res json
+   */
 
   export async function getCountDocReporte(req: Request, res: Response) {
     const {fechaInc,fechaFin} = req.params;
@@ -322,6 +342,13 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
                    
    res.status(200).json(countDoctores);                        
   }
+
+
+  /**
+   * Funcion que genera una tabla con la informacion de del doctor "idDoctor", "idEspecialidad", "idPersona" 
+   * @param req 
+   * @param res json
+   */
   
   export async function getEspecialidadesReporte(req: Request, res: Response) {
    
@@ -332,6 +359,12 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
    res.status(200).json(espDoctores);                        
   }
 
+
+  /**
+   * Funcion que regresa todas las especialidades que se tienen en la clinica 
+   * @param req   
+   * @param res  json 
+   */
 
   export async function getAllEsp(req: Request, res: Response) {
     try{
@@ -345,6 +378,12 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
 
 
+  /**
+   * Funcion que genera una tabla con los doctores que se tengan por id de Especialidad
+   * @param req idEspecialidad
+   * @param res json
+   */
+
   export async function getDoctorEsp(req: Request, res: Response) {
     try{
     const {idEspecialidad} = req.params;  
@@ -357,7 +396,12 @@ export async function getVistaAddDoctor(req: Request, res: Response) {
   }
   }
 
-
+  /**
+   * Funcion que genera: el total de citas de acuerdo a un intervalo de tiempo, las citas canceladas y las finalizadas
+   * @param req Intervalo de tiempo "yyyy-mm-dd"
+   * @param res json
+   */
+  
   export async function getAllCitasCount(req: Request, res: Response) {
     const {fechaInc,fechaFin} = req.params;
     const fI = new Date(fechaInc);
